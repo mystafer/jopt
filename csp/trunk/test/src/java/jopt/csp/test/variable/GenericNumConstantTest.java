@@ -82,29 +82,29 @@ public class GenericNumConstantTest extends TestCase {
         IndexIterator iter= new IndexIterator(Arrays.asList(newGIJ.getIndices()));
         iter.reset();
         iter.next();
-        assertEquals("The first of new item should be 3+11=14",new Integer(14),newGIJ.getIntegerForIndex());
+        assertEquals("The first of new item should be 11+3=14",new Integer(14),newGIJ.getIntegerForIndex());
         iter.next();
-        assertEquals("The first of new item should be 3+13=16",new Integer(16),newGIJ.getIntegerForIndex());
+        assertEquals("The first of new item should be 11+6=17",new Integer(17),newGIJ.getIntegerForIndex());
         iter.next();
-        assertEquals("The first of new item should be 3+15=18",new Integer(18),newGIJ.getIntegerForIndex());
+        assertEquals("The first of new item should be 11+9=20",new Integer(20),newGIJ.getIntegerForIndex());
         iter.next();
-        assertEquals("The first of new item should be 3+17=20",new Integer(20),newGIJ.getIntegerForIndex());
+        assertEquals("The first of new item should be 13+3=16",new Integer(16),newGIJ.getIntegerForIndex());
         iter.next();
-        assertEquals("The first of new item should be 6+11=14",new Integer(17),newGIJ.getIntegerForIndex());
+        assertEquals("The first of new item should be 13+6=19",new Integer(19),newGIJ.getIntegerForIndex());
         iter.next();
-        assertEquals("The first of new item should be 6+13=16",new Integer(19),newGIJ.getIntegerForIndex());
+        assertEquals("The first of new item should be 13+9=22",new Integer(22),newGIJ.getIntegerForIndex());
         iter.next();
-        assertEquals("The first of new item should be 6+15=18",new Integer(21),newGIJ.getIntegerForIndex());
+        assertEquals("The first of new item should be 15+3=18",new Integer(18),newGIJ.getIntegerForIndex());
         iter.next();
-        assertEquals("The first of new item should be 6+17=20",new Integer(23),newGIJ.getIntegerForIndex());
+        assertEquals("The first of new item should be 15+6=21",new Integer(21),newGIJ.getIntegerForIndex());
         iter.next();
-        assertEquals("The first of new item should be 9+11=14",new Integer(20),newGIJ.getIntegerForIndex());
+        assertEquals("The first of new item should be 15+9=24",new Integer(24),newGIJ.getIntegerForIndex());
         iter.next();
-        assertEquals("The first of new item should be 9+13=16",new Integer(22),newGIJ.getIntegerForIndex());
+        assertEquals("The first of new item should be 17+3=20",new Integer(20),newGIJ.getIntegerForIndex());
         iter.next();
-        assertEquals("The first of new item should be 9+15=18",new Integer(24),newGIJ.getIntegerForIndex());
+        assertEquals("The first of new item should be 17+6=23",new Integer(23),newGIJ.getIntegerForIndex());
         iter.next();
-        assertEquals("The first of new item should be 9+17=20",new Integer(26),newGIJ.getIntegerForIndex());
+        assertEquals("The first of new item should be 17+9=26",new Integer(26),newGIJ.getIntegerForIndex());
     }
     
     public void testExpression1() {
