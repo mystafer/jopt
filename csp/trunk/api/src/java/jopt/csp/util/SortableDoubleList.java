@@ -20,8 +20,9 @@ import org.apache.commons.collections.primitives.DoubleCollection;
  * @author Chris Johnson
  */
 public class SortableDoubleList extends ArrayDoubleList {
-
-    private transient double[] data = null;
+	private static final long serialVersionUID = 1L;
+	
+	private transient double[] data = null;
     private int size = 0;
     
     /** 

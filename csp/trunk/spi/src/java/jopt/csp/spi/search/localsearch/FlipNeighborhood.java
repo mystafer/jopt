@@ -19,7 +19,7 @@ import jopt.csp.variable.CspIntVariable;
  */
 public class FlipNeighborhood implements Neighborhood {
     private SolverSolution initial;
-    private List vars;
+    private List<CspIntVariable> vars;
     private int lastSelected=-1;
     
     /**

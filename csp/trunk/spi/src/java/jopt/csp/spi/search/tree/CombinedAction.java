@@ -17,7 +17,7 @@ import jopt.csp.variable.PropagationFailureException;
 public final class CombinedAction implements SearchAction {
     // List implementing a stack of action to be executed.
     // The last element in the list is the first to be executed.
-    private LinkedList actionStack;
+    private LinkedList<SearchAction> actionStack;
 
     /**
      * Creates a new combined action
@@ -26,7 +26,7 @@ public final class CombinedAction implements SearchAction {
      * @param action2   Second action to perform
      */
     public CombinedAction(SearchAction action1, SearchAction action2) {
-        this.actionStack = new LinkedList();
+        this.actionStack = new LinkedList<SearchAction>();
         actionStack.add(action2);
         actionStack.add(action1);
     }
@@ -39,7 +39,7 @@ public final class CombinedAction implements SearchAction {
      * @param action3   Third action to perform
      */
     public CombinedAction(SearchAction action1, SearchAction action2, SearchAction action3) {
-        this.actionStack = new LinkedList();
+        this.actionStack = new LinkedList<SearchAction>();
         actionStack.add(action3);
         actionStack.add(action2);
         actionStack.add(action1);
@@ -51,8 +51,8 @@ public final class CombinedAction implements SearchAction {
      * @param actions   List of actions that should make up this combined action.
      *                  Actions will be performed in the order they exist in the list.
      */
-    public CombinedAction(List actions) {
-        this.actionStack = new LinkedList(actions);
+    public CombinedAction(List<? extends SearchAction> actions) {
+        this.actionStack = new LinkedList<SearchAction>(actions);
         
         // Necessary because internally we perform the last element of the list first
         // but the List that is passed in wants us to perferm the first element first.
@@ -65,8 +65,9 @@ public final class CombinedAction implements SearchAction {
      * @param cpAction          Choice point action that should be first action to perform
      * @param remainingActions  Remaining actions in list that need to be performed
      */
-    private CombinedAction(Object cpAction, LinkedList remainingActions) {
-        this.actionStack = (LinkedList) remainingActions.clone();
+    @SuppressWarnings("unchecked")
+	private CombinedAction(SearchAction cpAction, LinkedList<SearchAction> remainingActions) {
+        this.actionStack = (LinkedList<SearchAction>) remainingActions.clone();
         actionStack.add(cpAction);
     }
     
@@ -76,7 +77,8 @@ public final class CombinedAction implements SearchAction {
      * combined action will eventually be executed.
      */
     public SearchAction performAction() throws PropagationFailureException {
-        LinkedList workingStack = (LinkedList) actionStack.clone();
+        @SuppressWarnings("unchecked")
+		LinkedList<SearchAction> workingStack = (LinkedList<SearchAction>) actionStack.clone();
         
         // loop over actions and process each
         SearchAction currentAction = (SearchAction) workingStack.removeLast();
@@ -121,7 +123,7 @@ public final class CombinedAction implements SearchAction {
      * actions in the stack that have not yet executed.  It ensures that the
      * rest of the stack is executed after the technique change is done.
      */
-    public SearchAction processSearchChange(LinkedList workingStack, SearchAction searchAction) throws PropagationFailureException {
+    public SearchAction processSearchChange(LinkedList<SearchAction> workingStack, SearchAction searchAction) throws PropagationFailureException {
         SearchTechniqueChange tc = (SearchTechniqueChange) searchAction;
         
         // no next action exists
@@ -141,7 +143,7 @@ public final class CombinedAction implements SearchAction {
      * This method handles creating combined choice point if additional actions exist
      * that have not yet executed in the stack
      */
-    public SearchAction processChoicePoint(LinkedList workingStack, SearchAction searchAction) throws PropagationFailureException {
+    public SearchAction processChoicePoint(LinkedList<SearchAction> workingStack, SearchAction searchAction) throws PropagationFailureException {
         // If no more actions remain in the stack, simply the choice point as next action
         if (workingStack.size()==0) {
             return searchAction;
@@ -156,10 +158,10 @@ public final class CombinedAction implements SearchAction {
             
             // build collection of combined actions for each child
             // action in choicepoint
-            LinkedList newCpActions = new LinkedList();
-            Iterator oldCpActionIter = cp.getChildActions().iterator();
+            LinkedList<SearchAction> newCpActions = new LinkedList<SearchAction>();
+            Iterator<SearchAction> oldCpActionIter = cp.getChildActions().iterator();
             while (oldCpActionIter.hasNext()) {
-                Object cpAction = oldCpActionIter.next();
+                SearchAction cpAction = oldCpActionIter.next();
                 
                 // create new combined action for choice point
                 newCpActions.add(new CombinedAction(cpAction, workingStack));

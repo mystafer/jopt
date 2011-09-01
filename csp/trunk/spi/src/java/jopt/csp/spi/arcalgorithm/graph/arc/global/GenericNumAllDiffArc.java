@@ -111,13 +111,14 @@ public class GenericNumAllDiffArc extends GenericArc implements NumArc {
      * Guarantees domain consistency among all targets, requires no source since this is a hyper arc
      * @throws PropagationFailureException
      */
-    public void propagateNumNodeDomain () throws PropagationFailureException {
+    @SuppressWarnings("unchecked")
+	public void propagateNumNodeDomain () throws PropagationFailureException {
         // For efficiency, we cast all the targets to start with
         NumNode targets[] = targetNumNodeArray();
         
         // First we sort out only the non bound nodes
-        HashSet tempUnboundTargets = new HashSet();
-        HashSet boundVals = new HashSet();
+        HashSet<NumNode> tempUnboundTargets = new HashSet<NumNode>();
+        HashSet<Number> boundVals = new HashSet<Number>();
         int newSizeSum=0;
         // TODO: Possible bug... it's not always true that the domains are the same size as
         // the number of targets (not everything is a sudoko puzzle!)
@@ -173,13 +174,13 @@ public class GenericNumAllDiffArc extends GenericArc implements NumArc {
         //Here we set up an array of sets that we will use to notify that we have found a
         //valid matching which this is a part of.  When a value gets matched, it gets moved
         //from the valsToMatch list to the matchedVals hashSet
-        ArrayList[] valsToMatch = new ArrayList[unboundTargets.length];
-        HashSet[] matchedVals = new HashSet[unboundTargets.length];
+		ArrayList<Number>[] valsToMatch = new ArrayList[unboundTargets.length];
+		HashSet<Number>[] matchedVals = new HashSet[unboundTargets.length];
     
         //populate vals to Match
         for (int i=0; i<unboundTargets.length; i++) {
-            valsToMatch[i] = new ArrayList();
-            matchedVals[i] = new HashSet();
+            valsToMatch[i] = new ArrayList<Number>();
+            matchedVals[i] = new HashSet<Number>();
             Number val = unboundTargets[i].getMin();
             for (int j=0; j<unboundTargets[i].getSize(); j++) {
                 if (val instanceof MutableNumber) {
@@ -210,7 +211,7 @@ public class GenericNumAllDiffArc extends GenericArc implements NumArc {
                 if (num instanceof MutableNumber) {
                     num = ((MutableNumber)num).toConst();
                 }
-                if (boundVals.contains(num) || !match(valsToMatch, matchedVals, num , i, new Number[unboundTargets.length], (HashSet)boundVals.clone())) {
+                if (boundVals.contains(num) || !match(valsToMatch, matchedVals, num , i, new Number[unboundTargets.length], (HashSet<Number>)boundVals.clone())) {
                     try {
                         unboundTargets[i].removeValue(num);
                     }
@@ -248,7 +249,7 @@ public class GenericNumAllDiffArc extends GenericArc implements NumArc {
      * @param usedNums - A list of numbers that have already been assigned to variables so as not to assign a number twice
      * @return true if such a matching exists, false elsewise
      */
-    private static boolean match(ArrayList[] valsToMatch, HashSet[] matchedVals, Number numToAssign, int indexToAssignTo, Number[] assignment, HashSet usedNums){
+    private static boolean match(ArrayList<Number>[] valsToMatch, HashSet<Number>[] matchedVals, Number numToAssign, int indexToAssignTo, Number[] assignment, HashSet<Number> usedNums){
 
         //TODO:  improvments may be made with early exit conditions etc. investigate these
         //IE:  If there are three to assign yet and three that are able to be assign, assign more restricted variables first.
@@ -304,7 +305,7 @@ public class GenericNumAllDiffArc extends GenericArc implements NumArc {
         // valsToMatch.length.
         int nextIndexToAssignTo = (indexToAssignTo+1)%valsToMatch.length;
         //We try the next elements valsToMatch yet first, hoping to use it in a matching
-        Iterator numIter = valsToMatch[nextIndexToAssignTo].iterator();
+        Iterator<Number> numIter = valsToMatch[nextIndexToAssignTo].iterator();
         while(numIter.hasNext()){
             Number num = (Number)numIter.next();
             if (num instanceof MutableNumber) {
@@ -364,7 +365,7 @@ public class GenericNumAllDiffArc extends GenericArc implements NumArc {
         if (src.getSize()==targets.length)
             return;
         //Now we collect all the values that are left in src in the HashSet src
-        HashSet thisVals = new HashSet(); 
+        HashSet<Number> thisVals = new HashSet<Number>(); 
         Number cVal = src.getMin();
         for (int i =0; i<src.getSize(); i++){
             thisVals.add(cVal);
@@ -374,14 +375,14 @@ public class GenericNumAllDiffArc extends GenericArc implements NumArc {
         //We now sort based NumNodeSizeComparator
         Arrays.sort(targets, new NumNodeSizeComparator(thisVals));
         //We thus iterate through all nodes, hopefully building Hall sets on the way, meaning any member of a Hall set can and should be removed
-        HashSet visitedVals = new HashSet();
-        HashSet removableVals = new HashSet();
+        HashSet<Number> visitedVals = new HashSet<Number>();
+        HashSet<Number> removableVals = new HashSet<Number>();
         int counter=0;
         for (int i=0; i<targets.length; i++) {
             //In this case, no more vals will be able to be removed from subsequent nodes
             if (visitedVals.size()>=targets.length) {
                 for (; i<targets.length; i++) {
-                    Iterator iter = removableVals.iterator();
+                    Iterator<Number> iter = removableVals.iterator();
                     while (iter.hasNext()) {
                         Number num =(Number)iter.next();
                         targets[i].removeValue(num);
@@ -391,13 +392,13 @@ public class GenericNumAllDiffArc extends GenericArc implements NumArc {
             }
             //In this case we have a hall interval, all subsequent intervals can safely remove these vals
             if (visitedVals.size()==counter){
-                Iterator iter = visitedVals.iterator();
+                Iterator<Number> iter = visitedVals.iterator();
                 while (iter.hasNext()) {
                     removableVals.add(iter.next());    
                 }   
             }
             //Remove all removable values
-            Iterator iter = removableVals.iterator();
+            Iterator<Number> iter = removableVals.iterator();
             while (iter.hasNext()) {
                 Number num =(Number)iter.next();
                 targets[i].removeValue(num);
@@ -449,13 +450,13 @@ public class GenericNumAllDiffArc extends GenericArc implements NumArc {
         }
     }
 
-    public class NumNodeComparator implements Comparator {
+    public class NumNodeComparator implements Comparator<NumNode> {
         Number val;
         public NumNodeComparator(Number valToCompare){
             val=valToCompare;
         }
         //This method compares two NumNode objects based on the sum of the absoulte value difference between val and the NumNodes extrema 
-        public int compare(Object o1, Object o2) {
+        public int compare(NumNode o1, NumNode o2) {
             //Calc diff 1
             double diff1 = Math.abs(val.doubleValue()-((NumNode)o1).getMin().doubleValue());
             diff1+= Math.abs(val.doubleValue()-((NumNode)o1).getMax().doubleValue());
@@ -474,13 +475,13 @@ public class GenericNumAllDiffArc extends GenericArc implements NumArc {
         }
     }
 
-    public class NumNodeSizeComparator implements Comparator {
-        HashSet vals;
-        public NumNodeSizeComparator(HashSet valsToCompare){
+    public class NumNodeSizeComparator implements Comparator<NumNode> {
+        HashSet<Number> vals;
+        public NumNodeSizeComparator(HashSet<Number> valsToCompare){
             vals = valsToCompare;
         }
         //Compare by rank, where rank is the number of elements not in vals
-        public int compare(Object o1, Object o2) {
+        public int compare(NumNode o1, NumNode o2) {
             NumNode node1 = (NumNode)o1;
             NumNode node2 = (NumNode)o2;
             int rank1= node1.getSize();
@@ -512,9 +513,9 @@ public class GenericNumAllDiffArc extends GenericArc implements NumArc {
         }
     }
 
-    public class NodeSizeComparator implements Comparator {
+    public class NodeSizeComparator implements Comparator<NumNode> {
         //compare strictly by size of number of values left in nodes
-        public int compare(Object o1, Object o2) {
+        public int compare(NumNode o1, NumNode o2) {
             int size1= ((NumNode)o1).getSize();
             int size2= ((NumNode)o2).getSize();
             return size1-size2;

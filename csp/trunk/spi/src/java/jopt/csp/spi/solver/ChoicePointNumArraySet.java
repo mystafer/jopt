@@ -25,12 +25,12 @@ import org.apache.commons.collections.primitives.ArrayIntList;
  * @version $Revision: 1.3 $ 
  */
 public class ChoicePointNumArraySet implements ChoicePointEntry {
-	private ArrayList stacks;
+	private ArrayList<ChoicePointNumArraySet.StackList> stacks;
     private ChoicePointEntryCloseListener closeListener;
     private Integer entryID;
     private ChoicePointEntryListener listener;
     private ArrayIntList deltaIdxWorkingList;
-    private ArrayList deltaWorkingList;
+    private ArrayList<Object> deltaWorkingList;
     private boolean pushing;
     private boolean popping;
     
@@ -43,7 +43,7 @@ public class ChoicePointNumArraySet implements ChoicePointEntry {
     public ChoicePointNumArraySet(ChoicePointEntryCloseListener closeListener, Integer entryID) {
         this.closeListener = closeListener;
         this.entryID = entryID;
-        this.stacks = new ArrayList();
+        this.stacks = new ArrayList<ChoicePointNumArraySet.StackList>();
     }
     
     /**
@@ -250,7 +250,7 @@ public class ChoicePointNumArraySet implements ChoicePointEntry {
         // initialize delta working lists
         if (deltaIdxWorkingList==null) {
         	deltaIdxWorkingList = new ArrayIntList();
-            deltaWorkingList = new ArrayList();
+            deltaWorkingList = new ArrayList<Object>();
         }
         else {
         	deltaIdxWorkingList.clear();

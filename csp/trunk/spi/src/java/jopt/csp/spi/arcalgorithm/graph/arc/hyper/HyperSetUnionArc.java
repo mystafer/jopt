@@ -10,14 +10,14 @@ import jopt.csp.variable.PropagationFailureException;
 /**
  * Arc representing Z = union( sources )
  */
-public class HyperSetUnionArc extends HyperSetArc {
+public class HyperSetUnionArc<T> extends HyperSetArc {
     /**
      * Constructor
      *
      * @param   sources     Source nodes in equation
      * @param   target      Target node in equation
      */
-    public HyperSetUnionArc(SetNode[] sources, SetNode target) {
+    public HyperSetUnionArc(SetNode<T>[] sources, SetNode<T> target) {
         super(sources, target);
     }
     
@@ -43,11 +43,13 @@ public class HyperSetUnionArc extends HyperSetArc {
      * Filters target nodes using delta information in source nodes
      */
     private void propagateWithDeltas(Node src) throws PropagationFailureException {
-        SetNode x = (SetNode) src;
-        SetNode z = (SetNode) target;
+        @SuppressWarnings("unchecked")
+		SetNode<T> x = (SetNode<T>) src;
+        @SuppressWarnings("unchecked")
+		SetNode<T> z = (SetNode<T>) target;
         
         // Loop over values recently required in source and require from target
-        Iterator iterator = x.getRequiredDeltaSet().iterator();
+        Iterator<T> iterator = x.getRequiredDeltaSet().iterator();
         while (iterator.hasNext())
             z.addRequired(iterator.next());
 
@@ -61,7 +63,8 @@ public class HyperSetUnionArc extends HyperSetArc {
                 // Determine if value is possible in any other source
                 boolean possible = false;
                 for (int i=0; i<sources.length; i++) {
-                    SetNode source = (SetNode) sources[i];
+                    @SuppressWarnings("unchecked")
+					SetNode<T> source = (SetNode<T>) sources[i];
                     if (source!=x && source.isPossible(val)) {
                         possible = true;
                         break;
@@ -80,27 +83,30 @@ public class HyperSetUnionArc extends HyperSetArc {
      * Filters target nodes without using delta information in source nodes
      */
     private void propagateNoDeltas() throws PropagationFailureException {
-        SetNode z = (SetNode) target;
+        @SuppressWarnings("unchecked")
+		SetNode<T> z = (SetNode<T>) target;
         
         // add any required value in sources to z
         for (int i=0; i<sources.length; i++) {
-            SetNode source = (SetNode) sources[i];
+            @SuppressWarnings("unchecked")
+			SetNode<T> source = (SetNode<T>) sources[i];
             
             // add required values to z
-            Iterator valIter = source.getRequiredSet().iterator();
+            Iterator<T> valIter = source.getRequiredSet().iterator();
             while (valIter.hasNext())
                 z.addRequired(valIter.next());
         }
         
         // build set of values to remove
-        HashSet valsToRemove = new HashSet(z.getPossibleSet());
+        HashSet<T> valsToRemove = new HashSet<T>(z.getPossibleSet());
         for (int i=0; i<sources.length; i++) {
-            SetNode source = (SetNode) sources[i];
+            @SuppressWarnings("unchecked")
+			SetNode<T> source = (SetNode<T>) sources[i];
             valsToRemove.removeAll(source.getPossibleSet());
         }
         
         // remove values from z no longer supported
-        Iterator valIter = valsToRemove.iterator();
+        Iterator<T> valIter = valsToRemove.iterator();
         while (valIter.hasNext())
             z.removePossible(valIter.next());
     }

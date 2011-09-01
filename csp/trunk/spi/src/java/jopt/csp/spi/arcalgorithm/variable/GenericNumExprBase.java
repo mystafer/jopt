@@ -65,7 +65,7 @@ public abstract class GenericNumExprBase extends NumExprBase implements GenericN
         }
         
         // build list of indices
-        HashSet indexSet = new HashSet();
+        HashSet<CspGenericIndex> indexSet = new HashSet<CspGenericIndex>();
         if (gaexpr!=null) indexSet.addAll(Arrays.asList(gaexpr.getIndices()));
         if (gbexpr!=null) indexSet.addAll(Arrays.asList(gbexpr.getIndices()));
         if (aGenConst!=null) indexSet.addAll(Arrays.asList(aGenConst.getIndices()));
@@ -161,7 +161,7 @@ public abstract class GenericNumExprBase extends NumExprBase implements GenericN
      * value of this constraint upon a change
      */
     public Arc[] getBooleanSourceArcs(){
-        ArrayList arcs = new ArrayList();
+        ArrayList<Arc> arcs = new ArrayList<Arc>();
         	if ((constraint !=null)&&(constraint instanceof NumConstraint))
         	    arcs.addAll(Arrays.asList(super.getBooleanSourceArcs()));
         	for (int i=0; i< exprs.length; i++) {
@@ -474,8 +474,8 @@ public abstract class GenericNumExprBase extends NumExprBase implements GenericN
     // used by constraints when creating fragments of constraints
     public final NumExpr createFragment(GenericIndex fragIndices[]) {
         // build list of indices that are not contained in expression
-        List remainingIdxList = new LinkedList(Arrays.asList(indices));
-        List fragIdxList = Arrays.asList(fragIndices);
+        List<CspGenericIndex> remainingIdxList = new LinkedList<CspGenericIndex>(Arrays.asList(indices));
+        List<GenericIndex> fragIdxList = Arrays.asList(fragIndices);
         remainingIdxList.removeAll(fragIdxList);
         
         // if all indices are used for variable, return the specific
@@ -498,7 +498,7 @@ public abstract class GenericNumExprBase extends NumExprBase implements GenericN
             
             // Iterate over remaing indices and build list of variables
             // that make up fragment
-            LinkedList fragExprs = new LinkedList();
+            LinkedList<NumExpr> fragExprs = new LinkedList<NumExpr>();
             IndexIterator iter = new IndexIterator(remainingIdxList);
             while (iter.hasNext()) {
                 iter.next();

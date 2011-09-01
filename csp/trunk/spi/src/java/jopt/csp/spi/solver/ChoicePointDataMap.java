@@ -32,13 +32,13 @@ import java.util.Stack;
  * @author Nick Coleman
  * @version %I% 
  */
-public class ChoicePointDataMap implements Map, ChoicePointEntry {
+public class ChoicePointDataMap implements Map<Object, Object>, ChoicePointEntry {
     private ChoicePointEntryCloseListener closeListener;
     private Integer entryID;
     // Stack of currentData maps that have been pushed
-    private Stack dataStack;
+    private Stack<Map<Object, Object>> dataStack;
     // Map containing data about any number of objects
-    private Map currentData;
+    private Map<Object, Object> currentData;
     private ChoicePointEntryListener listener;
     
     /**
@@ -51,7 +51,7 @@ public class ChoicePointDataMap implements Map, ChoicePointEntry {
         this.closeListener = closeListener;
         this.entryID = entryID;
         this.dataStack = null;
-        this.currentData = new HashMap();
+        this.currentData = new HashMap<Object, Object>();
     }
     
     /**
@@ -75,18 +75,19 @@ public class ChoicePointDataMap implements Map, ChoicePointEntry {
      * Handles pushing values in the current map onto an internal stack
      * that can be restored when the pop method is called
      */
-    public void pushDelta(Object data) {
+	@SuppressWarnings("unchecked")
+	public void pushDelta(Object data) {
         // Notify listener
         if (listener!=null)
             listener.beforeChoicePointPushEvent();
         
-        if (dataStack==null) dataStack = new Stack();
+        if (dataStack==null) dataStack = new Stack<Map<Object, Object>>();
         dataStack.push(currentData);
         
         if (data==null)
-        	currentData = new HashMap();
+        	currentData = new HashMap<Object, Object>();
         else
-            currentData = (Map) data;
+            currentData = (Map<Object, Object>) data;
         
         // Notify listener
         if (listener!=null)
@@ -112,13 +113,13 @@ public class ChoicePointDataMap implements Map, ChoicePointEntry {
             listener.beforeChoicePointPopEvent();
         
         // capture changes that have occurred to map since last push
-        Map changes = currentData;
+        Map<Object, Object> changes = currentData;
         
         // Pop data from stack
         if (dataStack==null || dataStack.size()==0)
-            currentData = new HashMap();
+            currentData = new HashMap<Object, Object>();
         else
-            currentData = (Map) dataStack.pop();
+            currentData = (Map<Object, Object>) dataStack.pop();
         
         // Notify listener
         if (listener!=null)
@@ -154,7 +155,7 @@ public class ChoicePointDataMap implements Map, ChoicePointEntry {
         return currentData.containsValue(obj);
     }
     
-    public Set entrySet() {
+    public Set<Map.Entry<Object,Object>> entrySet() {
         return currentData.entrySet();
     }
     
@@ -166,7 +167,7 @@ public class ChoicePointDataMap implements Map, ChoicePointEntry {
         return currentData.isEmpty();
     }
     
-    public Set keySet() {
+    public Set<Object> keySet() {
         return currentData.keySet();
     }
     
@@ -174,7 +175,7 @@ public class ChoicePointDataMap implements Map, ChoicePointEntry {
         return currentData.put(obj, obj1);
     }
     
-    public void putAll(Map map) {
+    public void putAll(Map<? extends Object, ? extends Object> map) {
         currentData.putAll(map);
     }
     
@@ -186,7 +187,7 @@ public class ChoicePointDataMap implements Map, ChoicePointEntry {
         return currentData.size();
     }
     
-    public Collection values() {
+    public Collection<Object> values() {
         return currentData.values();
     }
     
@@ -199,7 +200,7 @@ public class ChoicePointDataMap implements Map, ChoicePointEntry {
         
         if (dataStack!=null) {
             for (int i=dataStack.size()-1; i>=0; i--) {
-            	Map pm = (Map) dataStack.get(i);
+            	Map<Object, Object> pm = dataStack.get(i);
                 buf.append("[");
                 buf.append(Integer.toString(i));
                 buf.append("]: ");

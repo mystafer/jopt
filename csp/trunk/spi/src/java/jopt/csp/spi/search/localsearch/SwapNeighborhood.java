@@ -27,7 +27,7 @@ import jopt.csp.variable.CspNumVariable;
  */
 public class SwapNeighborhood implements Neighborhood {
     private SolverSolution initial;
-    private List vars;
+    private List<CspNumVariable> vars;
     private int size;
     private int lastSelected = -1;
     /**

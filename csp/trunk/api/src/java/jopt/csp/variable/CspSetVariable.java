@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * Base interface class for set based variables
  */
-public abstract interface CspSetVariable extends CspVariable{
+public abstract interface CspSetVariable<T> extends CspVariable{
 	/**
 	 * Returns the name of the variable
 	 * @return name of this variable
@@ -22,13 +22,13 @@ public abstract interface CspSetVariable extends CspVariable{
      * Returns the possible set of values in this variable's domain
      * @return	set of possible values
      */
-    public Set getPossibleSet();
+    public Set<T> getPossibleSet();
 
     /**
      * Returns the required set of values in this variable's domain
      * @return set of required values
      */
-    public Set getRequiredSet();
+    public Set<T> getRequiredSet();
 
     /**
      * Returns the cardinality of the set of possible values
@@ -52,45 +52,45 @@ public abstract interface CspSetVariable extends CspVariable{
 	 * Adds a required value to the set of required values
 	 * @param	req		object to add to required set
 	 */
-    public void addRequired(Object req) throws PropagationFailureException;
+    public void addRequired(T req) throws PropagationFailureException;
     
 	/**
 	 * Returns true if the specified value is in this variable's domain
 	 * @param	val		object being inquired about
 	 * @return		true if val is in domain
 	 */
-	public boolean isInDomain(Object val);
+	public boolean isInDomain(T val);
 
 	/**
 	 * Returns true if the specified value is in the set of required values
 	 * @param	value		object being inquired about
 	 * @return				true if val is set of required
 	 */
-	public boolean isRequired(Object value);
+	public boolean isRequired(T value);
 
 	/**
 	 * Returns true if the specified value is in the set of possible values
 	 * @param	value		object being inquired about
 	 * @return				true if val is set of required
 	 */
-	public boolean isPossible(Object value);
+	public boolean isPossible(T value);
 
 	/**
 	 * Removes a value from the possible set
 	 *  @param	value		object to be removed from possible
 	 */
-	public void removePossible(Object value) throws PropagationFailureException;
+	public void removePossible(T value) throws PropagationFailureException;
     
 	/**
 	 * Removes a set of values from the possible set
 	 * @param	values		set of value to be removed from possible
 	 */
-	public void removePossible(Set values) throws PropagationFailureException;
+	public void removePossible(Set<T> values) throws PropagationFailureException;
 	
 	/**
 	 * Adds a set of required values
 	 * @param	req		set of value to be added to required
 	 */
-    public void addRequired(Set req) throws PropagationFailureException;	
+    public void addRequired(Set<T> req) throws PropagationFailureException;	
 	
 }

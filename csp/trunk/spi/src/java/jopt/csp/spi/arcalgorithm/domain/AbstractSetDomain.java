@@ -9,23 +9,23 @@ import java.util.TreeSet;
 import jopt.csp.spi.solver.ChoicePointStack;
 import jopt.csp.variable.PropagationFailureException;
 
-public abstract class AbstractSetDomain extends AbstractDomain {
+public abstract class AbstractSetDomain<T> extends AbstractDomain {
 //  TODO: There is no indication anywhere as to why this class exists
 //  instead of it all being in AbstractSetDomain. We need to document why
 //  it is this way or move all the SetDomainBase code into AbstractSetDomain.
-    protected SetDomainBase setdomain;
+    protected SetDomainBase<T> setdomain;
     
     /**
      * Constructor
      */
     protected AbstractSetDomain() {
-        super(new HashSet(), null, new HashSet());
+        super(new HashSet<DomainChangeListener>(), null, new HashSet<DomainChangeListener>());
     }
     
     /**
      * Constructor
      */
-    protected AbstractSetDomain(SetDomainBase base) {
+    protected AbstractSetDomain(SetDomainBase<T> base) {
         this();
         this.setdomain = base;
     }
@@ -33,8 +33,8 @@ public abstract class AbstractSetDomain extends AbstractDomain {
     /**
      * Constructor
      */
-    protected AbstractSetDomain(Collection col) {
-        this(new SetDomainBase(col));
+    protected AbstractSetDomain(Collection<T> col) {
+        this(new SetDomainBase<T>(col));
     }
     
     /**
@@ -66,28 +66,28 @@ public abstract class AbstractSetDomain extends AbstractDomain {
     /**
      * Returns possible set of values
      */
-    public final Set getPossibleSet() {
+    public final Set<T> getPossibleSet() {
         return setdomain.getPossibleSet();
     }
 
     /**
      * Returns required set of values
      */
-    public final Set getRequiredSet() {
+    public final Set<T> getRequiredSet() {
         return setdomain.getRequiredSet();
     }
 
     /**
      * Returns the possible-delta set
      */
-    public final Set getPossibleDeltaSet() {
+    public final Set<T> getPossibleDeltaSet() {
         return setdomain.getPossibleDeltaSet();
     }
 
     /**
      * Returns the required-delta set
      */
-    public final Set getRequiredDeltaSet() {
+    public final Set<T> getRequiredDeltaSet() {
         return setdomain.getRequiredDeltaSet();
     }
         
@@ -109,7 +109,7 @@ public abstract class AbstractSetDomain extends AbstractDomain {
     /**
      * Returns iterator of possible values in domain
      */
-    public final Iterator values() {
+    public final Iterator<T> values() {
         return setdomain.values();
     }
 
@@ -117,28 +117,28 @@ public abstract class AbstractSetDomain extends AbstractDomain {
     /**
      * Returns true if value is in domain
      */
-    public final boolean isInDomain(Object val) {
+    public final boolean isInDomain(T val) {
     	return setdomain.isInDomain(val);
     }
 
     /**
      * Returns true if value is required
      */
-    public final boolean isRequired(Object value) {
+    public final boolean isRequired(T value) {
         return setdomain.isRequired(value);
     }
     
     /**
      * Returns true if value is possible
      */
-    public final boolean isPossible(Object value) {
+    public final boolean isPossible(T value) {
         return setdomain.isRequired(value);
     }
     
     /**
      * Adds a required value to the set
      */
-    public final void addRequired(Object value) throws PropagationFailureException {
+    public final void addRequired(T value) throws PropagationFailureException {
         setdomain.addRequired(value);
 
         // Notify listeners if domain changes
@@ -150,8 +150,8 @@ public abstract class AbstractSetDomain extends AbstractDomain {
     /**
      * Adds a set of values to the required set
      */
-    public final void addRequired(Set values) throws PropagationFailureException {
-        Iterator setIter = values.iterator();
+    public final void addRequired(Set<T> values) throws PropagationFailureException {
+        Iterator<T> setIter = values.iterator();
         while (setIter.hasNext()) {
             addRequired(setIter.next());
         }
@@ -160,7 +160,7 @@ public abstract class AbstractSetDomain extends AbstractDomain {
     /**
      * Removes a value from the possible set
      */
-    public final void removePossible(Object value) throws PropagationFailureException {
+    public final void removePossible(T value) throws PropagationFailureException {
         setdomain.removePossible(value);
 
         // Notify listeners if domain changes
@@ -172,8 +172,8 @@ public abstract class AbstractSetDomain extends AbstractDomain {
     /**
      * Removes a set of values from the possible set
      */
-    public final void removePossible(Set values) throws PropagationFailureException {
-        Iterator setIter = values.iterator();
+    public final void removePossible(Set<T> values) throws PropagationFailureException {
+        Iterator<T> setIter = values.iterator();
         while (setIter.hasNext()) {
             removePossible(setIter.next());
         }
@@ -201,7 +201,7 @@ public abstract class AbstractSetDomain extends AbstractDomain {
 
     //  javadoc is inherited
     public String toString() {
-        return "[Required:" + new TreeSet(getRequiredSet()).toString() + 
-               ",Possible:" + new TreeSet(getPossibleSet()).toString() + "]";
+        return "[Required:" + new TreeSet<T>(getRequiredSet()).toString() + 
+               ",Possible:" + new TreeSet<T>(getPossibleSet()).toString() + "]";
     }
 }

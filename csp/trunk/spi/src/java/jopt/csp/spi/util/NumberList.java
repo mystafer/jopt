@@ -17,15 +17,15 @@ import org.apache.commons.pool.BasePoolableObjectFactory;
 public class NumberList {
     public static final Pool pool = new Pool();
     
-	private ArrayList list;
-    private ArrayList free;
+	private ArrayList<MutableNumber> list;
+    private ArrayList<MutableNumber> free;
     
     /**
      * Creates a new list
      */
     public NumberList() {
-    	this.list = new ArrayList();
-        this.free = new ArrayList();
+    	this.list = new ArrayList<MutableNumber>();
+        this.free = new ArrayList<MutableNumber>();
     }
     
     private MutableNumber newNumber() {
@@ -173,7 +173,7 @@ public class NumberList {
     }
     
     public Number remove(int idx) {
-        Number n = (Number) list.remove(idx);
+    	MutableNumber n = list.remove(idx);
     	free.add(n);
         return n;
     }

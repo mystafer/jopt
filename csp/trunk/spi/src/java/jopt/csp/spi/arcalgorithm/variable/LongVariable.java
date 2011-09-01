@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import jopt.csp.spi.arcalgorithm.domain.BaseLongDomain;
 import jopt.csp.spi.arcalgorithm.domain.LongIntervalDomain;
+import jopt.csp.spi.solver.VariableChangeListener;
 import jopt.csp.util.LongSet;
 import jopt.csp.util.NumSet;
 import jopt.csp.variable.CspLongVariable;
@@ -269,9 +270,10 @@ public class LongVariable extends LongExpr implements CspLongVariable, Variable 
     /**
      * Clones this variables
      */
-    public Object clone() {
+    @SuppressWarnings("unchecked")
+	public Object clone() {
         LongVariable var = new LongVariable(name, this);
-        var.variableListeners = (HashMap)this.variableListeners.clone();
+        var.variableListeners = (HashMap<VariableChangeListener, Integer>)this.variableListeners.clone();
         return var;
     }
     

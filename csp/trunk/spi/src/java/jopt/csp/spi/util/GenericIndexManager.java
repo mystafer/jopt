@@ -25,11 +25,11 @@ public class GenericIndexManager {
     private boolean xyCommonIndex;
     private boolean yzCommonIndex;
     
-    private List xControlledIndices;
-    private List yControlledIndices;
-    private List zControlledIndices;
-    private List allIndices;
-    private List restrictedIndices;
+    private List<CspGenericIndex> xControlledIndices;
+    private List<CspGenericIndex> yControlledIndices;
+    private List<CspGenericIndex> zControlledIndices;
+    private List<CspGenericIndex> allIndices;
+    private List<CspGenericIndex> restrictedIndices;
     
     private IndexIterator xIterator;
     private IndexIterator yIterator;
@@ -68,11 +68,11 @@ public class GenericIndexManager {
             GenericIndex restrictedIndices[], boolean restrictZ) 
     {
         // build set of excluded indices
-        HashSet restrictedSet = new HashSet();
+        HashSet<CspGenericIndex> restrictedSet = new HashSet<CspGenericIndex>();
         if (restrictedIndices!=null) restrictedSet.addAll(Arrays.asList(restrictedIndices));
         
         // build set of unique z indices
-        HashSet zIndiceSet = new HashSet();
+        HashSet<CspGenericIndex> zIndiceSet = new HashSet<CspGenericIndex>();
         if (zIndices!=null) {
             for (int i=0; i<zIndices.length; i++) {
                 GenericIndex idx = zIndices[i];
@@ -89,10 +89,10 @@ public class GenericIndexManager {
 
         // remove z indices from restricted set
         restrictedSet.removeAll(zIndiceSet);
-        this.restrictedIndices = new ArrayList(restrictedSet);
+        this.restrictedIndices = new ArrayList<CspGenericIndex>(restrictedSet);
         
         // build set of unique x indices
-        HashSet xIndiceSet = new HashSet();
+        HashSet<CspGenericIndex> xIndiceSet = new HashSet<CspGenericIndex>();
         if (xIndices!=null) {
             for (int i=0; i<xIndices.length; i++) {
                 GenericIndex idx = xIndices[i];
@@ -109,7 +109,7 @@ public class GenericIndexManager {
         }
 
         // build set of unique y indices
-        HashSet yIndiceSet = new HashSet();
+        HashSet<CspGenericIndex> yIndiceSet = new HashSet<CspGenericIndex>();
         if (yIndices!=null) {
             for (int i=0; i<yIndices.length; i++) {
                 GenericIndex idx = yIndices[i];
@@ -140,26 +140,26 @@ public class GenericIndexManager {
         // if no common indices, no need for iteration
         if (xzCommonIndex || xyCommonIndex || yzCommonIndex || xIndexRestricted || yIndexRestricted || zIndexRestricted) {
             // build control set for all indices
-            HashSet s = new HashSet(zIndiceSet);
+            HashSet<CspGenericIndex> s = new HashSet<CspGenericIndex>(zIndiceSet);
             if (xzCommonIndex || xyCommonIndex) s.addAll(xIndiceSet);
             if (yzCommonIndex || xyCommonIndex) s.addAll(yIndiceSet);
-            zControlledIndices = new ArrayList(s);
+            zControlledIndices = new ArrayList<CspGenericIndex>(s);
             
             // build X controlled set where x indices should not be looped
             s.removeAll(xIndiceSet);
-            xControlledIndices = new ArrayList(s);
+            xControlledIndices = new ArrayList<CspGenericIndex>(s);
             
             // build Y controlled set where y indices should not be looped
             if (xzCommonIndex || xyCommonIndex) s.addAll(xIndiceSet);
             s.removeAll(yIndiceSet);
-            yControlledIndices = new ArrayList(s);
+            yControlledIndices = new ArrayList<CspGenericIndex>(s);
         }
         
         // build complete set of indices
-        HashSet s = new HashSet(zIndiceSet);
+        HashSet<CspGenericIndex> s = new HashSet<CspGenericIndex>(zIndiceSet);
         s.addAll(xIndiceSet);
         s.addAll(yIndiceSet);
-        allIndices = new ArrayList(s);
+        allIndices = new ArrayList<CspGenericIndex>(s);
     }
     
     /**

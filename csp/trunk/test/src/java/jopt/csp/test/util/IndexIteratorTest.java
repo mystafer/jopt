@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 
 import jopt.csp.spi.util.GenericIndex;
 import jopt.csp.spi.util.IndexIterator;
+import jopt.csp.variable.CspGenericIndex;
 import junit.framework.TestCase;
 
 /**
@@ -23,7 +24,7 @@ public class IndexIteratorTest extends TestCase {
     public void testSingleIndexIterator() {
         GenericIndex idxI = new GenericIndex("i", 3);
         
-        ArrayList indexList = new ArrayList();
+        ArrayList<CspGenericIndex> indexList = new ArrayList<CspGenericIndex>();
         indexList.add(idxI);
         
         IndexIterator idxItr = new IndexIterator(indexList);
@@ -46,7 +47,7 @@ public class IndexIteratorTest extends TestCase {
         GenericIndex idxI = new GenericIndex("i", 3);
         GenericIndex idxJ = new GenericIndex("j", 2);
         
-        ArrayList indexList = new ArrayList();
+        ArrayList<CspGenericIndex> indexList = new ArrayList<CspGenericIndex>();
         indexList.add(idxI);
         indexList.add(idxJ);
         
@@ -82,7 +83,7 @@ public class IndexIteratorTest extends TestCase {
         GenericIndex idxI = new GenericIndex("i", 1);
         GenericIndex idxJ = new GenericIndex("j", 3);
         
-        ArrayList indexList = new ArrayList();
+        ArrayList<CspGenericIndex> indexList = new ArrayList<CspGenericIndex>();
         indexList.add(idxI);
         indexList.add(idxJ);
         
@@ -110,7 +111,7 @@ public class IndexIteratorTest extends TestCase {
         GenericIndex idxJ = new GenericIndex("j", 2);
         GenericIndex idxK = new GenericIndex("k", 2);
         
-        ArrayList indexList = new ArrayList();
+        ArrayList<CspGenericIndex> indexList = new ArrayList<CspGenericIndex>();
         indexList.add(idxI);
         indexList.add(idxJ);
         indexList.add(idxK);
@@ -162,7 +163,7 @@ public class IndexIteratorTest extends TestCase {
         GenericIndex idxJ = new GenericIndex("j", 2);
         GenericIndex idxK = new GenericIndex("k", 1);
         
-        ArrayList indexList = new ArrayList();
+        ArrayList<CspGenericIndex> indexList = new ArrayList<CspGenericIndex>();
         indexList.add(idxI);
         indexList.add(idxJ);
         indexList.add(idxK);

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import jopt.csp.variable.PropagationFailureException;
 
-public interface SetNode extends Node {
+public interface SetNode<T> extends Node {
     /**
      * Returns true if value is required
      */
@@ -28,22 +28,22 @@ public interface SetNode extends Node {
     /**
      * Returns possible set of values
      */
-    public Set getPossibleSet() ;
+    public Set<T> getPossibleSet() ;
 
     /**
      * Returns required set of values
      */
-    public Set getRequiredSet();
+    public Set<T> getRequiredSet();
 
     /**
      * Returns the possible-delta set
      */
-    public Set getPossibleDeltaSet();
+    public Set<T> getPossibleDeltaSet();
 
     /**
      * Returns the required-delta set
      */
-    public Set getRequiredDeltaSet();
+    public Set<T> getRequiredDeltaSet();
     
     /**
      * Returns possible cardinality

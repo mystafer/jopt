@@ -96,7 +96,7 @@ public class LocalSearchTest extends TestCase {
         SearchAction storeSol = new StoreSolutionAction(store, result);
         
         // combined browse and store into single action
-        List actions = new LinkedList();
+        List<SearchAction> actions = new LinkedList<SearchAction>();
         actions.add(browse);
         actions.add(storeSol);
         SearchAction browseAndStore = new CombinedAction(actions);
@@ -164,7 +164,7 @@ public class LocalSearchTest extends TestCase {
         SearchAction storeSol = new StoreSolutionAction(store, result);
         
         // combined browse and store into single action
-        List actions = new LinkedList();
+        List<SearchAction> actions = new LinkedList<SearchAction>();
         actions.add(browse);
         actions.add(storeSol);
         SearchAction browseAndStore = new CombinedAction(actions);
@@ -243,7 +243,7 @@ public class LocalSearchTest extends TestCase {
             SearchAction select = new SelectCurrentNeighborAction(store, solution, currentNeighbor);
     		
     		// combined find neighbor and store into single action
-    		List actions = new LinkedList();
+    		List<SearchAction> actions = new LinkedList<SearchAction>();
     		actions.add(findFirst);
     		actions.add(select);
     		SearchAction move = new CombinedAction(actions);

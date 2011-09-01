@@ -1168,7 +1168,9 @@ public class IntIntervalSet extends IntSet implements IntervalSet {
      * Iterator for integer values
      */
     private class IntIntervalNumberIterator extends NumberIterator {
-        private int curIntervalIdx;
+        private static final long serialVersionUID = 1L;
+		
+		private int curIntervalIdx;
         private int nextIntervalIdx;
         private int n;
         private int endVal;

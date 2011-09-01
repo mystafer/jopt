@@ -15,6 +15,7 @@ import jopt.csp.spi.util.GenericIndex;
 import jopt.csp.spi.util.GenericIndexManager;
 import jopt.csp.spi.util.NumberMath;
 import jopt.csp.util.DoubleUtil;
+import jopt.csp.variable.CspGenericIndex;
 
 public abstract class ThreeVarConstraint extends NumConstraint {
     private Node[] sourceNodes;
@@ -81,7 +82,7 @@ public abstract class ThreeVarConstraint extends NumConstraint {
         }
         else{
 	        booleanArcsObtained = true;
-	        ArrayList arcs = new ArrayList();
+	        ArrayList<Arc> arcs = new ArrayList<Arc>();
 	        if(xexpr!=null)
 	            arcs.addAll(Arrays.asList(xexpr.getBooleanSourceArcs()));
 	        if (yexpr!=null)
@@ -102,7 +103,7 @@ public abstract class ThreeVarConstraint extends NumConstraint {
     //  javadoc is inherited
     public Node[] getBooleanSourceNodes() {
         if (sourceNodes==null) {
-            Collection nodes = null;
+            Collection<Node> nodes = null;
             
             // retrieve nodes from x
             if (xexpr!=null)
@@ -216,7 +217,7 @@ public abstract class ThreeVarConstraint extends NumConstraint {
     // inherited javadoc from NumConstraint abstract class
     public boolean isViolated(boolean allViolated) {
         GenericIndexManager gim = this.getIndexManager();
-        Iterator gimIt;
+        Iterator<CspGenericIndex> gimIt;
         // all combinations must be checked in the case of NEQ constraints
         if(constraintType == ThreeVarConstraint.NEQ || allViolated) {
             gimIt = gim.allIterator();

@@ -18,7 +18,7 @@ public class SolutionScope {
     protected final static int MINIMIZE    = 1;
     protected final static int MAXIMIZE    = 2;
     
-	protected List variables;
+	protected List<CspVariable> variables;
     protected int objectiveType; // minimize or maximize
     protected CspNumExpr objectiveExpr;
     
@@ -36,12 +36,12 @@ public class SolutionScope {
      */
     public SolutionScope(SolutionScope scope) {
         if (scope!=null) {
-            this.variables = new LinkedList(scope.variables());
+            this.variables = new LinkedList<CspVariable>(scope.variables());
             this.objectiveType = scope.objectiveType;
             this.objectiveExpr = scope.objectiveExpr;
         }
         else
-        	this.variables = new LinkedList();
+        	this.variables = new LinkedList<CspVariable>();
     }
     
     /**
@@ -76,7 +76,7 @@ public class SolutionScope {
     /**
      * Returns the list of variables within the scope of the solution
      */
-    public List variables() {
+    public List<CspVariable> variables() {
         return Collections.unmodifiableList(variables);
     }
     

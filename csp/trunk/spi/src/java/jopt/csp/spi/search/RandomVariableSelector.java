@@ -14,7 +14,7 @@ import jopt.csp.variable.CspVariable;
 
 public class RandomVariableSelector implements VariableSelector {
 
-    private ArrayList vars;
+    private ArrayList<CspVariable> vars;
     private Random rand;
     
     //javadoc inherited
@@ -39,7 +39,7 @@ public class RandomVariableSelector implements VariableSelector {
 
     //javadoc inherited
     public void setVariables(CspVariable[] vars) {
-        this.vars = new ArrayList();
+        this.vars = new ArrayList<CspVariable>();
         for(int i=0;i<vars.length;i++) {
             this.vars.add(vars[i]);
         }

@@ -14,6 +14,7 @@ import jopt.csp.spi.solver.VariableChangeListener;
 import jopt.csp.spi.solver.VariableChangeSource;
 import jopt.csp.spi.util.GenericIndex;
 import jopt.csp.spi.util.GenericIndexManager;
+import jopt.csp.variable.CspGenericIndex;
 
 /**
  * Base class for constraints with one variable
@@ -82,7 +83,7 @@ public abstract class ThreeVarConstraint extends BooleanConstraint {
             if (zexpr != null) zexpr.updateGraph(graph);
             
             if (arcs == null) {
-                ArrayList arcsList = new ArrayList();
+                ArrayList<Arc> arcsList = new ArrayList<Arc>();
                 arcsList.addAll(Arrays.asList(createArcs()));
                 arcsList.addAll(Arrays.asList(getBooleanSourceArcs()));
                 arcs = (Arc[])arcsList.toArray(new Arc[0]);
@@ -142,7 +143,7 @@ public abstract class ThreeVarConstraint extends BooleanConstraint {
     //We only want to add Source Arcs of Number or Set constraints
     //Java doc inherited
     public Arc[] getBooleanSourceArcs() {
-        ArrayList arcs = new ArrayList();
+        ArrayList<Arc> arcs = new ArrayList<Arc>();
         if (xexpr!=null)
         	arcs.addAll(Arrays.asList(xexpr.getBooleanSourceArcs()));
         if (yexpr!=null)
@@ -155,15 +156,15 @@ public abstract class ThreeVarConstraint extends BooleanConstraint {
     
     //  javadoc is inherited
     public Node[] getBooleanSourceNodes() {
-        ArrayList sourceNodes = new ArrayList();
+        ArrayList<Node> sourceNodes = new ArrayList<Node>();
         
         BooleanNode xnode = (xexpr!=null) ? (BooleanNode)xexpr.getNode() : null;
         BooleanNode ynode = (yexpr!=null) ? (BooleanNode)yexpr.getNode() : null;
         BooleanNode znode = (zexpr!=null) ? (BooleanNode)zexpr.getNode() : null;
         
-        ArrayList xnodeColl =  (xexpr instanceof GenericBoolExpr) ? new ArrayList(xexpr.getNodeCollection()) : null;
-        ArrayList ynodeColl =  (yexpr instanceof GenericBoolExpr) ? new ArrayList(yexpr.getNodeCollection()) : null;
-        ArrayList znodeColl =  (zexpr instanceof GenericBoolExpr) ? new ArrayList(zexpr.getNodeCollection()) : null;
+        ArrayList<Node> xnodeColl =  (xexpr instanceof GenericBoolExpr) ? new ArrayList<Node>(xexpr.getNodeCollection()) : null;
+        ArrayList<Node> ynodeColl =  (yexpr instanceof GenericBoolExpr) ? new ArrayList<Node>(yexpr.getNodeCollection()) : null;
+        ArrayList<Node> znodeColl =  (zexpr instanceof GenericBoolExpr) ? new ArrayList<Node>(zexpr.getNodeCollection()) : null;
         
         if (boolSourceNodes==null) {
             if (xnode!=null)
@@ -219,7 +220,7 @@ public abstract class ThreeVarConstraint extends BooleanConstraint {
     public boolean isViolated(boolean allViolated) {
         GenericIndexManager gim = this.getIndexManager();
         
-        Iterator gimIt;
+        Iterator<CspGenericIndex> gimIt;
         if(allViolated)
             gimIt = gim.allIterator();
         else

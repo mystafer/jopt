@@ -14,6 +14,7 @@ import jopt.csp.spi.solver.VariableChangeListener;
 import jopt.csp.spi.solver.VariableChangeSource;
 import jopt.csp.spi.util.GenericIndex;
 import jopt.csp.spi.util.GenericIndexManager;
+import jopt.csp.variable.CspGenericIndex;
 
 /**
  * Base class for constraints with one variable
@@ -64,7 +65,7 @@ public abstract class TwoVarConstraint extends BooleanConstraint {
     //We only want to add Source Arcs of Number or Set constraints
     //Java doc inherited
     public Arc[] getBooleanSourceArcs() {
-        ArrayList arcs = new ArrayList();
+        ArrayList<Arc> arcs = new ArrayList<Arc>();
         if (aexpr!=null)
             arcs.addAll(Arrays.asList(aexpr.getBooleanSourceArcs()));
         if (zexpr!=null)
@@ -80,7 +81,7 @@ public abstract class TwoVarConstraint extends BooleanConstraint {
             if (zexpr != null) zexpr.updateGraph(graph);
             
             if (arcs == null) {
-                ArrayList arcsList = new ArrayList();
+                ArrayList<Arc> arcsList = new ArrayList<Arc>();
                 arcsList.addAll(Arrays.asList(createArcs()));
                 arcsList.addAll(Arrays.asList(getBooleanSourceArcs()));
                 arcs = (Arc[])arcsList.toArray(new Arc[0]);
@@ -131,12 +132,12 @@ public abstract class TwoVarConstraint extends BooleanConstraint {
     
     //  javadoc is inherited
     public Node[] getBooleanSourceNodes() {
-        ArrayList sourceNodes = new ArrayList();
+        ArrayList<Node> sourceNodes = new ArrayList<Node>();
         BooleanNode anode = (aexpr!=null) ? (BooleanNode)aexpr.getNode() : null;
         BooleanNode znode = (zexpr!=null) ? (BooleanNode)zexpr.getNode() : null;
         
-        ArrayList anodeColl =  (aexpr instanceof GenericBoolExpr) ? new ArrayList(aexpr.getNodeCollection()) : null;
-        ArrayList znodeColl =  (zexpr instanceof GenericBoolExpr) ? new ArrayList(zexpr.getNodeCollection()) : null;
+        ArrayList<Node> anodeColl =  (aexpr instanceof GenericBoolExpr) ? new ArrayList<Node>(aexpr.getNodeCollection()) : null;
+        ArrayList<Node> znodeColl =  (zexpr instanceof GenericBoolExpr) ? new ArrayList<Node>(zexpr.getNodeCollection()) : null;
         
         if (boolSourceNodes==null) {
             if (anode!=null)
@@ -179,7 +180,7 @@ public abstract class TwoVarConstraint extends BooleanConstraint {
     public boolean isViolated(boolean allViolated) {
         GenericIndexManager gim = this.getIndexManager();
         
-        Iterator gimIt;
+        Iterator<CspGenericIndex> gimIt;
         if(allViolated)
             gimIt = gim.allIterator();
         else

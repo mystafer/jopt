@@ -89,7 +89,7 @@ public class GenericBooleanExpr extends BooleanExpr implements CspGenericBoolean
         }
         
         // build list of indices
-        HashSet indexSet = new HashSet();
+        HashSet<CspGenericIndex> indexSet = new HashSet<CspGenericIndex>();
         if (gaexpr!=null) indexSet.addAll(Arrays.asList(gaexpr.getIndices()));
         if (gbexpr!=null) indexSet.addAll(Arrays.asList(gbexpr.getIndices()));
         this.indices = (GenericIndex[]) indexSet.toArray(new GenericIndex[indexSet.size()]);
@@ -436,8 +436,8 @@ public class GenericBooleanExpr extends BooleanExpr implements CspGenericBoolean
     // used by constraints when creating fragments of constraints
     public final BoolExpr createFragment(GenericIndex fragIndices[]) {
         // build list of indices that are not contained in expression
-        List remainingIdxList = new LinkedList(Arrays.asList(indices));
-        List fragIdxList = Arrays.asList(fragIndices);
+        List<CspGenericIndex> remainingIdxList = new LinkedList<CspGenericIndex>(Arrays.asList(indices));
+        List<GenericIndex> fragIdxList = Arrays.asList(fragIndices);
         remainingIdxList.removeAll(fragIdxList);
         
         // if all indices are used for variable, return the specific
@@ -454,7 +454,7 @@ public class GenericBooleanExpr extends BooleanExpr implements CspGenericBoolean
         else {
             // Iterator over remaing indices and build list of variables
             // that make up fragment
-            LinkedList fragExprs = new LinkedList();
+            LinkedList<BoolExpr> fragExprs = new LinkedList<BoolExpr>();
             IndexIterator iter = new IndexIterator(remainingIdxList);
             while (iter.hasNext()) {
                 iter.next();
@@ -606,7 +606,7 @@ public class GenericBooleanExpr extends BooleanExpr implements CspGenericBoolean
      * value of this constraint upon a change
      */
     public Arc[] getBooleanSourceArcs(){
-        ArrayList arcs = new ArrayList();
+        ArrayList<Arc> arcs = new ArrayList<Arc>();
 //            arcs.addAll(Arrays.asList(super.getBooleanSourceArcs()));
         for (int i=0; i< exprs.length; i++) {
             if (exprs[i]!= null)
@@ -708,8 +708,8 @@ public class GenericBooleanExpr extends BooleanExpr implements CspGenericBoolean
         return isAllFalse();
     }
     
-    public Collection getNodeCollection() {
-        Collection nodes = null; 
+    public Collection<Node> getNodeCollection() {
+        Collection<Node> nodes = null; 
             if (super.getNodeCollection()!=null)
                     nodes = super.getNodeCollection();
             
@@ -726,7 +726,7 @@ public class GenericBooleanExpr extends BooleanExpr implements CspGenericBoolean
         
         // add this node to collection
         if (nodes==null)
-        	nodes = new ArrayList();
+        	nodes = new ArrayList<Node>();
         nodes.add(getNode());
         
     	return nodes;

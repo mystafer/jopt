@@ -15,7 +15,7 @@ import jopt.csp.variable.PropagationFailureException;
  */
 public class BinarySetNotMemberOfSetReflexArc extends BinarySetArc {
 
-    public BinarySetNotMemberOfSetReflexArc(NumNode expr, SetNode set) {
+    public BinarySetNotMemberOfSetReflexArc(NumNode expr, SetNode<Number> set) {
         super(expr, set);
 
         if (expr instanceof GenericNumExpr)
@@ -24,7 +24,8 @@ public class BinarySetNotMemberOfSetReflexArc extends BinarySetArc {
     
     // javadoc inherited from Arc
     public void propagate() throws PropagationFailureException {
-        SetNode set = (SetNode) target;
+        @SuppressWarnings("unchecked")
+		SetNode<Number> set = (SetNode<Number>) target;
         NumNode x = (NumNode) source;
         
         // when x is bound, make sure it is not in set

@@ -20,8 +20,9 @@ import org.apache.commons.collections.primitives.FloatCollection;
  * @author Chris Johnson
  */
 public class SortableFloatList extends ArrayFloatList {
-
-    private transient float[] data = null;
+	private static final long serialVersionUID = 1L;
+	
+	private transient float[] data = null;
     private int size = 0;
     
     /** 

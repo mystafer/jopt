@@ -19,127 +19,128 @@ import jopt.csp.variable.CspSetConstraints;
 import jopt.csp.variable.CspSetVariable;
 
 /**
- * Implementation of the SetConstraints interface for creating constraints
+ * Implementation of the Set<T>Constraints interface for creating constraints
  * from the API
  */
-public class SetConstraints implements CspSetConstraints {
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqIntersection(CspSetVariable x, CspSetVariable y, CspSetVariable z) {
-        return new EqIntersection((SetVariable) x, (SetVariable) y, (SetVariable) z);
+@SuppressWarnings("unchecked")
+public class SetConstraints<T> implements CspSetConstraints<T> {
+    // javadoc inherited from CspSet<T>Constraints
+	public CspConstraint eqIntersection(CspSetVariable<T> x, CspSetVariable<T> y, CspSetVariable<T> z) {
+        return new EqIntersection<T>((SetVariable<T>) x, (SetVariable<T>) y, (SetVariable<T>) z);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqIntersection(CspSetVariable sources[], CspSetVariable target) {
-        return new EqIntersection(toSetVarArray(sources), (SetVariable) target);
+    // javadoc inherited from CspSet<T>Constraints
+	public CspConstraint eqIntersection(CspSetVariable<T> sources[], CspSetVariable<T> target) {
+        return new EqIntersection<T>(toSetVarArray(sources), (SetVariable<T>) target);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqPartition(CspSetVariable x, CspSetVariable y, CspSetVariable z) {
-        return new EqPartition((SetVariable) x, (SetVariable) y, (SetVariable) z);
+    // javadoc inherited from CspSet<T>Constraints
+	public CspConstraint eqPartition(CspSetVariable<T> x, CspSetVariable<T> y, CspSetVariable<T> z) {
+        return new EqPartition<T>((SetVariable<T>) x, (SetVariable<T>) y, (SetVariable<T>) z);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqPartition(CspSetVariable sources[], CspSetVariable target) {
-        return new EqPartition(toSetVarArray(sources), (SetVariable) target);
+    // javadoc inherited from CspSet<T>Constraints
+	public CspConstraint eqPartition(CspSetVariable<T> sources[], CspSetVariable<T> target) {
+        return new EqPartition<T>(toSetVarArray(sources), (SetVariable<T>) target);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqPartition(CspSetVariable x, CspSetVariable y, CspSetVariable z, boolean advancedFilter) {
-        return new EqPartition((SetVariable) x, (SetVariable) y, (SetVariable) z, advancedFilter);
+    // javadoc inherited from CspSet<T>Constraints
+	public CspConstraint eqPartition(CspSetVariable<T> x, CspSetVariable<T> y, CspSetVariable<T> z, boolean advancedFilter) {
+        return new EqPartition<T>((SetVariable<T>) x, (SetVariable<T>) y, (SetVariable<T>) z, advancedFilter);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqPartition(CspSetVariable sources[], CspSetVariable target, boolean advancedFilter) {
-        return new EqPartition(toSetVarArray(sources), (SetVariable) target, advancedFilter);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint eqPartition(CspSetVariable<T> sources[], CspSetVariable<T> target, boolean advancedFilter) {
+        return new EqPartition<T>(toSetVarArray(sources), (SetVariable<T>) target, advancedFilter);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqUnion(CspSetVariable x, CspSetVariable y, CspSetVariable z) {
-        return new EqUnion((SetVariable) x, (SetVariable) y, (SetVariable) z);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint eqUnion(CspSetVariable<T> x, CspSetVariable<T> y, CspSetVariable<T> z) {
+        return new EqUnion<T>((SetVariable<T>) x, (SetVariable<T>) y, (SetVariable<T>) z);
     }
 
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqUnion(CspSetVariable sources[], CspSetVariable target) {
-        return new EqUnion(toSetVarArray(sources), (SetVariable) target);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint eqUnion(CspSetVariable<T> sources[], CspSetVariable<T> target) {
+        return new EqUnion<T>(toSetVarArray(sources), (SetVariable<T>) target);
     }
 
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqUnion(CspSetVariable x, CspSetVariable y, CspSetVariable z, CspSetVariable intersect) {
-        return new EqUnion((SetVariable) x, (SetVariable) y, (SetVariable) z, (SetVariable) intersect);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint eqUnion(CspSetVariable<T> x, CspSetVariable<T> y, CspSetVariable<T> z, CspSetVariable<T> intersect) {
+        return new EqUnion<T>((SetVariable<T>) x, (SetVariable<T>) y, (SetVariable<T>) z, (SetVariable<T>) intersect);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqUnion(CspSetVariable sources[], CspSetVariable target, boolean advancedFilter) {
-        return new EqUnion(toSetVarArray(sources), (SetVariable) target, advancedFilter);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint eqUnion(CspSetVariable<T> sources[], CspSetVariable<T> target, boolean advancedFilter) {
+        return new EqUnion<T>(toSetVarArray(sources), (SetVariable<T>) target, advancedFilter);
     }
 
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint nullIntersection(CspSetVariable sources[]) {
-        return new NullIntersection(toSetVarArray(sources));
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint nullIntersection(CspSetVariable<T> sources[]) {
+        return new NullIntersection<T>(toSetVarArray(sources));
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint nullIntersection(CspSetVariable a, CspSetVariable b) {
-        return new NullIntersection((SetVariable) a, (SetVariable) b);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint nullIntersection(CspSetVariable<T> a, CspSetVariable<T> b) {
+        return new NullIntersection<T>((SetVariable<T>) a, (SetVariable<T>) b);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint nullIntersection(CspSetVariable a, Set constb) {
-        return new NullIntersection((SetVariable) a, constb);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint nullIntersection(CspSetVariable<T> a, Set<T> constb) {
+        return new NullIntersection<T>((SetVariable<T>) a, constb);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint nullIntersection(Set consta, CspSetVariable b) {
-        return new NullIntersection(consta, (SetVariable) b);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint nullIntersection(Set<T> consta, CspSetVariable<T> b) {
+        return new NullIntersection<T>(consta, (SetVariable<T>) b);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqSubset(CspSetVariable a, CspSetVariable b) {
-        return new EqSubset((SetVariable) a, (SetVariable) b);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint eqSubset(CspSetVariable<T> a, CspSetVariable<T> b) {
+        return new EqSubset<T>((SetVariable<T>) a, (SetVariable<T>) b);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqSubset(Set a, CspSetVariable b) {
-        return new EqSubset(a, (SetVariable) b);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint eqSubset(Set<T> a, CspSetVariable<T> b) {
+        return new EqSubset<T>(a, (SetVariable<T>) b);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint eqSubset(CspSetVariable a, Set b) {
-        return new EqSubset((SetVariable) a, b);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint eqSubset(CspSetVariable<T> a, Set<T> b) {
+        return new EqSubset<T>((SetVariable<T>) a, b);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint strictSubset(CspSetVariable a, CspSetVariable b) {
-        return new StrictSubset((SetVariable) a, (SetVariable) b);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint strictSubset(CspSetVariable<T> a, CspSetVariable<T> b) {
+        return new StrictSubset<T>((SetVariable<T>) a, (SetVariable<T>) b);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint strictSubset(Set a, CspSetVariable b) {
-        return new StrictSubset(a, (SetVariable) b);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint strictSubset(Set<T> a, CspSetVariable<T> b) {
+        return new StrictSubset<T>(a, (SetVariable<T>) b);
     }
     
-    // javadoc inherited from CspSetConstraints
-    public CspConstraint strictSubset(CspSetVariable a, Set b) {
-        return new StrictSubset((SetVariable) a, b);
+    // javadoc inherited from CspSet<T>Constraints
+    public CspConstraint strictSubset(CspSetVariable<T> a, Set<T> b) {
+        return new StrictSubset<T>((SetVariable<T>) a, b);
     }
     
-    // javadoc inherited from CspSetConstraints
+    // javadoc inherited from CspSet<T>Constraints
     public CspConstraint memberOfSet(CspIntSetVariable set, CspIntExpr expr) {
-    	return new MemberOfSet((SetVariable) set, (NumExpr) expr);
+    	return new MemberOfSet((SetVariable<Number>) set, (NumExpr) expr);
     }
     
-    // javadoc inherited from CspSetConstraints
+    // javadoc inherited from CspSet<T>Constraints
     public CspConstraint notMemberOfSet(CspIntSetVariable set, CspIntExpr expr) {
-        return new NotMemberOfSet((SetVariable) set, (NumExpr) expr);
+        return new NotMemberOfSet((SetVariable<Number>) set, (NumExpr) expr);
     }
     
     /**
-     * Converts an array of CSP expressions to internal set variables
+     * Converts an array of CSP expressions to internal Set<T> variables
      */
-    public static SetVariable[] toSetVarArray(CspSetVariable variables[]) {
-        SetVariable varArray[] = new SetVariable[variables.length];
+	public static <T> SetVariable<T>[] toSetVarArray(CspSetVariable<T> variables[]) {
+        SetVariable<T> varArray[] = new SetVariable[variables.length];
         for (int i=0; i<variables.length; i++)
-            varArray[i] = (SetVariable) variables[i];
+            varArray[i] = (SetVariable<T>) variables[i];
         return varArray;
     }
     

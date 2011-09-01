@@ -15,6 +15,7 @@ import jopt.csp.spi.util.GenericIndex;
 import jopt.csp.spi.util.GenericIndexManager;
 import jopt.csp.spi.util.NumberMath;
 import jopt.csp.util.DoubleUtil;
+import jopt.csp.variable.CspGenericIndex;
 
 /**
  * Base class for numeric constraints based on two variables: A and Z
@@ -101,7 +102,7 @@ public abstract class TwoVarConstraint extends NumConstraint {
         }
         else{
 	        booleanArcsObtained = true;
-	        ArrayList arcs = new ArrayList();
+	        ArrayList<Arc> arcs = new ArrayList<Arc>();
 	        if (aexpr!=null)
 	            arcs.addAll(Arrays.asList(aexpr.getBooleanSourceArcs()));
 	        if (zexpr!=null)
@@ -120,7 +121,7 @@ public abstract class TwoVarConstraint extends NumConstraint {
     //  javadoc is inherited
     public Node[] getBooleanSourceNodes() {
         if (sourceNodes==null) {
-            Collection nodes = null;
+            Collection<Node> nodes = null;
             
             // retrieve nodes from a
             if (aexpr!=null)
@@ -161,7 +162,7 @@ public abstract class TwoVarConstraint extends NumConstraint {
     // inherited javadoc from NumConstraint abstract class
     public boolean isViolated(boolean allViolated) {
         GenericIndexManager gim = this.getIndexManager();
-        Iterator gimIt;
+        Iterator<CspGenericIndex> gimIt;
         // all combinations must be checked in the case of NEQ constraints
         if( (constraintType == TwoVarConstraint.NEQ || allViolated)) {
             gimIt = gim.allIterator();

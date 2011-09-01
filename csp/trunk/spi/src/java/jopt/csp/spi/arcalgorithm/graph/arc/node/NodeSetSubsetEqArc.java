@@ -9,15 +9,15 @@ import jopt.csp.variable.PropagationFailureException;
 /**
  * Arc representing Z is subset or equal to x
  */
-public class NodeSetSubsetEqArc extends NodeSetArc {
-    private Set constVals;
+public class NodeSetSubsetEqArc<T> extends NodeSetArc<T> {
+    private Set<T> constVals;
     private boolean constSource;
     private boolean strict;
 
     /**
      * Internal Constructor
      */
-    private NodeSetSubsetEqArc(SetNode node, Set constVals, boolean constSource, boolean strict) {
+    private NodeSetSubsetEqArc(SetNode<T> node, Set<T> constVals, boolean constSource, boolean strict) {
         super(node);
         this.constVals = constVals;
         this.constSource = constSource;
@@ -27,14 +27,14 @@ public class NodeSetSubsetEqArc extends NodeSetArc {
     /**
      * Constructor
      */
-    public NodeSetSubsetEqArc(SetNode x, Set z, boolean strict) {
+    public NodeSetSubsetEqArc(SetNode<T> x, Set<T> z, boolean strict) {
         this(x, z, false, strict);
     }
 
     /**
      * Constructor
      */
-    public NodeSetSubsetEqArc(Set x, SetNode z, boolean strict) {
+    public NodeSetSubsetEqArc(Set<T> x, SetNode<T> z, boolean strict) {
         this(z, x, true, strict);
     }
 
@@ -80,10 +80,11 @@ public class NodeSetSubsetEqArc extends NodeSetArc {
      */
     public void propagate() throws PropagationFailureException {
         if (constSource) {
-            SetNode z = (SetNode) node;
+            @SuppressWarnings("unchecked")
+			SetNode<T> z = (SetNode<T>) node;
 
             // Iterate over values in z removing values not possible in x
-            Iterator iterator = z.getPossibleSet().iterator();
+            Iterator<T> iterator = z.getPossibleSet().iterator();
             while (iterator.hasNext()) {
                 Object zval = iterator.next();
 
@@ -101,7 +102,7 @@ public class NodeSetSubsetEqArc extends NodeSetArc {
                 if (z.getRequiredCardinality() == constVals.size() - 1) {
                     
                     // iterate over smaller set
-                    Iterator valIter = null;
+                    Iterator<T> valIter = null;
                     if (constVals.size() < z.getPossibleCardinality())
                         valIter = constVals.iterator();
                     else
@@ -119,10 +120,11 @@ public class NodeSetSubsetEqArc extends NodeSetArc {
         }
 
         else {
-            SetNode x = (SetNode) node;
+            @SuppressWarnings("unchecked")
+			SetNode<T> x = (SetNode<T>) node;
 
             // Iterate over values in required values in x and add requirement to z
-            Iterator iterator = constVals.iterator();
+            Iterator<T> iterator = constVals.iterator();
             while (iterator.hasNext()) {
                 Object zval = iterator.next();
                 x.addRequired(zval);

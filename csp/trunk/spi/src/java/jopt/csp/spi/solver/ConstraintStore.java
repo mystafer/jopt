@@ -37,8 +37,8 @@ public class ConstraintStore implements VariableChangeListener {
     private boolean autoPropagate;
     private boolean isPropagating;
     private ChoicePointStack stack;
-    private Set constraintSet;
-    private Set variableSet;
+    private Set<CspConstraint> constraintSet;
+    private Set<CspVariable> variableSet;
 
     /**
      * Constructor taking a particular constraint reduction algorithm and autoPropagate value.
@@ -52,8 +52,8 @@ public class ConstraintStore implements VariableChangeListener {
         this.stack = cps;
         isPropagating = false;
         this.constraintAlg = constraintAlg;
-        this.constraintSet = new HashSet();
-        this.variableSet = new HashSet();
+        this.constraintSet = new HashSet<CspConstraint>();
+        this.variableSet = new HashSet<CspVariable>();
 
         // set choice point stack for algorithm
         if (cps!=null)
@@ -276,14 +276,14 @@ public class ConstraintStore implements VariableChangeListener {
         stack.reset();
 
         // return all added constraints to the algorithm
-        Iterator cnstIter = constraintSet.iterator();
+        Iterator<CspConstraint> cnstIter = constraintSet.iterator();
         while (cnstIter.hasNext()) {
             CspConstraint constraint = (CspConstraint) cnstIter.next();
             constraintAlg.addConstraint(constraint);
         }
 
         // return all added variables to the algorithm
-        Iterator varIter = variableSet.iterator();
+        Iterator<CspVariable> varIter = variableSet.iterator();
         while (varIter.hasNext()) {
             CspVariable var = (CspVariable) varIter.next();
             constraintAlg.addVariable(var);
@@ -300,7 +300,7 @@ public class ConstraintStore implements VariableChangeListener {
      */
     public void storeSolution(SolverSolution solution) {
         // loop over variables and extract solution for each
-        Iterator varIter = solution.variables().iterator();
+        Iterator<CspVariable> varIter = solution.variables().iterator();
         while (varIter.hasNext()) {
             // record data in solution
             CspVariable var = (CspVariable) varIter.next();
@@ -347,7 +347,7 @@ public class ConstraintStore implements VariableChangeListener {
         try {
             // loop over neighbor and extract solution for each variable
             if (neighbor!=null) {
-                Iterator varIter = neighbor.variables().iterator();
+                Iterator<CspVariable> varIter = neighbor.variables().iterator();
                 while (varIter.hasNext()) {
                     // make sure the solution is capable of being restored
                     CspVariable var = (CspVariable) varIter.next();
@@ -359,7 +359,7 @@ public class ConstraintStore implements VariableChangeListener {
             }
 
             // loop over variables and extract solution for each (if it hasn't been done already)
-            Iterator varIter = initial.variables().iterator();
+            Iterator<CspVariable> varIter = initial.variables().iterator();
             while (varIter.hasNext()) {
                 // make sure the solution is capable of being restored
                 CspVariable var = (CspVariable) varIter.next();
@@ -382,16 +382,16 @@ public class ConstraintStore implements VariableChangeListener {
         StringBuffer buf = new StringBuffer("<<<<<<< Constraint Store >>>>>>>\n");
 
         buf.append("===== Constraints =====\n");
-        Iterator iterator = constraintSet.iterator();
+        Iterator<CspConstraint> iterator = constraintSet.iterator();
         while (iterator.hasNext()) {
             buf.append(iterator.next());
             buf.append('\n');
         }
 
         buf.append("===== Variables =====\n");
-        iterator = variableSet.iterator();
-        while (iterator.hasNext()) {
-            buf.append(iterator.next());
+        Iterator<CspVariable> variableIterator = variableSet.iterator();
+        while (variableIterator.hasNext()) {
+            buf.append(variableIterator.next());
             buf.append('\n');
         }
 

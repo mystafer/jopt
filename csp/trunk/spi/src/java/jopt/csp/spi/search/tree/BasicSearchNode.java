@@ -52,8 +52,8 @@ public class BasicSearchNode implements TreeNode {
     private int depth;
     private boolean binary;
     
-    private LinkedList children;
-    private LinkedList path;
+    private LinkedList<TreeNode> children;
+    private LinkedList<Integer> path;
     private BinaryPath binaryPath;
     private Object stateData;
     private int nodeState;
@@ -106,9 +106,9 @@ public class BasicSearchNode implements TreeNode {
 	}
     
     // javadoc inherited from TreeNode
-    public List getPath() {
+    public List<Integer> getPath() {
     	if (path==null) {
-            path = new LinkedList();
+            path = new LinkedList<Integer>();
             
             if (parent!=null) {
                 path.addAll(parent.getPath());
@@ -297,8 +297,8 @@ public class BasicSearchNode implements TreeNode {
      * @param choicepoint ChoicePoint to create child nodes from.
      */
     private void createChildren(ChoicePoint choicepoint) {
-        children = new LinkedList();
-        Iterator childIter = choicepoint.getChildActions().iterator();
+        children = new LinkedList<TreeNode>();
+        Iterator<SearchAction> childIter = choicepoint.getChildActions().iterator();
         int nextChildNum = 0;
         while (childIter.hasNext()) {
             // create node wrapping action
@@ -420,7 +420,8 @@ public class BasicSearchNode implements TreeNode {
     
     // utility class to override toString display
     private class BinaryPath extends BitSet {
-        private int nbits;
+		private static final long serialVersionUID = 1L;
+		private int nbits;
         private String display;
         
     	public BinaryPath(int nbits) {

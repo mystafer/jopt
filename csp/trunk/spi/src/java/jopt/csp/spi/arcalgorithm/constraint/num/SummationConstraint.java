@@ -110,7 +110,7 @@ public class SummationConstraint extends TwoVarConstraint {
      * @param zIndicies		The indicies involved in the expression
      */
     private void verifyIndices(CspGenericIndex[] indexRange, CspGenericIndex[] zIndices) {
-        List zIndexList = Arrays.asList(zIndices);
+        List<CspGenericIndex> zIndexList = Arrays.asList(zIndices);
         for(int i=0; i<indexRange.length; i++) {
             if(zIndexList.contains(indexRange[i])) {
                 throw new IllegalStateException("summation cannot share indices with associated expression");
@@ -227,7 +227,7 @@ public class SummationConstraint extends TwoVarConstraint {
      * even if the generic is not completely bound yet
      */
     private boolean restrictedExprsBound(GenericIndexManager idxMgr) {
-        Iterator restrictedIterator = idxMgr.restrictedIterator();
+        Iterator<CspGenericIndex> restrictedIterator = idxMgr.restrictedIterator();
         
         while (restrictedIterator.hasNext()) {
             restrictedIterator.next();
@@ -259,7 +259,7 @@ public class SummationConstraint extends TwoVarConstraint {
         
         // calculate min value for z over specified range
         minSum.set(NumberMath.zero(nodeType));
-        Iterator rangeIter = idxMgr.restrictedIterator();
+        Iterator<CspGenericIndex> rangeIter = idxMgr.restrictedIterator();
         while (rangeIter==null || rangeIter.hasNext()) {
             if (rangeIter!=null) rangeIter.next();
             
@@ -285,7 +285,7 @@ public class SummationConstraint extends TwoVarConstraint {
         
         // calculate max value for z over specified range
         maxSum.set(NumberMath.zero(nodeType));
-        Iterator rangeIter = idxMgr.restrictedIterator();
+        Iterator<CspGenericIndex> rangeIter = idxMgr.restrictedIterator();
         while (rangeIter==null || rangeIter.hasNext()) {
             if (rangeIter!=null) rangeIter.next();
             
@@ -312,7 +312,7 @@ public class SummationConstraint extends TwoVarConstraint {
         // same time for speed
         minSum.set(NumberMath.zero(nodeType));
         maxSum.set(minSum);
-        Iterator rangeIter = idxMgr.restrictedIterator();
+        Iterator<CspGenericIndex> rangeIter = idxMgr.restrictedIterator();
         while (rangeIter==null || rangeIter.hasNext()) {
             if (rangeIter!=null) rangeIter.next();
             

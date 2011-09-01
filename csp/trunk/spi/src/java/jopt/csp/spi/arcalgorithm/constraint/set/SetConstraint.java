@@ -16,21 +16,21 @@ import jopt.csp.spi.util.GenericIndex;
 /**
  * Base Constraint class for Set Constraints
  */
-public abstract class SetConstraint extends AbstractConstraint implements VariableChangeSource {
+public abstract class SetConstraint<T> extends AbstractConstraint implements VariableChangeSource {
     private Node booleanNodes[] = null;
-    private SetNode sourceNodes[] = null;
-    private SetNode targetNodes[] = null;
+    private SetNode<T> sourceNodes[] = null;
+    private SetNode<T> targetNodes[] = null;
     
     protected NumExpr exprSource;
-    protected SetVariable sources[];
+    protected SetVariable<T> sources[];
     protected NumExpr exprTarget;
-    protected SetVariable targets[];
+    protected SetVariable<T> targets[];
     protected Arc[] arcs;
     
     /**
      * Constructor for set constraints with a numeric expression for a source
      */
-    protected SetConstraint(NumExpr source, SetVariable targets[]) 
+    protected SetConstraint(NumExpr source, SetVariable<T> targets[]) 
     {
         this.exprSource = source;
         this.targets = targets;
@@ -39,7 +39,7 @@ public abstract class SetConstraint extends AbstractConstraint implements Variab
     /**
      * Constructor for set constraints with a numeric expression for a target
      */
-    protected SetConstraint(SetVariable sources[], NumExpr target) 
+    protected SetConstraint(SetVariable<T> sources[], NumExpr target) 
     {
         // Ensure that at least 1 source node exists
         if (sources.length < 1) {
@@ -53,7 +53,7 @@ public abstract class SetConstraint extends AbstractConstraint implements Variab
     /**
      * Constructor for set constraints based only on set variables
      */
-    protected SetConstraint(SetVariable sources[], SetVariable targets[]) 
+    protected SetConstraint(SetVariable<T> sources[], SetVariable<T> targets[]) 
     {
         // Ensure that at least 1 source node exists
         if (sources.length <= 1) {
@@ -101,7 +101,7 @@ public abstract class SetConstraint extends AbstractConstraint implements Variab
     //We only want to add Source Arcs of Number or Set constraints
     //Java doc inherited
     public Arc[] getBooleanSourceArcs() {
-        ArrayList arcs = new ArrayList();
+        ArrayList<Arc> arcs = new ArrayList<Arc>();
         //NOTE: only the below code is currently necessary because set variables do not contain arcs
         arcs.addAll(Arrays.asList(createArcs()));
         return (Arc[])arcs.toArray(new Arc[arcs.size()]);
@@ -115,7 +115,7 @@ public abstract class SetConstraint extends AbstractConstraint implements Variab
             	booleanNodes = getSetSourceNodes();
             }
             else {
-                Collection c = exprSource.getNodeCollection();
+                Collection<Node> c = exprSource.getNodeCollection();
                 booleanNodes = (Node[]) c.toArray(new Node[c.size()]);
             }
         }
@@ -149,7 +149,8 @@ public abstract class SetConstraint extends AbstractConstraint implements Variab
      * Returns source nodes corresponding to source variables
      * in constraint for use when building arcs
      */
-    protected SetNode[] getSetSourceNodes() {
+    @SuppressWarnings("unchecked")
+	protected SetNode<T>[] getSetSourceNodes() {
         if (sourceNodes == null) {
             this.sourceNodes = new SetNode[sources.length];
             for (int i=0; i<sourceNodes.length; i++)
@@ -163,7 +164,8 @@ public abstract class SetConstraint extends AbstractConstraint implements Variab
      * Returns target nodes corresponding to target variables
      * in constraint for use when building arcs
      */
-    protected SetNode[] getSetTargetNodes() {
+    @SuppressWarnings("unchecked")
+	protected SetNode<T>[] getSetTargetNodes() {
         if (targetNodes == null) {
             this.targetNodes = new SetNode[targets.length];
             for (int i=0; i<targetNodes.length; i++)

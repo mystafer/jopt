@@ -18,20 +18,20 @@ import jopt.csp.spi.util.DomainChangeType;
  */
 public class NodeQueue {
     // Map associating nodes with Integer event types as defined in NodeChangeEvent class
-    private HashMap nodeMap;
+    private HashMap<Node,Integer> nodeMap;
     // Map associating nodes with ArcQueue objects
-    private HashMap nodeArcs;
+    private HashMap<Node, ArcQueue> nodeArcs;
     // List containing Node objects
-    private LinkedList list;
+    private LinkedList<Node> list;
     private ArcQueue currentArcs;
     
     /**
      * Constructor
      */
     public NodeQueue() {
-        this.nodeMap = new HashMap();
-        this.nodeArcs = new HashMap();
-        this.list = new LinkedList();
+        this.nodeMap = new HashMap<Node,Integer>();
+        this.nodeArcs = new HashMap<Node, ArcQueue>();
+        this.list = new LinkedList<Node>();
     }
     
     /**

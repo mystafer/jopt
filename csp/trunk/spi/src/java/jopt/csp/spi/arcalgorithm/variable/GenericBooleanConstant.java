@@ -113,8 +113,8 @@ public class GenericBooleanConstant implements CspGenericBooleanConstant, Generi
     // javadoc inherited from CspGenericBooleanConstant interface    
     public CspGenericBooleanConstant createFragment(CspGenericIndex fragIndices[]) {
         // build list of indices that are not contained in expression
-        List remainingIdxList = new LinkedList(Arrays.asList(indices));
-        List fragIdxList = Arrays.asList(fragIndices);
+        List<CspGenericIndex> remainingIdxList = new LinkedList<CspGenericIndex>(Arrays.asList(indices));
+        List<CspGenericIndex> fragIdxList = Arrays.asList(fragIndices);
         remainingIdxList.removeAll(fragIdxList);
         
         // if all indices are used for variable, return the specific

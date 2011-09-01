@@ -18,7 +18,9 @@ import jopt.csp.spi.util.IndexIterator;
 import jopt.csp.spi.util.NameUtil;
 import jopt.csp.spi.util.NumOperation;
 import jopt.csp.variable.CspConstraint;
+import jopt.csp.variable.CspDoubleCast;
 import jopt.csp.variable.CspDoubleExpr;
+import jopt.csp.variable.CspFloatCast;
 import jopt.csp.variable.CspFloatExpr;
 import jopt.csp.variable.CspGenericDoubleExpr;
 import jopt.csp.variable.CspGenericFloatExpr;
@@ -27,6 +29,7 @@ import jopt.csp.variable.CspGenericIndexRestriction;
 import jopt.csp.variable.CspGenericIntExpr;
 import jopt.csp.variable.CspGenericLongExpr;
 import jopt.csp.variable.CspIntExpr;
+import jopt.csp.variable.CspLongCast;
 import jopt.csp.variable.CspLongExpr;
 import jopt.csp.variable.CspMath;
 import jopt.csp.variable.CspNumExpr;
@@ -341,10 +344,10 @@ public class VarMath implements CspMath {
 	 CspIntExpr intExpression = null;
 
 	 // create unique set of source indices
-	 Set s = new HashSet(Arrays.asList(x.getIndices()));
+	 Set<CspGenericIndex> s = new HashSet<CspGenericIndex>(Arrays.asList(x.getIndices()));
 
 	 // create list of range indices
-	 List rangeList = Arrays.asList(indexRange);
+	 List<CspGenericIndex> rangeList = Arrays.asList(indexRange);
 
 	 // ensure that all indices in range are also in x
 	 if (!s.containsAll(rangeList))
@@ -369,14 +372,14 @@ public class VarMath implements CspMath {
 
 	     // iterate over combinations of indices not part of summation
 	     // and build a summation expression for each
-	     IndexIterator otherIter = new IndexIterator(new LinkedList(s));
+	     IndexIterator otherIter = new IndexIterator(new LinkedList<CspGenericIndex>(s));
 	     IndexIterator sumIter = new IndexIterator(rangeList);
-	     LinkedList forAllExprs = new LinkedList();
+	     LinkedList<IntExpr> forAllExprs = new LinkedList<IntExpr>();
 	     while (otherIter.hasNext()) {
 		 otherIter.next();
 
 		 // retrieve variables that are part of this summations
-		 LinkedList vars = new LinkedList();
+		 LinkedList<CspIntExpr> vars = new LinkedList<CspIntExpr>();
 		 sumIter.reset();
 		 while (sumIter.hasNext()) {
 		     sumIter.next();
@@ -429,10 +432,10 @@ public class VarMath implements CspMath {
      {
 	 CspLongExpr longExpression = null;
 	 // create unique set of source indices
-	 Set s = new HashSet(Arrays.asList(x.getIndices()));
+	 Set<CspGenericIndex> s = new HashSet<CspGenericIndex>(Arrays.asList(x.getIndices()));
 
 	 // create list of range indices
-	 List rangeList = Arrays.asList(indexRange);
+	 List<CspGenericIndex> rangeList = Arrays.asList(indexRange);
 
 	 // ensure that all indices in range are also in x
 	 if (!s.containsAll(rangeList))
@@ -457,14 +460,14 @@ public class VarMath implements CspMath {
 
 	     // iterate over combinations of indices not part of summation
 	     // and build a summation expression for each
-	     IndexIterator otherIter = new IndexIterator(new LinkedList(s));
+	     IndexIterator otherIter = new IndexIterator(new LinkedList<CspGenericIndex>(s));
 	     IndexIterator sumIter = new IndexIterator(rangeList);
-	     LinkedList forAllExprs = new LinkedList();
+	     LinkedList<LongExpr> forAllExprs = new LinkedList<LongExpr>();
 	     while (otherIter.hasNext()) {
 		 otherIter.next();
 
 		 // retrieve variables that are part of this summations
-		 LinkedList vars = new LinkedList();
+		 LinkedList<CspLongCast> vars = new LinkedList<CspLongCast>();
 		 sumIter.reset();
 		 while (sumIter.hasNext()) {
 		     sumIter.next();
@@ -516,10 +519,10 @@ public class VarMath implements CspMath {
      {
 	 CspFloatExpr floatExpression = null;
 	 // create unique set of source indices
-	 Set s = new HashSet(Arrays.asList(x.getIndices()));
+	 Set<CspGenericIndex> s = new HashSet<CspGenericIndex>(Arrays.asList(x.getIndices()));
 
 	 // create list of range indices
-	 List rangeList = Arrays.asList(indexRange);
+	 List<CspGenericIndex> rangeList = Arrays.asList(indexRange);
 
 	 // ensure that all indices in range are also in x
 	 if (!s.containsAll(rangeList))
@@ -544,14 +547,14 @@ public class VarMath implements CspMath {
 
 	     // iterate over combinations of indices not part of summation
 	     // and build a summation expression for each
-	     IndexIterator otherIter = new IndexIterator(new LinkedList(s));
+	     IndexIterator otherIter = new IndexIterator(new LinkedList<CspGenericIndex>(s));
 	     IndexIterator sumIter = new IndexIterator(rangeList);
-	     LinkedList forAllExprs = new LinkedList();
+	     LinkedList<FloatExpr> forAllExprs = new LinkedList<FloatExpr>();
 	     while (otherIter.hasNext()) {
 		 otherIter.next();
 
 		 // retrieve variables that are part of this summations
-		 LinkedList vars = new LinkedList();
+		 LinkedList<CspFloatCast> vars = new LinkedList<CspFloatCast>();
 		 sumIter.reset();
 		 while (sumIter.hasNext()) {
 		     sumIter.next();
@@ -603,10 +606,10 @@ public class VarMath implements CspMath {
      {
 	 CspDoubleExpr doubleExpression = null;
 	 // create unique set of source indices
-	 Set s = new HashSet(Arrays.asList(x.getIndices()));
+	 Set<CspGenericIndex> s = new HashSet<CspGenericIndex>(Arrays.asList(x.getIndices()));
 
 	 // create list of range indices
-	 List rangeList = Arrays.asList(indexRange);
+	 List<CspGenericIndex> rangeList = Arrays.asList(indexRange);
 
 	 // ensure that all indices in range are also in x
 	 if (!s.containsAll(rangeList))
@@ -631,14 +634,14 @@ public class VarMath implements CspMath {
 
 	     // iterate over combinations of indices not part of summation
 	     // and build a summation expression for each
-	     IndexIterator otherIter = new IndexIterator(new LinkedList(s));
+	     IndexIterator otherIter = new IndexIterator(new LinkedList<CspGenericIndex>(s));
 	     IndexIterator sumIter = new IndexIterator(rangeList);
-	     LinkedList forAllExprs = new LinkedList();
+	     LinkedList<DoubleExpr> forAllExprs = new LinkedList<DoubleExpr>();
 	     while (otherIter.hasNext()) {
 		 otherIter.next();
 
 		 // retrieve variables that are part of this summations
-		 LinkedList vars = new LinkedList();
+		 LinkedList<CspDoubleCast> vars = new LinkedList<CspDoubleCast>();
 		 sumIter.reset();
 		 while (sumIter.hasNext()) {
 		     sumIter.next();

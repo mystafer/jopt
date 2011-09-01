@@ -11,7 +11,7 @@ import jopt.csp.variable.PropagationFailureException;
 /**
  * Arc representing cardinality(Z) = X
  */
-public class BinaryNumCardinalityReflexArc extends BinaryNumArc {
+public class BinaryNumCardinalityReflexArc<T> extends BinaryNumArc {
     private Integer constSource;
     
     /**
@@ -21,7 +21,7 @@ public class BinaryNumCardinalityReflexArc extends BinaryNumArc {
      * @param   z          target expression in equation
      * @param   arcType    Arc relation type (Eq, Lt, Gt, etc.)
      */
-    public BinaryNumCardinalityReflexArc(NumNode x, SetNode z, int arcType) {
+    public BinaryNumCardinalityReflexArc(NumNode x, SetNode<T> z, int arcType) {
         super(x, z);
         this.arcType = arcType;
         this.sourceDependency = DomainChangeType.DOMAIN;
@@ -34,7 +34,7 @@ public class BinaryNumCardinalityReflexArc extends BinaryNumArc {
      * @param   z          target expression in equation
      * @param   arcType    Arc relation type (Eq, Lt, Gt, etc.)
      */
-    public BinaryNumCardinalityReflexArc(Integer x, SetNode z, int arcType) {
+    public BinaryNumCardinalityReflexArc(Integer x, SetNode<T> z, int arcType) {
         super(z, z);
         this.arcType = arcType;
         this.sourceDependency = DomainChangeType.DOMAIN;
@@ -42,7 +42,8 @@ public class BinaryNumCardinalityReflexArc extends BinaryNumArc {
     }
 
     protected void propagateBounds() throws PropagationFailureException {
-        SetNode z = (SetNode) target;
+        @SuppressWarnings("unchecked")
+		SetNode<T> z = (SetNode<T>) target;
         
         // determine min and max for target
         int min = 0;
@@ -131,8 +132,8 @@ public class BinaryNumCardinalityReflexArc extends BinaryNumArc {
     /**
      * Helper function to all possible values to required set
      */
-    private void requireAll(SetNode z) throws PropagationFailureException {
-    	Iterator valIter = z.getPossibleSet().iterator();
+    private void requireAll(SetNode<T> z) throws PropagationFailureException {
+    	Iterator<T> valIter = z.getPossibleSet().iterator();
         while (valIter.hasNext())
             z.addRequired(valIter.next());
     }
@@ -140,8 +141,8 @@ public class BinaryNumCardinalityReflexArc extends BinaryNumArc {
     /**
      * Helper function to remove all possible values not yet required
      */
-    private void removeAllNotRequired(SetNode z) throws PropagationFailureException {
-        Iterator valIter = z.getPossibleSet().iterator();
+    private void removeAllNotRequired(SetNode<T> z) throws PropagationFailureException {
+        Iterator<T> valIter = z.getPossibleSet().iterator();
         while (valIter.hasNext()) {
             Object val = valIter.next();
             if (!z.isRequired(val))

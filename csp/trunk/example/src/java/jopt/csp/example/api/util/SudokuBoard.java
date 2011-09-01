@@ -168,7 +168,7 @@ public class SudokuBoard {
 	 */
 	public CspIntVariable[] getUnboundedCells()
 	{
-		ArrayList unbound = new ArrayList();
+		ArrayList<CspIntVariable> unbound = new ArrayList<CspIntVariable>();
 		for (int i=0; i<numSquares*numSquares; i++) 
 		{
 			for (int j=0; j<numSquares*numSquares; j++)

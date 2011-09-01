@@ -12,6 +12,7 @@ import jopt.csp.spi.solver.ConstraintStore;
 import jopt.csp.spi.util.GenericIndex;
 import jopt.csp.spi.util.IndexIterator;
 import jopt.csp.variable.CspAlgorithm;
+import jopt.csp.variable.CspGenericIndex;
 import jopt.csp.variable.CspGenericIntExpr;
 import jopt.csp.variable.CspIntVariable;
 import jopt.csp.variable.CspVariableFactory;
@@ -44,7 +45,7 @@ public class GenericIntTest extends TestCase {
         	assertEquals("index next", curI++, idxI.currentVal());
         }
         
-        ArrayList l = new ArrayList();
+        ArrayList<CspGenericIndex> l = new ArrayList<CspGenericIndex>();
         l.add(idxI);
         IndexIterator idxIterator = new IndexIterator(l);
         curI = 0;

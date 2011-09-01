@@ -64,8 +64,8 @@ public class SearchActionsImpl implements SearchActions {
 	 * Adds all variables to the constraint store to ensure their states are
 	 * maintained correctly while searching
 	 */
-	private void addVarsToCs(Collection vars) {
-		Iterator varIter = vars.iterator();
+	private void addVarsToCs(Collection<CspVariable> vars) {
+		Iterator<CspVariable> varIter = vars.iterator();
 		while (varIter.hasNext())
 			store.addVariable((CspVariable) varIter.next(), true);
 	}
@@ -191,21 +191,21 @@ public class SearchActionsImpl implements SearchActions {
 	}
 
 	// javadoc inherited from SearchActions
-	public SearchAction generate(CspSetVariable vars[]) {
+	public <T> SearchAction generate(CspSetVariable<T> vars[]) {
 		addVarsToCs(vars);
-		return new GenerateSetAction(vars);
+		return new GenerateSetAction<T>(vars);
 	}
 
 	// javadoc inherited from SearchActions
-	public SearchAction generate(CspSetVariable vars[], SetSelector selector) {
+	public <T> SearchAction generate(CspSetVariable<T> vars[], SetSelector<T> selector) {
 		addVarsToCs(vars);
-		return new GenerateSetAction(vars, selector, null);
+		return new GenerateSetAction<T>(vars, selector, null);
 	}
 
 	// javadoc inherited from SearchActions
-	public SearchAction generate(CspSetVariable vars[], SetSelector selector, VariableSelector varSelector) {
+	public <T> SearchAction generate(CspSetVariable<T> vars[], SetSelector<T> selector, VariableSelector varSelector) {
 		addVarsToCs(vars);
-		return new GenerateSetAction(vars, selector, varSelector);
+		return new GenerateSetAction<T>(vars, selector, varSelector);
 	}
 
 	// javadoc inherited from SearchActions

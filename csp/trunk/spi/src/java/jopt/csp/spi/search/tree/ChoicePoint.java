@@ -15,7 +15,7 @@ import jopt.csp.variable.PropagationFailureException;
  * @author  Nick Coleman
  */
 public final class ChoicePoint implements SearchAction {
-    private Collection actions;
+    private Collection<SearchAction> actions;
 
     /**
      * Creates a new choice point
@@ -24,7 +24,7 @@ public final class ChoicePoint implements SearchAction {
      * @param action2   Second choice
      */
     public ChoicePoint(SearchAction action1, SearchAction action2) {
-        this.actions = new LinkedList();
+        this.actions = new LinkedList<SearchAction>();
         actions.add(action1);
         actions.add(action2);
     }
@@ -34,14 +34,14 @@ public final class ChoicePoint implements SearchAction {
      *  
      * @param actions       Collection of actions that should be separated into individual search nodes
      */
-    public ChoicePoint(Collection actions) {
+    public ChoicePoint(Collection<SearchAction> actions) {
         this.actions = actions;
     }
     
     /**
      * Returns the child actions that should be split into separate source nodes
      */
-    public Collection getChildActions() {
+    public Collection<SearchAction> getChildActions() {
         return actions;
     }
 

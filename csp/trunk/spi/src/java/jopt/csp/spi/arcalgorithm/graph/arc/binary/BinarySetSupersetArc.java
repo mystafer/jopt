@@ -8,7 +8,7 @@ import jopt.csp.variable.PropagationFailureException;
 /**
  * Arc representing Z is superset of X
  */
-public class BinarySetSupersetArc extends BinarySetArc {
+public class BinarySetSupersetArc<T> extends BinarySetArc {
     private boolean strict;
     
     /**
@@ -18,25 +18,27 @@ public class BinarySetSupersetArc extends BinarySetArc {
      * @param   target     Target node in equation
      * @param   strict     True if target is a strict superset of source
      */
-    public BinarySetSupersetArc(SetNode source, SetNode target, boolean strict) {
+    public BinarySetSupersetArc(SetNode<T> source, SetNode<T> target, boolean strict) {
         super(source, target);
         this.strict = strict;
     }
 
     public void propagate() throws PropagationFailureException {
-        SetNode x = (SetNode) source;
-        SetNode z = (SetNode) target;
+        @SuppressWarnings("unchecked")
+		SetNode<T> x = (SetNode<T>) source;
+        @SuppressWarnings("unchecked")
+		SetNode<T> z = (SetNode<T>) target;
         
         // check if deltas are supported
         if (useDeltas) {
             // Iterate over newly required values in x and add requirement to z
-            Iterator iterator = x.getRequiredDeltaSet().iterator();
+            Iterator<T> iterator = x.getRequiredDeltaSet().iterator();
             while (iterator.hasNext())
                 z.addRequired(iterator.next());
         }
         else {
             // Iterate over required values in x and add requirement to z
-            Iterator iterator = x.getRequiredSet().iterator();
+            Iterator<T> iterator = x.getRequiredSet().iterator();
             while (iterator.hasNext())
                 z.addRequired(iterator.next());
         }

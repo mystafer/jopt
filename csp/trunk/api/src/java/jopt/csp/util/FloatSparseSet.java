@@ -318,7 +318,9 @@ public class FloatSparseSet extends FloatSet {
      * Iterator for float values
      */
     private class FloatSparseIterator extends NumberIterator {
-        private FloatIterator iterator;
+        private static final long serialVersionUID = 1L;
+		
+		private FloatIterator iterator;
         private float n;
         
         public FloatSparseIterator() {

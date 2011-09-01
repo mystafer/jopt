@@ -9,7 +9,9 @@ package jopt.csp.spi.util;
 /**
  * Number object where values can be changed
  */
-public class MutableNumber extends Number implements Comparable {
+public class MutableNumber extends Number implements Comparable<Number> {
+	private static final long serialVersionUID = 1L;
+	
 	private int type;
     private int intVal;
     private long longVal;
@@ -323,7 +325,7 @@ public class MutableNumber extends Number implements Comparable {
         }
     }
     
-    public int compareTo(Object o1){
+    public int compareTo(Number o1){
         Number n1 = (Number) o1;
         Number n2 = (Number) this;
         if ((n2.doubleValue()- n1.doubleValue())<0) {

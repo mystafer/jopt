@@ -34,7 +34,7 @@ import jopt.csp.variable.PropagationFailureException;
 public class SolverImpl extends CspSolver {
     protected ConstraintStore store;
     private Search currentSearch;
-    private List preProcessors;
+    private List<CspPreProcessor> preProcessors;
 
     /**
      * Creates a default AC5 algorithm used when a new solver
@@ -55,7 +55,7 @@ public class SolverImpl extends CspSolver {
         // create default search manager if not specified during creation
         this.searchMgr = (searchMgr!=null) ? searchMgr : new SearchManagerImpl(getVarFactory(), store);
         
-        this.preProcessors = new ArrayList();
+        this.preProcessors = new ArrayList<CspPreProcessor>();
     }
 
     // javadoc inherited from CspSolver
@@ -84,7 +84,7 @@ public class SolverImpl extends CspSolver {
     }
     
     // javadoc inherited from CspSolver
-    public List getPreProcessors() {
+    public List<CspPreProcessor> getPreProcessors() {
         return preProcessors;
     }
 

@@ -16,9 +16,9 @@ import jopt.csp.variable.PropagationFailureException;
  */
 public class BinarySetNotMemberOfSetArc extends BinarySetArc {
 
-    private SetNode set;
+    private SetNode<Number> set;
     
-    public BinarySetNotMemberOfSetArc(SetNode set, NumNode expr) {
+    public BinarySetNotMemberOfSetArc(SetNode<Number> set, NumNode expr) {
         super(set, expr);
         this.set = set;
     }
@@ -31,7 +31,7 @@ public class BinarySetNotMemberOfSetArc extends BinarySetArc {
         if (useDeltas) {
             
             // remove values in source required delta from target
-            Iterator removedIter = set.getRequiredDeltaSet().iterator();
+            Iterator<Number> removedIter = set.getRequiredDeltaSet().iterator();
             while (removedIter.hasNext())
                 z.removeValue((Number) removedIter.next());
         }

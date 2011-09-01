@@ -186,7 +186,7 @@ public abstract class CspSolver {
      * 
      * @return the List of pre-processorss
      */
-    public abstract List getPreProcessors();
+    public abstract List<CspPreProcessor> getPreProcessors();
 
     /**
      * Propagates the constraints currently defined using the constraint reduction
@@ -462,7 +462,7 @@ public abstract class CspSolver {
      * @param vars      Array of variables to instantiate
      * @return True if a solution was found 
      */
-    public boolean solve(CspSetVariable vars[]) {
+    public <T> boolean solve(CspSetVariable<T> vars[]) {
         return solve(searchMgr.getSearchActions().generate(vars));
     }
 

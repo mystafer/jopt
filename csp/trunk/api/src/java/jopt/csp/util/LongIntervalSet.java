@@ -1164,7 +1164,9 @@ public class LongIntervalSet extends LongSet implements IntervalSet {
      * Iterator for long values
      */
     private class LongIntervalNumberIterator extends NumberIterator {
-        private int curIntervalIdx;
+        private static final long serialVersionUID = 1L;
+		
+		private int curIntervalIdx;
         private int nextIntervalIdx;
         private long n;
         private long endVal;

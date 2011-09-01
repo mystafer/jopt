@@ -14,33 +14,33 @@ import jopt.csp.variable.PropagationFailureException;
 // TODO: There is no indication anywhere as to why this class exists
 // instead of it all being in AbstractSetDomain. We need to document why
 // it is this way or move all this code into AbstractSetDomain.
-public class SetDomainBase implements ChoicePointEntryListener {
+public class SetDomainBase<T> implements ChoicePointEntryListener {
 	private ChoicePointStack cps;
     private ChoicePointDataMap cpdata;
-    private HashSet possibleValues;
-    private HashSet requiredValues;
-    private HashSet possibleValuesDelta;
-    private HashSet requiredValuesDelta;
+    private HashSet<T> possibleValues;
+    private HashSet<T> requiredValues;
+    private HashSet<T> possibleValuesDelta;
+    private HashSet<T> requiredValuesDelta;
     private boolean changed;
     
     /**
      * Constructor
      */
-    public SetDomainBase(Collection col) {
-        this.possibleValues = new HashSet(col);
-        this.requiredValues = new HashSet();
-        this.possibleValuesDelta = new HashSet();
-        this.requiredValuesDelta = new HashSet();
+    public SetDomainBase(Collection<T> col) {
+        this.possibleValues = new HashSet<T>(col);
+        this.requiredValues = new HashSet<T>();
+        this.possibleValuesDelta = new HashSet<T>();
+        this.requiredValuesDelta = new HashSet<T>();
     }
     
     /**
      * Internal constructor
      */
-    private SetDomainBase(SetDomainBase base) {
-        this.possibleValues = new HashSet(base.possibleValues);
-        this.requiredValues = new HashSet(base.requiredValues);
-        this.possibleValuesDelta = new HashSet(base.possibleValuesDelta);
-        this.requiredValuesDelta = new HashSet(base.requiredValuesDelta);
+    private SetDomainBase(SetDomainBase<T> base) {
+        this.possibleValues = new HashSet<T>(base.possibleValues);
+        this.requiredValues = new HashSet<T>(base.requiredValues);
+        this.possibleValuesDelta = new HashSet<T>(base.possibleValuesDelta);
+        this.requiredValuesDelta = new HashSet<T>(base.requiredValuesDelta);
     }
 
     /**
@@ -90,21 +90,21 @@ public class SetDomainBase implements ChoicePointEntryListener {
     /**
      * Returns true if value is required
      */
-    public boolean isRequired(Object value) {
+    public boolean isRequired(T value) {
         return requiredValues.contains(value);
     }
     
     /**
      * Returns true if value is possible
      */
-    public boolean isPossible(Object value) {
+    public boolean isPossible(T value) {
         return possibleValues.contains(value);
     }
     
     /**
      * Adds a required value to the set
      */
-    public void addRequired(Object value) throws PropagationFailureException {
+    public void addRequired(T value) throws PropagationFailureException {
         if (!possibleValues.contains(value)) throw new PropagationFailureException();
         internalAddRequiredValue(value);
     }
@@ -112,7 +112,7 @@ public class SetDomainBase implements ChoicePointEntryListener {
     /**
      * Removes a value from the possible set
      */
-    public void removePossible(Object value) throws PropagationFailureException {
+    public void removePossible(T value) throws PropagationFailureException {
         if (requiredValues.contains(value)) throw new PropagationFailureException();
         internalRemovePossibleValue(value);
     }
@@ -120,29 +120,29 @@ public class SetDomainBase implements ChoicePointEntryListener {
     /**
      * Returns possible set of values
      */
-    public Set getPossibleSet() {
-        return new HashSet(possibleValues);
+    public Set<T> getPossibleSet() {
+        return new HashSet<T>(possibleValues);
     }
     
     /**
      * Returns the possible-delta set
      */
-    public Set getPossibleDeltaSet() {
-        return new HashSet(possibleValuesDelta);
+    public Set<T> getPossibleDeltaSet() {
+        return new HashSet<T>(possibleValuesDelta);
     }
 
     /**
      * Returns required set of values
      */
-    public Set getRequiredSet() {
-        return new HashSet(requiredValues);
+    public Set<T> getRequiredSet() {
+        return new HashSet<T>(requiredValues);
     }
     
     /**
      * Returns the required-delta set
      */
-    public Set getRequiredDeltaSet() {
-        return new HashSet(requiredValuesDelta);
+    public Set<T> getRequiredDeltaSet() {
+        return new HashSet<T>(requiredValuesDelta);
     }
 
     /**
@@ -150,17 +150,17 @@ public class SetDomainBase implements ChoicePointEntryListener {
      */
     public void clearDelta() {
         // Retrieve choice point sets
-        Set reqAddedSet = getRequiredDeltaAddedSet();
-        Set reqRemovedSet = getRequiredDeltaRemovedSet();
-        Set posAddedSet = getPossibleDeltaAddedSet();
-        Set posRemovedSet = getPossibleDeltaRemovedSet();
+        Set<T> reqAddedSet = getRequiredDeltaAddedSet();
+        Set<T> reqRemovedSet = getRequiredDeltaRemovedSet();
+        Set<T> posAddedSet = getPossibleDeltaAddedSet();
+        Set<T> posRemovedSet = getPossibleDeltaRemovedSet();
         
         // Update choice point if necessary
         if (reqAddedSet != null) {
             // Update required delta sets
-            Iterator iterator = requiredValuesDelta.iterator();
+            Iterator<T> iterator = requiredValuesDelta.iterator();
             while (iterator.hasNext()) {
-                Object val = iterator.next();
+                T val = iterator.next();
 
                 // First attempt to remove from recently added set
                 if (!reqAddedSet.remove(val))
@@ -170,7 +170,7 @@ public class SetDomainBase implements ChoicePointEntryListener {
             // Update possible delta sets
             iterator = possibleValuesDelta.iterator();
             while (iterator.hasNext()) {
-                Object val = iterator.next();
+                T val = iterator.next();
 
                 // First attempt to remove from recently added set
                 if (!posAddedSet.remove(val))
@@ -186,7 +186,7 @@ public class SetDomainBase implements ChoicePointEntryListener {
     /**
      * Returns an iterator of possible values in the set
      */
-    public Iterator values() {
+    public Iterator<T> values() {
         return new SetDomainIterator();
     }
 
@@ -194,7 +194,7 @@ public class SetDomainBase implements ChoicePointEntryListener {
      * Adds a required value to the domain and records the change in the
      * choicepoint
      */
-    private void internalAddRequiredValue(Object value) {
+    private void internalAddRequiredValue(T value) {
         // Attempt to add required value
         if (this.requiredValues.add(value)) {
             // Update changed flag and delta set
@@ -202,7 +202,7 @@ public class SetDomainBase implements ChoicePointEntryListener {
             this.requiredValuesDelta.add(value);
             
             // Update choice point stack for added value
-            HashSet s = getRequiredAddedValueSet();
+            HashSet<T> s = getRequiredAddedValueSet();
             if (s!=null) {
                 s.add(value);
                 getRequiredDeltaAddedSet().add(value);
@@ -214,7 +214,7 @@ public class SetDomainBase implements ChoicePointEntryListener {
      * Removes a possible value from the domain and records the change in the
      * choicepoint
      */
-    private void internalRemovePossibleValue(Object value) {
+    private void internalRemovePossibleValue(T value) {
         // Attempt to remove possible value
         if (this.possibleValues.remove(value)) {
             // Update changed flag and delta set
@@ -222,7 +222,7 @@ public class SetDomainBase implements ChoicePointEntryListener {
             this.possibleValuesDelta.add(value);
             
             // Update choice point stack for removed value
-            HashSet s = getPossibleRemovedValueSet();
+            HashSet<T> s = getPossibleRemovedValueSet();
             if (s!=null) {
                 s.add(value);
                 getPossibleDeltaAddedSet().add(value);
@@ -233,11 +233,12 @@ public class SetDomainBase implements ChoicePointEntryListener {
     /**
      * Returns the set of added required values for the current choicepoint
      */
-    private HashSet getRequiredAddedValueSet() {
+    private HashSet<T> getRequiredAddedValueSet() {
         if (cpdata==null) return null;
-        HashSet added = (HashSet) cpdata.get("a");
+        @SuppressWarnings("unchecked")
+		HashSet<T> added = (HashSet<T>) cpdata.get("a");
         if (added == null) {
-            added = new HashSet();
+            added = new HashSet<T>();
             cpdata.put("a", added);
         }
         return added;
@@ -246,11 +247,12 @@ public class SetDomainBase implements ChoicePointEntryListener {
     /**
      * Returns the added values to the required delta-set for the current choicepoint
      */
-    private HashSet getRequiredDeltaAddedSet() {
+    private HashSet<T> getRequiredDeltaAddedSet() {
         if (cpdata==null) return null;
-        HashSet deltaAdded = (HashSet) cpdata.get("rda");
+        @SuppressWarnings("unchecked")
+		HashSet<T> deltaAdded = (HashSet<T>) cpdata.get("rda");
         if (deltaAdded == null) {
-            deltaAdded = new HashSet();
+            deltaAdded = new HashSet<T>();
             cpdata.put("rda", deltaAdded);
         }
         return deltaAdded;
@@ -259,11 +261,12 @@ public class SetDomainBase implements ChoicePointEntryListener {
     /**
      * Returns the removed values of the required delta-set for the current choicepoint
      */
-    private HashSet getRequiredDeltaRemovedSet() {
+    private HashSet<T> getRequiredDeltaRemovedSet() {
         if (cpdata==null) return null;
-        HashSet deltaRemoved = (HashSet) cpdata.get("rdr");
+        @SuppressWarnings("unchecked")
+		HashSet<T> deltaRemoved = (HashSet<T>) cpdata.get("rdr");
         if (deltaRemoved == null) {
-            deltaRemoved = new HashSet();
+            deltaRemoved = new HashSet<T>();
             cpdata.put("rdr", deltaRemoved);
         }
         return deltaRemoved;
@@ -272,11 +275,12 @@ public class SetDomainBase implements ChoicePointEntryListener {
     /**
      * Returns the added values to the possible delta-set for the current choicepoint
      */
-    private HashSet getPossibleDeltaAddedSet() {
+    private HashSet<T> getPossibleDeltaAddedSet() {
         if (cpdata==null) return null;
-        HashSet deltaAdded = (HashSet) cpdata.get("pda");
+        @SuppressWarnings("unchecked")
+		HashSet<T> deltaAdded = (HashSet<T>) cpdata.get("pda");
         if (deltaAdded == null) {
-            deltaAdded = new HashSet();
+            deltaAdded = new HashSet<T>();
             cpdata.put("pda", deltaAdded);
         }
         return deltaAdded;
@@ -285,11 +289,12 @@ public class SetDomainBase implements ChoicePointEntryListener {
     /**
      * Returns the removed values of the possible delta-set for the current choicepoint
      */
-    private HashSet getPossibleDeltaRemovedSet() {
+    private HashSet<T> getPossibleDeltaRemovedSet() {
         if (cpdata==null) return null;
-        HashSet deltaRemoved = (HashSet) cpdata.get("pdr");
+        @SuppressWarnings("unchecked")
+		HashSet<T> deltaRemoved = (HashSet<T>) cpdata.get("pdr");
         if (deltaRemoved == null) {
-            deltaRemoved = new HashSet();
+            deltaRemoved = new HashSet<T>();
             cpdata.put("pdr", deltaRemoved);
         }
         return deltaRemoved;
@@ -298,11 +303,12 @@ public class SetDomainBase implements ChoicePointEntryListener {
     /**
      * Returns the set of removed possible values for the current choicepoint
      */
-    private HashSet getPossibleRemovedValueSet() {
+    private HashSet<T> getPossibleRemovedValueSet() {
         if (cpdata==null) return null;
-        HashSet removed = (HashSet) cpdata.get("r");
+        @SuppressWarnings("unchecked")
+		HashSet<T> removed = (HashSet<T>) cpdata.get("r");
         if (removed == null) {
-            removed = new HashSet();
+            removed = new HashSet<T>();
             cpdata.put("r", removed);
         }
         return removed;
@@ -339,7 +345,7 @@ public class SetDomainBase implements ChoicePointEntryListener {
     // javadoc is inherited
     public void beforeChoicePointPopEvent() {
         // Remove any values that were added to required set
-        Iterator iterator = getRequiredAddedValueSet().iterator();
+        Iterator<T> iterator = getRequiredAddedValueSet().iterator();
         while (iterator.hasNext())
             requiredValues.remove(iterator.next());
 
@@ -383,7 +389,7 @@ public class SetDomainBase implements ChoicePointEntryListener {
     // javadoc is inherited
     public void afterChoicePointPushEvent() {
         // Add any values that were added to required set
-        Iterator iterator = getRequiredAddedValueSet().iterator();
+        Iterator<T> iterator = getRequiredAddedValueSet().iterator();
         while (iterator.hasNext())
             requiredValues.add(iterator.next());
 
@@ -418,14 +424,14 @@ public class SetDomainBase implements ChoicePointEntryListener {
     /**
      * Helper class for enumerating values in set
      */
-    private class SetDomainIterator implements Iterator {
-        private Iterator iterator;
+    private class SetDomainIterator implements Iterator<T> {
+        private Iterator<T> iterator;
 
         /**
          * Constructor
          */
         public SetDomainIterator() {
-            this.iterator = new HashSet(possibleValues).iterator();
+            this.iterator = new HashSet<T>(possibleValues).iterator();
         }
 
         /**
@@ -438,7 +444,7 @@ public class SetDomainBase implements ChoicePointEntryListener {
         /**
          * Returns next element in enumeration
          */
-        public Object next() {
+        public T next() {
             return iterator.next();
         }
         
@@ -456,10 +462,11 @@ public class SetDomainBase implements ChoicePointEntryListener {
      * 
      * @return an Object containing the values of this domain
      */
+	@SuppressWarnings("unchecked")
 	public Object getDomainState() {
-		HashMap valuesMap = new HashMap(2);
-		valuesMap.put("pv", possibleValues.clone());
-		valuesMap.put("rv", requiredValues.clone());
+		HashMap<String, HashSet<T>> valuesMap = new HashMap<String, HashSet<T>>(2);
+		valuesMap.put("pv", (HashSet<T>) possibleValues.clone());
+		valuesMap.put("rv", (HashSet<T>) requiredValues.clone());
 		return valuesMap;
 	}
 	
@@ -469,14 +476,15 @@ public class SetDomainBase implements ChoicePointEntryListener {
      * 
 	 * @see jopt.csp.spi.arcalgorithm.domain.Domain#restoreDomainState(java.lang.Object)
 	 */
+	@SuppressWarnings("unchecked")
 	public void restoreDomainState(Object state) {
-		HashMap valuesMap = (HashMap) state;
-		possibleValues = (HashSet) ((HashSet) valuesMap.get("pv")).clone();
-		requiredValues = (HashSet) ((HashSet) valuesMap.get("rv")).clone();
+		HashMap<String, HashSet<T>> valuesMap = (HashMap<String, HashSet<T>>) state;
+		possibleValues = (HashSet<T>) (valuesMap.get("pv")).clone();
+		requiredValues = (HashSet<T>) (valuesMap.get("rv")).clone();
 		clearDelta();
 	}
 
     public Object clone() {
-        return new SetDomainBase(this);
+        return new SetDomainBase<T>(this);
     }
 }

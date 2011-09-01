@@ -7,6 +7,7 @@ package jopt.csp.spi.solver;
 
 
 
+
 /**
  * Interface for objects that are referenced by a choice point stack and store
  * information about problem state at a previous point in the search tree.

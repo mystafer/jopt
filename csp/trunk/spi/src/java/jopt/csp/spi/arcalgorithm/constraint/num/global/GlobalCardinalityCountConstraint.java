@@ -127,7 +127,7 @@ public class GlobalCardinalityCountConstraint extends AbstractConstraint {
     //We only want to add Source Arcs of Number or Set constraints
     //Java doc inherited
     public Arc[] getBooleanSourceArcs() {
-        ArrayList arcs = new ArrayList();
+        ArrayList<Arc[]> arcs = new ArrayList<Arc[]>();
 //        arcs.addAll(Arrays.asList(gsource.getBooleanSourceArcs()));
         arcs.add(createArc());
         return (Arc[])arcs.toArray(new Arc[0]);

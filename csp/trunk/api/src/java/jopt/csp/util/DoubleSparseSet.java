@@ -311,7 +311,9 @@ public class DoubleSparseSet extends DoubleSet {
      * Iterator for double values
      */
     private class DoubleSparseIterator extends NumberIterator {
-        private DoubleIterator iterator;
+        private static final long serialVersionUID = 1L;
+		
+		private DoubleIterator iterator;
         private double n;
         
         public DoubleSparseIterator() {

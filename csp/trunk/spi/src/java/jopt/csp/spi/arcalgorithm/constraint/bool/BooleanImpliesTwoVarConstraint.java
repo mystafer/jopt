@@ -11,6 +11,7 @@ import jopt.csp.spi.arcalgorithm.graph.arc.generic.GenericBoolImpliesTwoVarArc;
 import jopt.csp.spi.arcalgorithm.graph.node.BooleanNode;
 import jopt.csp.spi.arcalgorithm.variable.GenericBooleanConstant;
 import jopt.csp.spi.util.GenericIndexManager;
+import jopt.csp.variable.CspGenericIndex;
 
 /**
  * Constraint representing A -> Z
@@ -71,7 +72,7 @@ public class BooleanImpliesTwoVarConstraint extends TwoVarConstraint {
      */
     public boolean isTrue() {
         GenericIndexManager gim = this.getIndexManager();
-        Iterator gimIt = gim.allIterator();
+        Iterator<CspGenericIndex> gimIt = gim.allIterator();
         // null iterator means no need for looping
         if(gimIt == null) {
             return checkForSatisfaction(gim);

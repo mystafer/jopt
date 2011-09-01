@@ -126,17 +126,17 @@ public class SolutionStoreTest extends TestCase {
 		SearchAction generateA = new GenerateIntegerAction(new CspIntVariable[]{a});
 		SearchAction generateB = new GenerateIntegerAction(new CspIntVariable[]{b});
 		
-		List actionList = new LinkedList();
+		List<SearchAction> actionList = new LinkedList<SearchAction>();
 		actionList.add(restoreSol1);
 		actionList.add(generateA);
 		SearchAction restoreAndGenA = new CombinedAction(actionList);
 		
-		actionList = new LinkedList();
+		actionList = new LinkedList<SearchAction>();
 		actionList.add(restoreSol2);
 		actionList.add(generateB);
 		SearchAction restoreAndGenB = new CombinedAction(actionList);
 		
-		actionList = new LinkedList();
+		actionList = new LinkedList<SearchAction>();
 		actionList.add(restoreAndGenA);
 		actionList.add(restoreAndGenB);
 		SearchAction abChoice = new ChoicePoint(actionList);
@@ -330,7 +330,7 @@ public class SolutionStoreTest extends TestCase {
             genY = new GenerateIntegerAction(new CspIntVariable[]{y});
             storeXyzSol = new StoreSolutionAction(store, xyzSol);
             
-            List allActions = new LinkedList();
+            List<SearchAction> allActions = new LinkedList<SearchAction>();
             allActions.add(genX);
             allActions.add(genY);
             allActions.add(storeXyzSol);

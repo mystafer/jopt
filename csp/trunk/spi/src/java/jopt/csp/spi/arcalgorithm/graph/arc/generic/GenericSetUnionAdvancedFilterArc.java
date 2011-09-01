@@ -11,14 +11,14 @@ import jopt.csp.variable.PropagationFailureException;
  * only one node contains a possible value that is required in the union, it must
  * also be required by that node.
  */
-public class GenericSetUnionAdvancedFilterArc extends GenericSetArc {
+public class GenericSetUnionAdvancedFilterArc<T> extends GenericSetArc {
     /**
      * Constructor
      *
      * @param   union       Source node in equation
      * @param   targets     Target nodes in equation
      */
-    public GenericSetUnionAdvancedFilterArc(SetNode union, SetNode targets[])
+    public GenericSetUnionAdvancedFilterArc(SetNode<T> union, SetNode<T> targets[])
     {
         super(new SetNode[]{union}, targets);
     }
@@ -42,8 +42,10 @@ public class GenericSetUnionAdvancedFilterArc extends GenericSetArc {
     }
 
     public void propagate() throws PropagationFailureException {
-        SetNode union = (SetNode) this.sources[0];
-        SetNode targets[] = (SetNode[]) this.targets;
+        @SuppressWarnings("unchecked")
+		SetNode<T> union = (SetNode<T>) this.sources[0];
+        @SuppressWarnings("unchecked")
+		SetNode<T> targets[] = (SetNode<T>[]) this.targets;
         
         // Calculate required cardinality union should be if targets
         // had correct cardinality
@@ -60,14 +62,14 @@ public class GenericSetUnionAdvancedFilterArc extends GenericSetArc {
                 
                 // loop over newly required values in union
                 // and check if it is still in the intersection
-                Iterator iterator = useDeltas ? union.getRequiredDeltaSet().iterator() : union.getRequiredSet().iterator();
+                Iterator<T> iterator = useDeltas ? union.getRequiredDeltaSet().iterator() : union.getRequiredSet().iterator();
                 while (iterator.hasNext()) {
                     Object zval = iterator.next();
     
                     // search for node that is possible
-                    SetNode possibleNode = null;
+                    SetNode<T> possibleNode = null;
                     for (int i=0; i<targets.length; i++) {
-                        SetNode target = targets[i];
+                        SetNode<T> target = targets[i];
                         
                         // value is already required, exit loop
                         if (target.isRequired(zval)) {

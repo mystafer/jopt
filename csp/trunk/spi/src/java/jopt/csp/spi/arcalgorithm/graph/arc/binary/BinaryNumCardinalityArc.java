@@ -12,8 +12,8 @@ import jopt.csp.variable.PropagationFailureException;
 /**
  * Arc representing Z = cardinality(X)
  */
-public class BinaryNumCardinalityArc extends BinaryNumArc {
-    private Set constSource;
+public class BinaryNumCardinalityArc<T> extends BinaryNumArc {
+    private Set<T> constSource;
     private MutableNumber min = new MutableNumber();
     private MutableNumber max = new MutableNumber();
     
@@ -24,7 +24,7 @@ public class BinaryNumCardinalityArc extends BinaryNumArc {
      * @param   z          target expression in equation
      * @param   arcType    Arc relation type (Eq, Lt, Gt, etc.)
      */
-    public BinaryNumCardinalityArc(SetNode x, NumNode z, int arcType) {
+    public BinaryNumCardinalityArc(SetNode<T> x, NumNode z, int arcType) {
         super(x, z);
         this.arcType = arcType;
         this.sourceDependency = DomainChangeType.DOMAIN;
@@ -37,7 +37,7 @@ public class BinaryNumCardinalityArc extends BinaryNumArc {
      * @param   z          target expression in equation
      * @param   arcType    Arc relation type (Eq, Lt, Gt, etc.)
      */
-    public BinaryNumCardinalityArc(Set x, NumNode z, int arcType) {
+    public BinaryNumCardinalityArc(Set<T> x, NumNode z, int arcType) {
         super(z, z);
         this.arcType = arcType;
         this.sourceDependency = DomainChangeType.DOMAIN;
@@ -53,7 +53,8 @@ public class BinaryNumCardinalityArc extends BinaryNumArc {
             max.setIntValue(constSource.size());
         }
         else {
-            SetNode set = (SetNode) source;
+            @SuppressWarnings("unchecked")
+			SetNode<T> set = (SetNode<T>) source;
             min.setIntValue(set.getRequiredCardinality());
             max.setIntValue(set.getPossibleCardinality());
         }

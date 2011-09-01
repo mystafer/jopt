@@ -29,7 +29,7 @@ import junit.framework.TestCase;
  */
 public class SetSearchTest extends TestCase {
     private ConstraintStore store;
-    private CspSetVariable vars[] = null; 
+    private CspSetVariable<Integer> vars[] = null; 
 
     public SetSearchTest(String testName) {
         super(testName);
@@ -63,13 +63,13 @@ public class SetSearchTest extends TestCase {
     
     public void testDFSProblemStateTree() {
         setUp(false);
-        SearchAction genVars = new GenerateSetAction(vars);
+        SearchAction genVars = new GenerateSetAction<Integer>(vars);
         SearchTree tree = new CrawlingSearchTree(new BasicSearchNode(genVars), new ProblemStateManager(store));
         TreeSearch search = new TreeSearch(tree, new DepthFirstSearch());
         doTestSearch(search, 27);
 
         setUp(true);
-        genVars = new GenerateSetAction(vars);
+        genVars = new GenerateSetAction<Integer>(vars);
         tree = new CrawlingSearchTree(new BasicSearchNode(genVars), new ProblemStateManager(store));
         search = new TreeSearch(tree, new DepthFirstSearch());
         doTestSearch(search, 27);
@@ -77,13 +77,13 @@ public class SetSearchTest extends TestCase {
     
     public void testDFSDeltaStateTree() {
         setUp(false);
-        SearchAction genVars = new GenerateSetAction(vars);
+        SearchAction genVars = new GenerateSetAction<Integer>(vars);
         SearchTree tree = new CrawlingSearchTree(new BasicSearchNode(genVars), new DeltaStateManager(store));
         TreeSearch search = new TreeSearch(tree, new DepthFirstSearch());
         doTestSearch(search, 27);
 
         setUp(true);
-        genVars = new GenerateSetAction(vars);
+        genVars = new GenerateSetAction<Integer>(vars);
         tree = new CrawlingSearchTree(new BasicSearchNode(genVars), new DeltaStateManager(store));
         search = new TreeSearch(tree, new DepthFirstSearch());
         doTestSearch(search, 27);
@@ -91,13 +91,13 @@ public class SetSearchTest extends TestCase {
     
     public void testDFSJumpingTree() {
         setUp(false);
-        SearchAction genVars = new GenerateSetAction(vars);
+        SearchAction genVars = new GenerateSetAction<Integer>(vars);
         SearchTree tree = new JumpingSearchTree(new BasicSearchNode(genVars), new ProblemStateManager(store));
         TreeSearch search = new TreeSearch(tree, new DepthFirstSearch());
         doTestSearch(search, 27);
 
         setUp(true);
-        genVars = new GenerateSetAction(vars);
+        genVars = new GenerateSetAction<Integer>(vars);
         tree = new JumpingSearchTree(new BasicSearchNode(genVars), new ProblemStateManager(store));
         search = new TreeSearch(tree, new DepthFirstSearch());
         doTestSearch(search, 27);
@@ -105,25 +105,25 @@ public class SetSearchTest extends TestCase {
     
     public void testDFSRecalculatingTree() {
         setUp(false);
-        SearchAction genVars = new GenerateSetAction(vars);
+        SearchAction genVars = new GenerateSetAction<Integer>(vars);
         TreeSearch search = new TreeSearch(store, genVars, new DepthFirstSearch());
         doTestSearch(search, 27);
 
         setUp(true);
-        genVars = new GenerateSetAction(vars);
+        genVars = new GenerateSetAction<Integer>(vars);
         search = new TreeSearch(store, genVars, new DepthFirstSearch());
         doTestSearch(search, 27);
     }
     
     public void testBFSProblemStateTree() {
         setUp(false);
-        SearchAction genVars = new GenerateSetAction(vars);
+        SearchAction genVars = new GenerateSetAction<Integer>(vars);
         SearchTree tree = new CrawlingSearchTree(new BasicSearchNode(genVars), new ProblemStateManager(store));
         TreeSearch search = new TreeSearch(tree, new BreadthFirstSearch());
         doTestSearch(search, 27);
 
         setUp(true);
-        genVars = new GenerateSetAction(vars);
+        genVars = new GenerateSetAction<Integer>(vars);
         tree = new CrawlingSearchTree(new BasicSearchNode(genVars), new ProblemStateManager(store));
         search = new TreeSearch(tree, new BreadthFirstSearch());
         doTestSearch(search, 27);
@@ -131,13 +131,13 @@ public class SetSearchTest extends TestCase {
     
     public void testBFSDeltaStateTree() {
         setUp(false);
-        SearchAction genVars = new GenerateSetAction(vars);
+        SearchAction genVars = new GenerateSetAction<Integer>(vars);
         SearchTree tree = new CrawlingSearchTree(new BasicSearchNode(genVars), new DeltaStateManager(store));
         TreeSearch search = new TreeSearch(tree, new BreadthFirstSearch());
         doTestSearch(search, 27);
 
         setUp(true);
-        genVars = new GenerateSetAction(vars);
+        genVars = new GenerateSetAction<Integer>(vars);
         tree = new CrawlingSearchTree(new BasicSearchNode(genVars), new DeltaStateManager(store));
         search = new TreeSearch(tree, new BreadthFirstSearch());
         doTestSearch(search, 27);
@@ -145,13 +145,13 @@ public class SetSearchTest extends TestCase {
     
     public void testBFSJumpingTree() {
         setUp(false);
-        SearchAction genVars = new GenerateSetAction(vars);
+        SearchAction genVars = new GenerateSetAction<Integer>(vars);
         SearchTree tree = new JumpingSearchTree(new BasicSearchNode(genVars), new ProblemStateManager(store));
         TreeSearch search = new TreeSearch(tree, new BreadthFirstSearch());
         doTestSearch(search, 27);
 
         setUp(true);
-        genVars = new GenerateSetAction(vars);
+        genVars = new GenerateSetAction<Integer>(vars);
         tree = new JumpingSearchTree(new BasicSearchNode(genVars), new ProblemStateManager(store));
         search = new TreeSearch(tree, new BreadthFirstSearch());
         doTestSearch(search, 27);
@@ -159,12 +159,12 @@ public class SetSearchTest extends TestCase {
     
     public void testBFSRecalculatingTree() {
         setUp(false);
-        SearchAction genVars = new GenerateSetAction(vars);
+        SearchAction genVars = new GenerateSetAction<Integer>(vars);
         TreeSearch search = new TreeSearch(store, genVars, new BreadthFirstSearch());
         doTestSearch(search, 27);
 
         setUp(true);
-        genVars = new GenerateSetAction(vars);
+        genVars = new GenerateSetAction<Integer>(vars);
         search = new TreeSearch(store, genVars, new BreadthFirstSearch());
         doTestSearch(search, 27);
     }
@@ -177,7 +177,7 @@ public class SetSearchTest extends TestCase {
             // define variables
             vars = new IntSetVariable[n];
             for (int i=0; i<n; i++) {
-                ArrayList numbers = new ArrayList();
+                ArrayList<Integer> numbers = new ArrayList<Integer>();
                 for (int j=0; j<n; j++) {
                     numbers.add(new Integer(j));
                 }
@@ -192,13 +192,13 @@ public class SetSearchTest extends TestCase {
             for (int i=0; i<n; i++) {
                 for (int j=i+1; j<n; j++) {
                     // The third is a union of the previous two
-                	store.addConstraint(new EqUnion((IntSetVariable)vars[0],(IntSetVariable)vars[1], (IntSetVariable)vars[2]));
+                	store.addConstraint(new EqUnion<Integer>((IntSetVariable)vars[0],(IntSetVariable)vars[1], (IntSetVariable)vars[2]));
                     if(!store.getAutoPropagate()) {
                         store.propagate();
                     }
                     
                     // The first and second sets should have nothing in common
-                    store.addConstraint(new NullIntersection((IntSetVariable)vars[0],(IntSetVariable)vars[1]));
+                    store.addConstraint(new NullIntersection<Integer>((IntSetVariable)vars[0],(IntSetVariable)vars[1]));
                     if(!store.getAutoPropagate()) {
                         store.propagate();
                     }               

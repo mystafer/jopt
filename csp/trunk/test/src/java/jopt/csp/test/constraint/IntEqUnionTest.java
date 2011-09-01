@@ -57,7 +57,7 @@ public class IntEqUnionTest extends TestCase {
     public void testUnionScenario1() {
         try {
             initVarsScenario1();
-            gac.addConstraint(new EqUnion(x, y, z));
+            gac.addConstraint(new EqUnion<Integer>(x, y, z));
             gac.propagate();
 
             // Check union domain is correct
@@ -72,9 +72,9 @@ public class IntEqUnionTest extends TestCase {
             assertFalse("z not possible 10", z.isPossible(10));
 
             // Retrieve required set of all variables
-            Set xRequired = x.getRequiredSet();
-            Set yRequired = y.getRequiredSet();
-            Set zRequired = z.getRequiredSet();
+            Set<Integer> xRequired = x.getRequiredSet();
+            Set<Integer> yRequired = y.getRequiredSet();
+            Set<Integer> zRequired = z.getRequiredSet();
 
             // assert x required is subset of z required
             assertTrue("x subset of z", zRequired.containsAll(xRequired));
@@ -94,8 +94,8 @@ public class IntEqUnionTest extends TestCase {
     public void testUnionWithIntersectScenario1() {
         try {
             initVarsScenario1();
-            gac.addConstraint(new EqIntersection(x, y, intersect));
-            gac.addConstraint(new EqUnion(x, y, z, intersect));
+            gac.addConstraint(new EqIntersection<Integer>(x, y, intersect));
+            gac.addConstraint(new EqUnion<Integer>(x, y, z, intersect));
             gac.propagate();
             
             // Check union domain is correct
@@ -142,7 +142,7 @@ public class IntEqUnionTest extends TestCase {
     public void testUnionScenario2() {
         try {
             initVarsScenario2();
-            gac.addConstraint(new EqUnion(x, y, z));
+            gac.addConstraint(new EqUnion<Integer>(x, y, z));
 
             // propagation should fail
             gac.propagate();
@@ -158,8 +158,8 @@ public class IntEqUnionTest extends TestCase {
     public void testUnionWithIntersectScenario2() {
         try {
             initVarsScenario2();
-            gac.addConstraint(new EqIntersection(x, y, intersect));
-            gac.addConstraint(new EqUnion(x, y, z, intersect));
+            gac.addConstraint(new EqIntersection<Integer>(x, y, intersect));
+            gac.addConstraint(new EqUnion<Integer>(x, y, z, intersect));
 
             // propagation should fail
             gac.propagate();
@@ -177,15 +177,15 @@ public class IntEqUnionTest extends TestCase {
     public void testUnionScenario3() {
         try {
             initVarsScenario3();
-            gac.addConstraint(new EqUnion(x, y, z));
+            gac.addConstraint(new EqUnion<Integer>(x, y, z));
 
             // propagation might succeed
             gac.propagate();
 
             // Retrieve required set of all variables
-            Set xRequired = x.getRequiredSet();
-            Set yRequired = y.getRequiredSet();
-            Set zRequired = z.getRequiredSet();
+            Set<Integer> xRequired = x.getRequiredSet();
+            Set<Integer> yRequired = y.getRequiredSet();
+            Set<Integer> zRequired = z.getRequiredSet();
 
             // assert x required is subset of z required
             assertTrue("x subset of z", zRequired.containsAll(xRequired));
@@ -204,8 +204,8 @@ public class IntEqUnionTest extends TestCase {
     public void testUnionWithIntersectScenario3() {
         try {
             initVarsScenario3();
-            gac.addConstraint(new EqIntersection(x, y, intersect));
-            gac.addConstraint(new EqUnion(x, y, z, intersect));
+            gac.addConstraint(new EqIntersection<Integer>(x, y, intersect));
+            gac.addConstraint(new EqUnion<Integer>(x, y, z, intersect));
 
             // propagation should fail
             gac.propagate();

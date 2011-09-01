@@ -9,7 +9,7 @@ import jopt.csp.spi.arcalgorithm.graph.node.SetNode;
 /**
  * Variable that will be reduced to one or more required set of values
  */
-public interface SetVariable {
+public interface SetVariable<T> {
 	/**
 	 * Returns name of node
 	 */
@@ -23,12 +23,12 @@ public interface SetVariable {
 	/**
 	 * Retrieves node for an expression
 	 */
-	public SetNode getNode();
+	public SetNode<T> getNode();
 
 	/**
 	 * Returns domain for variable
 	 */
-	public SetDomain getDomain();
+	public SetDomain<T> getDomain();
 
 	/**
 	 * Adds arcs representing this expression to the node arc graph
@@ -38,12 +38,12 @@ public interface SetVariable {
     /**
      * Returns possible set of values
      */
-    public Set getPossibleSet();
+    public Set<T> getPossibleSet();
 
     /**
      * Returns required set of values
      */
-    public Set getRequiredSet();
+    public Set<T> getRequiredSet();
 
     /**
      * Returns true if domain is bound to a value

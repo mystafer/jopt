@@ -14,9 +14,9 @@ import jopt.csp.variable.PropagationFailureException;
  * bind each variable to a single value such that all constraints are satisfied
  * and finishes searching upon finding the first consistent assignment.
  */
-public class GenerateSetAction extends AbstractSearchNodeAction {
-	private CspSetVariable vars[];
-	private SetSelector selector;
+public class GenerateSetAction<T> extends AbstractSearchNodeAction {
+	private CspSetVariable<T> vars[];
+	private SetSelector<T> selector;
 	private VariableSelector varSelector;
 
 	/**
@@ -24,7 +24,7 @@ public class GenerateSetAction extends AbstractSearchNodeAction {
 	 * 
 	 * @param vars  Variable to instantiate
 	 */
-	public GenerateSetAction(CspSetVariable vars[]) {
+	public GenerateSetAction(CspSetVariable<T> vars[]) {
 		this(vars, null, null);
 	}
 
@@ -34,7 +34,7 @@ public class GenerateSetAction extends AbstractSearchNodeAction {
 	 * @param vars      Variable to instantiate
 	 * @param selector  Used to select next value to reduce domain of variable
 	 */
-	public GenerateSetAction(CspSetVariable vars[], SetSelector selector, VariableSelector varSelector) {
+	public GenerateSetAction(CspSetVariable<T> vars[], SetSelector<T> selector, VariableSelector varSelector) {
 		this.vars = vars;
 		this.selector = selector;
 		this.varSelector = varSelector;
@@ -47,27 +47,28 @@ public class GenerateSetAction extends AbstractSearchNodeAction {
 	 */
 	public SearchAction performAction() throws PropagationFailureException {
 		// build list of instantiate actions for variables
-		LinkedList instantiateActions = new LinkedList();
+		LinkedList<InstantiateSetAction<T>> instantiateActions = new LinkedList<InstantiateSetAction<T>>();
 		if(varSelector != null) {
 			varSelector.reset();
 			varSelector.setVariables(vars);
 			while(varSelector.hasNext()) {
-				CspSetVariable var = (CspSetVariable) varSelector.next();
+				@SuppressWarnings("unchecked")
+				CspSetVariable<T> var = (CspSetVariable<T>) varSelector.next();
 
 				// don't bother instantiating a variable that is already bound
 				if (!var.isBound()) {
-					instantiateActions.add(new InstantiateSetAction(var, selector));
+					instantiateActions.add(new InstantiateSetAction<T>(var, selector));
 				}
 			}
 			varSelector.reset();
 		}
 		else {
 			for (int i=0; i<vars.length; i++) {
-				CspSetVariable var = vars[i];
+				CspSetVariable<T> var = vars[i];
 
 				// don't bother instantiating a variable that is already bound
 				if (!var.isBound()) {
-					instantiateActions.add(new InstantiateSetAction(var, selector));
+					instantiateActions.add(new InstantiateSetAction<T>(var, selector));
 				}
 			}
 		}

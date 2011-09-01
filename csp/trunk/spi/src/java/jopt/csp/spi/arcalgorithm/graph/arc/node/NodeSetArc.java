@@ -6,11 +6,11 @@ import jopt.csp.spi.arcalgorithm.graph.node.SetNode;
 /**
  * Abstract base arc for set arc with 1 variable
  */
-public abstract class NodeSetArc extends NodeArc implements SetArc {
+public abstract class NodeSetArc<T> extends NodeArc implements SetArc {
     /**
      * Constructor
      */
-    public NodeSetArc(SetNode node) {
+    public NodeSetArc(SetNode<T> node) {
         super(node);
     }
 }

@@ -184,7 +184,7 @@ public class TabuMetaheuristic implements Metaheuristic {
      */
     private TabuMove createMove(SolverSolution neighbor, boolean in) {
         TabuMove move = new TabuMove();
-        List variables = neighbor.variables();
+        List<CspVariable> variables = neighbor.variables();
         for (int i=0; i<variables.size(); i++) {
             CspVariable var = (CspVariable) variables.get(i);
             

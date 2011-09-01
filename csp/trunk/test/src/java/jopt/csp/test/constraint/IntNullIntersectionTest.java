@@ -48,7 +48,7 @@ public class IntNullIntersectionTest extends TestCase {
     public void testIntersectScenario1() {
         try {
             initVarsScenario1();
-            gac.addConstraint(new NullIntersection(x, y));
+            gac.addConstraint(new NullIntersection<Integer>(x, y));
             gac.propagate();
 
             // Check x domain is correct
@@ -105,7 +105,7 @@ public class IntNullIntersectionTest extends TestCase {
             initVarsScenario1();
 
             // Add constraint that should cause failure
-            gac.addConstraint(new NullIntersection(x, y));
+            gac.addConstraint(new NullIntersection<Integer>(x, y));
             x.addRequired(7);
             y.addRequired(7);
 

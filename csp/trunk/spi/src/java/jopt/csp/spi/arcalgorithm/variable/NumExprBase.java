@@ -31,6 +31,7 @@ import jopt.csp.spi.arcalgorithm.domain.NumDomain;
 import jopt.csp.spi.arcalgorithm.graph.GraphConstraint;
 import jopt.csp.spi.arcalgorithm.graph.NodeArcGraph;
 import jopt.csp.spi.arcalgorithm.graph.arc.Arc;
+import jopt.csp.spi.arcalgorithm.graph.node.Node;
 import jopt.csp.spi.solver.VariableChangeListener;
 import jopt.csp.spi.solver.VariableChangeSource;
 import jopt.csp.spi.util.GenericIndex;
@@ -185,8 +186,8 @@ public abstract class NumExprBase extends VariableChangeBase implements CspNumEx
     /**
      * Returns collection of all nodes used to build this expression 
      */
-    public Collection getNodeCollection() {
-        Collection nodes = null;
+    public Collection<Node> getNodeCollection() {
+        Collection<Node> nodes = null;
 
         // retrieve nodes from a
         if (aexpr!=null)
@@ -202,7 +203,7 @@ public abstract class NumExprBase extends VariableChangeBase implements CspNumEx
 
         // add this node to collection
         if (nodes==null)
-            nodes = new ArrayList();
+            nodes = new ArrayList<Node>();
         nodes.add(getNode());
 
         return nodes;
@@ -213,7 +214,7 @@ public abstract class NumExprBase extends VariableChangeBase implements CspNumEx
      * value of this constraint upon a change
      */
     public Arc[] getBooleanSourceArcs(){
-        ArrayList arcs = new ArrayList();
+        ArrayList<Arc> arcs = new ArrayList<Arc>();
         if(constraint == null) {
             constraint = createGraphConstraint();
         }

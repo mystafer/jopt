@@ -10,16 +10,16 @@ import jopt.csp.variable.PropagationFailureException;
 public abstract class AbstractDomain implements Domain, DomainChangeSource, ChoicePointDataSource {
     protected boolean changed;
     
-    private HashSet domainListeners;
-    private HashSet rangeListeners;
-    private HashSet valueListeners;
+    private HashSet<DomainChangeListener> domainListeners;
+    private HashSet<DomainChangeListener> rangeListeners;
+    private HashSet<DomainChangeListener> valueListeners;
     
     protected DomainChangeEvent event;
     
     /**
      * Constructor
      */
-    protected AbstractDomain(HashSet domainListeners, HashSet rangeListeners, HashSet valueListeners) {
+    protected AbstractDomain(HashSet<DomainChangeListener> domainListeners, HashSet<DomainChangeListener> rangeListeners, HashSet<DomainChangeListener> valueListeners) {
         this.domainListeners = domainListeners;
         this.rangeListeners = rangeListeners;
         this.valueListeners = valueListeners;
@@ -30,7 +30,7 @@ public abstract class AbstractDomain implements Domain, DomainChangeSource, Choi
      * Constructor
      */
     protected AbstractDomain() {
-        this(new HashSet(), new HashSet(), new HashSet());
+        this(new HashSet<DomainChangeListener>(), new HashSet<DomainChangeListener>(), new HashSet<DomainChangeListener>());
     }
     
     //  javadoc is inherited
@@ -87,7 +87,7 @@ public abstract class AbstractDomain implements Domain, DomainChangeSource, Choi
     
     protected void notifyChoicePointPop() {
         if (rangeListeners != null) {
-            Iterator iterator = rangeListeners.iterator();
+            Iterator<DomainChangeListener> iterator = rangeListeners.iterator();
             while (iterator.hasNext()) {
                 DomainChangeListener listener = (DomainChangeListener) iterator.next();
                 listener.choicePointPop();
@@ -97,7 +97,7 @@ public abstract class AbstractDomain implements Domain, DomainChangeSource, Choi
     
     protected void notifyChoicePointPush() {
         if (rangeListeners != null) {
-            Iterator iterator = rangeListeners.iterator();
+            Iterator<DomainChangeListener> iterator = rangeListeners.iterator();
             while (iterator.hasNext()) {
                 DomainChangeListener listener = (DomainChangeListener) iterator.next();
                 listener.choicePointPush();
@@ -119,7 +119,7 @@ public abstract class AbstractDomain implements Domain, DomainChangeSource, Choi
         event.setType(type); 
         //Notify value listeners
         if (type == DomainChangeType.VALUE && valueListeners != null) {
-            Iterator iterator = valueListeners.iterator();
+            Iterator<DomainChangeListener> iterator = valueListeners.iterator();
             while (iterator.hasNext()) {
                 DomainChangeListener listener = (DomainChangeListener) iterator.next();
                 listener.domainChange(event);
@@ -128,7 +128,7 @@ public abstract class AbstractDomain implements Domain, DomainChangeSource, Choi
 
         // Notify range listeners
         if (type >= DomainChangeType.RANGE && rangeListeners != null) {
-            Iterator iterator = rangeListeners.iterator();
+            Iterator<DomainChangeListener> iterator = rangeListeners.iterator();
             while (iterator.hasNext()) {
                 DomainChangeListener listener = (DomainChangeListener) iterator.next();
                 listener.domainChange(event);
@@ -137,7 +137,7 @@ public abstract class AbstractDomain implements Domain, DomainChangeSource, Choi
         
         // Notify domain listeners
         if (domainListeners != null) {
-            Iterator iterator = domainListeners.iterator();
+            Iterator<DomainChangeListener> iterator = domainListeners.iterator();
             while (iterator.hasNext()) {
                 DomainChangeListener listener = (DomainChangeListener) iterator.next();
                 listener.domainChange(event);

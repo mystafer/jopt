@@ -129,6 +129,7 @@ public class FiveQueenMultipleSolutions {
 		store.propagate();
 		
 		//save the variables in the consistent state
+		@SuppressWarnings("rawtypes")
 		StateStore ss = (StateStore) ((HashMap) store.getCurrentState()).get("d");
 		ss.storeState();
 		System.out.println("--consistent state stored--");

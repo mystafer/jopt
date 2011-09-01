@@ -9,13 +9,13 @@ import jopt.csp.variable.PropagationFailureException;
 /**
  * Arc representing null-intersection of source nodes
  */
-public class GenericSetNullIntersectionArc extends GenericSetArc {
+public class GenericSetNullIntersectionArc<T> extends GenericSetArc {
     /**
      * Constructor
      *
      * @param   sources     Source nodes in equation
      */
-    public GenericSetNullIntersectionArc(SetNode[] sources) {
+    public GenericSetNullIntersectionArc(SetNode<T>[] sources) {
         super(sources, sources);
     }
     
@@ -39,17 +39,19 @@ public class GenericSetNullIntersectionArc extends GenericSetArc {
      * Handles propagation useing the source nodes delta or complete required set
      */
     private void filterTarget(Node src, boolean requiredDelta) throws PropagationFailureException {
-        SetNode x = (SetNode) src;
+        @SuppressWarnings("unchecked")
+		SetNode<T> x = (SetNode<T>) src;
 
         // Loop over recently required values in X and remove as possibility
         // from all other variables
-        Iterator iterator = requiredDelta ? x.getRequiredDeltaSet().iterator() : x.getRequiredSet().iterator();
+        Iterator<T> iterator = requiredDelta ? x.getRequiredDeltaSet().iterator() : x.getRequiredSet().iterator();
         while (iterator.hasNext()) {
             Object xval = iterator.next();
 
             // Loop over other other variables
             for (int j=0; j<sources.length; j++) {
-                SetNode z = (SetNode) sources[j];
+                @SuppressWarnings("unchecked")
+				SetNode<T> z = (SetNode<T>) sources[j];
 
                 // Skip if x and z are same node
                 if (!x.equals(z))

@@ -22,7 +22,7 @@ public class VariableSelectorTest extends TestCase {
     
     private CspSolver solver;
     private CspVariableFactory varFactory;
-    private ArrayList variables;
+    private ArrayList<CspVariable> variables;
     private SearchActions actions;
     
     private static int MAX_TRIES = 20;
@@ -32,7 +32,7 @@ public class VariableSelectorTest extends TestCase {
         solver = CspSolver.createSolver();
         actions = solver.getSearchActions();
         varFactory = solver.getVarFactory();
-        variables = new ArrayList();
+        variables = new ArrayList<CspVariable>();
     }
     
     public void tearDown() {
@@ -344,17 +344,17 @@ public class VariableSelectorTest extends TestCase {
      * Test the search action to generate solution to array of CspSetVariables.
      * This will use the default variable selection method of in-order.
      */
+    @SuppressWarnings("unchecked")
     public void testSetInOrder() {
         try {
             useSetVars(); 
-            SearchAction action = actions.generate(
-                    (CspSetVariable[]) variables.toArray(new CspSetVariable[3]));
+			SearchAction action = actions.<Integer>generate(variables.toArray(new CspSetVariable[3]));
             
             SolverSolution solution = solveProblem(action);
 
-            assertTrue(solution.getSolution((CspSetVariable) variables.get(0)).getPossibleSet().contains(new Integer(1)));
-            assertTrue(solution.getSolution((CspSetVariable) variables.get(0)).getPossibleSet().contains(new Integer(2)));
-            assertTrue(solution.getSolution((CspSetVariable) variables.get(0)).getPossibleSet().contains(new Integer(3)));
+            assertTrue(solution.getSolution((CspSetVariable<Integer>) variables.get(0)).getPossibleSet().contains(new Integer(1)));
+            assertTrue(solution.getSolution((CspSetVariable<Integer>) variables.get(0)).getPossibleSet().contains(new Integer(2)));
+            assertTrue(solution.getSolution((CspSetVariable<Integer>) variables.get(0)).getPossibleSet().contains(new Integer(3)));
         }
         catch (PropagationFailureException ex) {
             ex.printStackTrace();
@@ -369,8 +369,8 @@ public class VariableSelectorTest extends TestCase {
     public void testSetRandomOrder() {
         try {
             useSetVars(); 
-            SearchAction action = actions.generate(
-                    (CspSetVariable[]) variables.toArray(new CspSetVariable[3]),null,new RandomVariableSelector());
+            @SuppressWarnings("unchecked")
+			SearchAction action = actions.<Integer>generate(variables.toArray(new CspSetVariable[3]),null,new RandomVariableSelector());
             
             SolverSolution solution1 = solveProblem(action);
             SolverSolution solution2 = solveProblem(action);
@@ -495,10 +495,11 @@ public class VariableSelectorTest extends TestCase {
     /**
      * Helper method to create CspSetVariable and constraints
      */
-    private void useSetVars() throws PropagationFailureException {
-        CspSetVariable x = varFactory.intSetVar("x", 1, 3);
-        CspSetVariable y = varFactory.intSetVar("y", 1, 3);
-        CspSetVariable z = varFactory.intSetVar("z", 1, 3);
+    @SuppressWarnings("unchecked")
+	private void useSetVars() throws PropagationFailureException {
+        CspSetVariable<Integer> x = varFactory.intSetVar("x", 1, 3);
+        CspSetVariable<Integer> y = varFactory.intSetVar("y", 1, 3);
+        CspSetVariable<Integer> z = varFactory.intSetVar("z", 1, 3);
         
         variables.add(x);
         variables.add(y);

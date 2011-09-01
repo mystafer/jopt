@@ -220,7 +220,7 @@ public class BooleanExpr extends IntExpr implements CspBooleanExpr, BoolExpr {
      * value of this constraint upon a change
      */
     public Arc[] getBooleanSourceArcs(){
-        ArrayList arcs = new ArrayList();
+        ArrayList<Arc> arcs = new ArrayList<Arc>();
         arcs.addAll(Arrays.asList(super.getBooleanSourceArcs()));
         if ((wrappedConstraint!=null)&&(wrappedConstraint instanceof NumConstraint))
             arcs.addAll(Arrays.asList(((NumConstraint)wrappedConstraint).getBooleanSourceArcs(false)));
@@ -630,8 +630,8 @@ public class BooleanExpr extends IntExpr implements CspBooleanExpr, BoolExpr {
         return buf.toString();
     }
 
-    public Collection getNodeCollection() {
-        Collection nodes = null;
+    public Collection<Node> getNodeCollection() {
+        Collection<Node> nodes = null;
         
         // retrieve nodes from a
         if (aexpr!=null)
@@ -647,7 +647,7 @@ public class BooleanExpr extends IntExpr implements CspBooleanExpr, BoolExpr {
         
         // add this node to collection
         if (nodes==null)
-        	nodes = new ArrayList();
+        	nodes = new ArrayList<Node>();
         nodes.add(getNode());
         
     	return nodes;

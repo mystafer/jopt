@@ -287,7 +287,7 @@ public abstract class GenericNumNode extends AbstractNode implements NodeChangeL
     	return 0;
     }
     
-    public Iterator values() {
+    public Iterator<Number> values() {
     	return null;
     }
     
@@ -320,7 +320,7 @@ public abstract class GenericNumNode extends AbstractNode implements NodeChangeL
     
     private void processNodeEvent(NodeChangeEvent ev) {
         int idx = ((Integer) (ev.getCallbackValue())).intValue();
-        Map modifyMap = getModifiedMinMaxChangeMap();
+        Map<String, Integer> modifyMap = getModifiedMinMaxChangeMap();
 
         // add to value modified set
         if (ev.getType() == DomainChangeType.VALUE) {
@@ -405,15 +405,16 @@ public abstract class GenericNumNode extends AbstractNode implements NodeChangeL
     /**
      * Returns the set of changes to modified node min / max value
      */
-    private Map getModifiedMinMaxChangeMap() {
+    private Map<String, Integer> getModifiedMinMaxChangeMap() {
         if (cpdata==null){
             return null;
         }
         
         // retrieve map of modifications
-        Map modifyMap = (Map) cpdata.get("mm");
+        @SuppressWarnings("unchecked")
+		Map<String, Integer> modifyMap = (Map<String, Integer>) cpdata.get("mm");
         if (modifyMap == null) {
-            modifyMap = new HashMap();
+            modifyMap = new HashMap<String, Integer>();
             cpdata.put("mm", modifyMap);
         }
         
@@ -454,7 +455,7 @@ public abstract class GenericNumNode extends AbstractNode implements NodeChangeL
     // javadoc is inherited
     public void beforeChoicePointPopEvent() {
         // Add any values that were removed
-        Map modifyMap = getModifiedMinMaxChangeMap();
+        Map<String, Integer> modifyMap = getModifiedMinMaxChangeMap();
         
         //If no modify data is stored, there can be no popping back
         if (modifyMap==null) {
@@ -519,7 +520,7 @@ public abstract class GenericNumNode extends AbstractNode implements NodeChangeL
      */
     public Object getState() {
         // store state for each node in a statemap
-        Map stateMap = new HashMap();
+        Map<String, Object> stateMap = new HashMap<String, Object>();
         for (int i=0; i<nodes.length; i++) {
             Node n = nodes[i];
             stateMap.put(n.getName(), n.getState());
@@ -533,7 +534,8 @@ public abstract class GenericNumNode extends AbstractNode implements NodeChangeL
      */
     public void restoreState(Object state) {
         // restore state for each node in a statemap
-    	Map stateMap = (Map) state;
+    	@SuppressWarnings("unchecked")
+		Map<String, Object> stateMap = (Map<String, Object>) state;
         for (int i=0; i<nodes.length; i++) {
             Node n = nodes[i];
             n.restoreState(stateMap.get(n.getName()));

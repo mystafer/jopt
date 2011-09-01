@@ -49,7 +49,7 @@ public class GenerateIntegerAction extends AbstractSearchNodeAction {
 	 */
 	public SearchAction performAction() throws PropagationFailureException {
 		// build list of instantiate actions for variables
-		LinkedList instantiateActions = new LinkedList();
+		LinkedList<InstantiateIntegerAction> instantiateActions = new LinkedList<InstantiateIntegerAction>();
 		if(varSelector !=null ) {
 			varSelector.reset();
 			varSelector.setVariables(vars);

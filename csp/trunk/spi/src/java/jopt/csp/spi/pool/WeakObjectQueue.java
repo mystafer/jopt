@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Pool implementation that releases idle objects during garbage collection
  */
 public class WeakObjectQueue {
-    private WeakReference ref = null;
+    private WeakReference<ArrayList<Object>> ref = null;
     
     /**
      * Pops an object from the queue or returns null if no objects
@@ -18,7 +18,7 @@ public class WeakObjectQueue {
         if (ref==null) return null;
         
         // retrieve reference list
-        ArrayList list = (ArrayList) ref.get();
+		ArrayList<Object> list = (ArrayList<Object>) ref.get();
         if (list==null) return null;
         
         // check if value exists in list
@@ -33,12 +33,12 @@ public class WeakObjectQueue {
 	public void push(Object obj) {
         try {
             // retrieve list to store reference
-            ArrayList list = (ref != null) ? (ArrayList) ref.get() : null;
+			ArrayList<Object> list = (ref != null) ? (ArrayList<Object>) ref.get() : null;
             
             // check if list has been initialized
             if (list==null) {
-                list = new ArrayList();
-                ref = new WeakReference(list);
+                list = new ArrayList<Object>();
+                ref = new WeakReference<ArrayList<Object>>(list);
             }
             
             // add object to list
@@ -57,7 +57,7 @@ public class WeakObjectQueue {
         if (ref==null) return;
         
         // retrieve reference list
-        ArrayList list = (ArrayList) ref.get();
+        ArrayList<Object> list = ref.get();
         if (list==null) return;
         
         // check if value exists in list

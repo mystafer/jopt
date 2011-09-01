@@ -5,18 +5,18 @@ import java.util.Collection;
 
 import jopt.csp.variable.PropagationFailureException;
 
-public class IntSetDomain extends AbstractSetDomain implements SetDomain {
+public class IntSetDomain extends AbstractSetDomain<Integer> implements SetDomain<Integer> {
     /**
      * Internal Constructor
      */
-    private IntSetDomain(SetDomainBase base) {
+    private IntSetDomain(SetDomainBase<Integer> base) {
         super(base);
     }
     
     /**
      * Creates a domain containing all values in collection
      */
-    public IntSetDomain(Collection values) {
+    public IntSetDomain(Collection<Integer> values) {
         super(values);
     }
     
@@ -26,10 +26,10 @@ public class IntSetDomain extends AbstractSetDomain implements SetDomain {
     public IntSetDomain(int min, int max) {
         super();
         
-        ArrayList list = new ArrayList();
+        ArrayList<Integer> list = new ArrayList<Integer>();
         for (int i=min; i<=max; i++)
             list.add(new Integer(i));
-        this.setdomain = new SetDomainBase(list);
+        this.setdomain = new SetDomainBase<Integer>(list);
     }
     
     /**
@@ -43,7 +43,7 @@ public class IntSetDomain extends AbstractSetDomain implements SetDomain {
      * Returns true if value is in domain
      */
     public boolean isInDomain(int val) {
-        return setdomain.isInDomain(new Integer(val));
+        return setdomain.isInDomain(val);
     }
 
     /**
@@ -80,7 +80,8 @@ public class IntSetDomain extends AbstractSetDomain implements SetDomain {
         if (setdomain.changed()) notifyDomainChange();
     }
     
-    public Object clone() {
-        return new IntSetDomain((SetDomainBase) setdomain.clone());
+    @SuppressWarnings("unchecked")
+	public Object clone() {
+        return new IntSetDomain((SetDomainBase<Integer>) setdomain.clone());
     }
 }

@@ -14,13 +14,13 @@ import jopt.csp.solution.SolverSolution;
  * @version $Revision: 1.6 $
  */
 public class SimpleNeighborhood implements Neighborhood {
-    private List neighbors;
+    private List<SolverSolution> neighbors;
     private int lastSelected = -1;
     /**
      * Creates a simple neighborhood based on an initial solution
      */
     public SimpleNeighborhood() {
-        this.neighbors = new LinkedList();
+        this.neighbors = new LinkedList<SolverSolution>();
     }
     
     // javadoc inherited from Neighborhood

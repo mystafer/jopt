@@ -31,7 +31,7 @@ public abstract class AbstractSearchNodeAction implements SearchAction {
      * @param secondAction  Second action in choice
      */
     protected ChoicePoint choice(SearchAction firstAction, SearchAction secondAction) {
-        LinkedList actions = new LinkedList();
+        LinkedList<SearchAction> actions = new LinkedList<SearchAction>();
         actions.add(firstAction);
         actions.add(secondAction);
         return new ChoicePoint(actions);
@@ -42,7 +42,7 @@ public abstract class AbstractSearchNodeAction implements SearchAction {
      * 
      * @param actions  Collection of actions to choose between
      */
-    protected ChoicePoint choice(Collection actions) {
+    protected ChoicePoint choice(Collection<SearchAction> actions) {
         return new ChoicePoint(actions);
     }
     
@@ -53,7 +53,7 @@ public abstract class AbstractSearchNodeAction implements SearchAction {
      * @param secondAction  Second action in combination
      */
     protected CombinedAction combineActions(SearchAction firstAction, SearchAction secondAction) {
-        LinkedList actions = new LinkedList();
+        LinkedList<SearchAction> actions = new LinkedList<SearchAction>();
         actions.add(firstAction);
         actions.add(secondAction);
         return new CombinedAction(actions);
@@ -65,7 +65,7 @@ public abstract class AbstractSearchNodeAction implements SearchAction {
      * 
      * @param actions  List of actions to combine
      */
-    protected CombinedAction combineActions(List actions) {
+    protected CombinedAction combineActions(List<? extends SearchAction> actions) {
         return new CombinedAction(actions);
     }
 }

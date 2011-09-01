@@ -16,7 +16,7 @@ public class FailLimit implements SearchLimit {
 
 	private int maxFailures;
 	private int depth;
-	private List path;
+	private List<Integer> path;
 	private BitSet binaryPath;
 	private BitSet workBits;
 	
@@ -62,12 +62,12 @@ public class FailLimit implements SearchLimit {
      */
     private int nonBinaryFailures(TreeNode n) {
         // determine maximum possible common depth that
-    	List currentPath = null;
+    	List<Integer> currentPath = null;
     	if (this.path != null)
     		currentPath = this.path;
     	else
     		currentPath = convertToNonBinary(this.binaryPath, this.depth);
-        List nPath = n.getPath();
+        List<Integer> nPath = n.getPath();
         int commonDepth = Math.min(currentPath.size(), nPath.size());
         
         // determine depth of common parent
@@ -139,8 +139,8 @@ public class FailLimit implements SearchLimit {
     /**
      * Helper function to convert a binary path to a non-binary path
      */
-    private List convertToNonBinary(BitSet path, int depth) {
-        LinkedList list = new LinkedList();
+    private List<Integer> convertToNonBinary(BitSet path, int depth) {
+        LinkedList<Integer> list = new LinkedList<Integer>();
         for (int i=0; i<depth; i++) {
             if (path.get(i))
             	list.addLast(new Integer(1));

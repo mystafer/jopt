@@ -18,11 +18,12 @@ public class BreadthFirstSearch implements TreeSearchTechnique {
         // Queue of open nodes is actually stored in the previous move object, not in this class.
         // In a breadth-first search, open nodes are those whose children have not been enumerated
         // and added to the FIFO queue of nodes to visit.
-        LinkedList openNodes = (LinkedList) move.getTechniqueData();
+        @SuppressWarnings("unchecked")
+		LinkedList<SearchNodeReference> openNodes = (LinkedList<SearchNodeReference>) move.getTechniqueData();
         
         // If this is the first move, initialize the open nodes queue
         if (openNodes == null) {
-            openNodes = new LinkedList();
+            openNodes = new LinkedList<SearchNodeReference>();
             move.setTechniqueData(openNodes);
         }
         

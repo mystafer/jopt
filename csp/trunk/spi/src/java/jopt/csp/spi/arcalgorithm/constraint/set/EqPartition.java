@@ -12,7 +12,7 @@ import jopt.csp.spi.arcalgorithm.graph.node.SetNode;
  * a union constraint except the source variables cannot share any common
  * values.
  */
-public class EqPartition extends EqUnion {
+public class EqPartition<T> extends EqUnion<T> {
     /**
      * Creates new partition constraint
      * 
@@ -20,7 +20,8 @@ public class EqPartition extends EqUnion {
      * @param y         Second variable used to form union constrained to have no common values with x
      * @param z         Target variable that is constrained to be equal to the union of the sources
      */
-    public EqPartition(SetVariable x, SetVariable y, SetVariable z) {
+    @SuppressWarnings("unchecked")
+	public EqPartition(SetVariable<T> x, SetVariable<T> y, SetVariable<T> z) {
         this(new SetVariable[] {x, y}, z, false);
     }
     
@@ -30,7 +31,7 @@ public class EqPartition extends EqUnion {
      * @param sources           Array of sources that form the union constrained to have no common values
      * @param target            Target variable that is constrained to be equal to the union of the sources
      */
-    public EqPartition(SetVariable sources[], SetVariable target) {
+    public EqPartition(SetVariable<T> sources[], SetVariable<T> target) {
         super(sources, target, null, false);
     }
     
@@ -43,7 +44,8 @@ public class EqPartition extends EqUnion {
      * @param advancedFilter    True if advanced filtering should be performed which will reduce
      *                              domains more than normal but takes longer to run
      */
-    public EqPartition(SetVariable x, SetVariable y, SetVariable z, boolean advancedFilter) {
+    @SuppressWarnings("unchecked")
+	public EqPartition(SetVariable<T> x, SetVariable<T> y, SetVariable<T> z, boolean advancedFilter) {
         this(new SetVariable[] {x, y}, z, advancedFilter);
     }
     
@@ -55,7 +57,7 @@ public class EqPartition extends EqUnion {
      * @param advancedFilter    True if advanced filtering should be performed which will reduce
      *                              domains more than normal but takes longer to run
      */
-    public EqPartition(SetVariable sources[], SetVariable target, boolean advancedFilter) {
+    public EqPartition(SetVariable<T> sources[], SetVariable<T> target, boolean advancedFilter) {
         super(sources, target, advancedFilter);
     }
     
@@ -63,9 +65,9 @@ public class EqPartition extends EqUnion {
      * Creates an array of arcs representing constraint
      */
     protected Arc[] createArcs() {
-        SetNode sourceNodes[] = getSetSourceNodes();
-        ArrayList arcs = new ArrayList(Arrays.asList(super.createArcs()));
-        arcs.add(new GenericSetNullIntersectionArc(sourceNodes));
+        SetNode<T> sourceNodes[] = getSetSourceNodes();
+        ArrayList<Arc> arcs = new ArrayList<Arc>(Arrays.asList(super.createArcs()));
+        arcs.add(new GenericSetNullIntersectionArc<T>(sourceNodes));
         return (Arc[]) arcs.toArray(new Arc[arcs.size()]);
     }
 }

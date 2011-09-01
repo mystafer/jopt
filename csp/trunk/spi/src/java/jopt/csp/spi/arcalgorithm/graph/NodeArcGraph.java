@@ -46,17 +46,17 @@ public interface NodeArcGraph {
     /**
      * Retrieves a set of value dependent source arcs for node
      */
-    public Set getValueSourceArcs(Node node);
+    public Set<Arc> getValueSourceArcs(Node node);
     
     /**
      * Retrieves a set of range dependent source arcs for node
      */
-    public Set getRangeSourceArcs(Node node);
+    public Set<Arc> getRangeSourceArcs(Node node);
     
     /**
      * Retrieves a set of domain dependent source arcs for node
      */
-    public Set getDomainSourceArcs(Node node);
+    public Set<Arc> getDomainSourceArcs(Node node);
     
     /**
      * Returns true if graph contains specific node
@@ -72,12 +72,12 @@ public interface NodeArcGraph {
     /**
      * Returns all the nodes contained in the graph
      */
-    public Set getAllNodes();
+    public Set<Node> getAllNodes();
     
     /**
      * Returns all the arcs contained in the graph
      */
-    public Set getAllArcs();
+    public Set<Arc> getAllArcs();
     
     /**
      * Returns an object containing current state of the graph: the arcs and

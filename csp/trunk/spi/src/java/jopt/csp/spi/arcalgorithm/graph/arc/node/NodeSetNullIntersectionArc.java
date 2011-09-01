@@ -9,14 +9,14 @@ import jopt.csp.variable.PropagationFailureException;
 /**
  * Arc representing Z(target) has null-intersection x(source)
  */
-public class NodeSetNullIntersectionArc extends NodeSetArc {
-    private Set constVals;
+public class NodeSetNullIntersectionArc<T> extends NodeSetArc<T> {
+    private Set<T> constVals;
     private boolean constSource;
     
     /**
      * Internal Constructor
      */
-    private NodeSetNullIntersectionArc(SetNode node, Set constVals, boolean constSource) {
+    private NodeSetNullIntersectionArc(SetNode<T> node, Set<T> constVals, boolean constSource) {
         super(node);
         this.constVals = constVals;
         this.constSource = constSource;
@@ -25,14 +25,14 @@ public class NodeSetNullIntersectionArc extends NodeSetArc {
     /**
      * Constructor
      */
-    public NodeSetNullIntersectionArc(SetNode x, Set z) {
+    public NodeSetNullIntersectionArc(SetNode<T> x, Set<T> z) {
         this(x, z, false);
     }
     
     /**
      * Constructor
      */
-    public NodeSetNullIntersectionArc(Set x, SetNode z) {
+    public NodeSetNullIntersectionArc(Set<T> x, SetNode<T> z) {
         this(z, x, true);
     }
     
@@ -74,10 +74,11 @@ public class NodeSetNullIntersectionArc extends NodeSetArc {
      * @throws PropagationFailureException  If domain of target node becomes empty
      */
     public void propagate() throws PropagationFailureException {
-        SetNode snode = (SetNode) node;
+        @SuppressWarnings("unchecked")
+		SetNode<T> snode = (SetNode<T>) node;
         
         // Loop over constant values and remove required values from variable
-        Iterator iterator = constVals.iterator();
+        Iterator<T> iterator = constVals.iterator();
         while (iterator.hasNext()) {
             Object val = iterator.next();
             snode.removePossible(val);

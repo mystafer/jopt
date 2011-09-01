@@ -64,8 +64,8 @@ public class LocalSearchImpl implements LocalSearch {
      * Adds all variables to the constraint store to ensure their states are
      * maintained correctly while searching
      */
-    private void addVarsToCs(Collection vars) {
-        Iterator varIter = vars.iterator();
+    private void addVarsToCs(Collection<CspVariable> vars) {
+        Iterator<CspVariable> varIter = vars.iterator();
         while (varIter.hasNext())
             store.addVariable((CspVariable) varIter.next(), true);
     }

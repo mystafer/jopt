@@ -13,9 +13,9 @@ import jopt.csp.spi.arcalgorithm.graph.node.SetNode;
 /**
  * Constraint representing union( sources ) = target
  */
-public class EqUnion extends SetConstraint {
-    protected SetVariable intersect;
-    protected SetNode intersectNode;
+public class EqUnion<T> extends SetConstraint<T> {
+    protected SetVariable<T> intersect;
+    protected SetNode<T> intersectNode;
     protected boolean advancedFilter;
     
     /**
@@ -25,7 +25,8 @@ public class EqUnion extends SetConstraint {
      * @param y         Second variable used to form union
      * @param z         Target variable that is constrained to be equal to the union of the sources
      */
-    public EqUnion(SetVariable x, SetVariable y, SetVariable z) {
+    @SuppressWarnings("unchecked")
+	public EqUnion(SetVariable<T> x, SetVariable<T> y, SetVariable<T> z) {
         this(new SetVariable[] {x, y}, z, null, false);
     }
     
@@ -35,7 +36,7 @@ public class EqUnion extends SetConstraint {
      * @param sources           Array of sources that form the union
      * @param target            Target variable that is constrained to be equal to the union of the sources
      */
-    public EqUnion(SetVariable sources[], SetVariable target) {
+    public EqUnion(SetVariable<T> sources[], SetVariable<T> target) {
         this(sources, target, null, false);
     }
     
@@ -49,7 +50,8 @@ public class EqUnion extends SetConstraint {
      * @param intersect This variable must be the intersection of X and Y for this constraint to
      *                      work properly
      */
-    public EqUnion(SetVariable x, SetVariable y, SetVariable z, SetVariable intersect) {
+    @SuppressWarnings("unchecked")
+	public EqUnion(SetVariable<T> x, SetVariable<T> y, SetVariable<T> z, SetVariable<T> intersect) {
         this(new SetVariable[] {x, y}, z, intersect, false);
     }
     
@@ -61,7 +63,7 @@ public class EqUnion extends SetConstraint {
      * @param advancedFilter    True if advanced filtering should be performed which will reduce
      *                              domains more than normal but takes longer to run
      */
-    public EqUnion(SetVariable sources[], SetVariable target, boolean advancedFilter) {
+    public EqUnion(SetVariable<T> sources[], SetVariable<T> target, boolean advancedFilter) {
         this(sources, target, null, advancedFilter);
     }
     
@@ -75,7 +77,8 @@ public class EqUnion extends SetConstraint {
      * @param advancedFilter    True if advanced filtering should be performed which will reduce
      *                              domains more than normal but takes longer to run
      */
-    protected EqUnion(SetVariable sources[], SetVariable target, SetVariable intersect, boolean advancedFilter) {
+    @SuppressWarnings("unchecked")
+	protected EqUnion(SetVariable<T> sources[], SetVariable<T> target, SetVariable<T> intersect, boolean advancedFilter) {
         super(sources, new SetVariable[]{target});
         this.intersect = intersect;
         
@@ -89,28 +92,28 @@ public class EqUnion extends SetConstraint {
      * Creates an array of arcs representing constraint
      */
     protected Arc[] createArcs() {
-        SetNode sourceNodes[] = getSetSourceNodes();
-        SetNode targetNodes[] = getSetTargetNodes();
-        ArrayList arcs = new ArrayList();
+        SetNode<T> sourceNodes[] = getSetSourceNodes();
+        SetNode<T> targetNodes[] = getSetTargetNodes();
+        ArrayList<Arc> arcs = new ArrayList<Arc>();
         
         // Create arc removing values from source not possible in target
         for (int i=0; i<sourceNodes.length; i++)
-            arcs.add(new BinarySetSubsetArc(targetNodes[0], sourceNodes[i], false));
+            arcs.add(new BinarySetSubsetArc<T>(targetNodes[0], sourceNodes[i], false));
         
         // Create arc forcing target to be union of nodes
-        arcs.add(new HyperSetUnionArc(sourceNodes, targetNodes[0]));
+        arcs.add(new HyperSetUnionArc<T>(sourceNodes, targetNodes[0]));
         
         // Check if intersection node is supplied
         // and create arc further reducing union based on intersection
         if (intersectNode != null) {
-            arcs.add(new GenericSetUnionIntersectFilterArc(targetNodes[0], sourceNodes[0], sourceNodes[1], intersectNode));
+            arcs.add(new GenericSetUnionIntersectFilterArc<T>(targetNodes[0], sourceNodes[0], sourceNodes[1], intersectNode));
         }
         
         // Check if advanced filtering should be performed
         // to further reduced source variables based on changes to the
         // union
         if (advancedFilter) {
-            arcs.add(new GenericSetUnionAdvancedFilterArc(targetNodes[0], sourceNodes));
+            arcs.add(new GenericSetUnionAdvancedFilterArc<T>(targetNodes[0], sourceNodes));
         }
         
         return (Arc[]) arcs.toArray(new Arc[arcs.size()]);

@@ -93,12 +93,13 @@ public class CrawlingSearchTree extends AbstractSearchTree {
      * Moves to a specific node using non-binary paths from the
      * root to the current and new nodes 
      */
-    private void crawlNonBinary(CrawlingNodeRef ref) {
+    @SuppressWarnings("unchecked")
+	private void crawlNonBinary(CrawlingNodeRef ref) {
         // determine maximum possible common depth that 
-        List currentPath = currentNode.getPath();
-        List nPath = null;
+        List<Integer> currentPath = currentNode.getPath();
+        List<Integer> nPath = null;
         if (ref.path instanceof List)
-            nPath = (List) ref.path;
+            nPath = (List<Integer>) ref.path;
         else
             nPath = convertToNonBinary((BitSet) ref.path, ref.depth);
         int commonDepth = Math.min(currentPath.size(), nPath.size());
@@ -209,8 +210,8 @@ public class CrawlingSearchTree extends AbstractSearchTree {
     /**
      * Helper function to convert a binary path to a non-binary path
      */
-    private List convertToNonBinary(BitSet path, int depth) {
-        LinkedList list = new LinkedList();
+    private List<Integer> convertToNonBinary(BitSet path, int depth) {
+        LinkedList<Integer> list = new LinkedList<Integer>();
         for (int i=0; i<depth; i++) {
             if (path.get(i))
             	list.addLast(new Integer(1));

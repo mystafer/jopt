@@ -138,10 +138,6 @@ public class EqConstraintToBooleanNodeTest extends TestCase {
         	this.isOpposite = isOpposite;
         }
     	
-    	public boolean isOverRealInterval() {
-        	return false;
-        }
-    	
     	public boolean isTrue()
         {
         	return false;

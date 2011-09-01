@@ -19,8 +19,8 @@ import jopt.csp.variable.CspVariable;
  * Implementation of a solution that is produced by a solver
  */
 public class SolverSolution extends SolutionScope {
-    protected HashMap varSolutions;
-    protected HashSet nonRestoreVars;
+    protected HashMap<CspVariable, VariableSolution> varSolutions;
+    protected HashSet<CspVariable> nonRestoreVars;
     protected double objectiveVal;
     
     /**
@@ -30,12 +30,12 @@ public class SolverSolution extends SolutionScope {
      */
     public SolverSolution(SolutionScope scope) {
         super(scope);
-        this.varSolutions = new HashMap();
-        this.nonRestoreVars = new HashSet();
+        this.varSolutions = new HashMap<CspVariable, VariableSolution>();
+        this.nonRestoreVars = new HashSet<CspVariable>();
         
         // add solutions for each variable within request
         if (variables.size()>0) {
-        	Iterator varIter = variables.iterator();
+        	Iterator<CspVariable> varIter = variables.iterator();
             while (varIter.hasNext()) {
                 CspVariable var = (CspVariable) varIter.next();
                 varSolutions.put(var, createSolution(var));
@@ -62,13 +62,13 @@ public class SolverSolution extends SolutionScope {
         
         // duplicate variable solutions
         varSolutions.clear();
-        Iterator varIter = sol.variables.iterator();
+        Iterator<CspVariable> varIter = sol.variables.iterator();
         while (varIter.hasNext()) {
             CspVariable var = (CspVariable) varIter.next();
             variables.add(var);
             
             VariableSolution vs = (VariableSolution) sol.getSolution(var);
-            varSolutions.put(var, vs.clone());
+            varSolutions.put(var, (VariableSolution) vs.clone());
         }
         
         // copy objective
@@ -152,7 +152,7 @@ public class SolverSolution extends SolutionScope {
      * 
      * @return Solution stored for variable
      */
-    public SetSolution add(CspSetVariable var) {
+    public <T> SetSolution<T> add(CspSetVariable<T> var) {
         addSolution(var);
         return getSolution(var);
     }
@@ -160,7 +160,8 @@ public class SolverSolution extends SolutionScope {
     /**
      * Handles creating a specific solution object for a variable
      */
-    protected VariableSolution createSolution(CspVariable var) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	protected VariableSolution createSolution(CspVariable var) {
         VariableSolution sol = null;
         
         // create appropriate solution for variable
@@ -218,7 +219,8 @@ public class SolverSolution extends SolutionScope {
     /**
      * Returns a stored solution for a set variable
      */
-    public SetSolution getSolution(CspSetVariable var) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public <T> SetSolution<T> getSolution(CspSetVariable<T> var) {
         return (SetSolution) getSolution((CspVariable) var);
     }
 
@@ -261,7 +263,7 @@ public class SolverSolution extends SolutionScope {
         StringBuffer buf = new StringBuffer();
         
         // loop over variables and convert solutions to strings
-        Iterator varIter = variables.iterator();
+        Iterator<CspVariable> varIter = variables.iterator();
         while (varIter.hasNext()) {
             // retrieve next variable and solution
             CspVariable var = (CspVariable) varIter.next();
@@ -539,7 +541,7 @@ public class SolverSolution extends SolutionScope {
     /**
      * Returns the set of possible values for the variable
      */
-    public Set getPossibleSet(CspSetVariable var) {
+    public <T> Set<T> getPossibleSet(CspSetVariable<T> var) {
         verifyInScope(var);
         return getSolution(var).getPossibleSet();
     }
@@ -547,7 +549,7 @@ public class SolverSolution extends SolutionScope {
     /**
      * Returns the set of required values for the variable
      */
-    public Set getRequiredSet(CspSetVariable var) {
+    public <T> Set<T> getRequiredSet(CspSetVariable<T> var) {
         verifyInScope(var);
         return getSolution(var).getRequiredSet();
     }
@@ -555,14 +557,14 @@ public class SolverSolution extends SolutionScope {
     /**
      * Sets the set of possible values for the variable
      */
-    public void setPossibleSet(CspSetVariable var, Set possibleSet) {
+    public <T> void setPossibleSet(CspSetVariable<T> var, Set<T> possibleSet) {
         add(var).setPossibleSet(possibleSet);
     }
     
     /**
      * Sets the set of required values for the variable
      */
-    public void setRequiredSet(CspSetVariable var, Set requiredSet) {
+    public <T> void setRequiredSet(CspSetVariable<T> var, Set<T> requiredSet) {
         add(var).setRequiredSet(requiredSet);
     }
 
@@ -630,7 +632,7 @@ public class SolverSolution extends SolutionScope {
      */
     public boolean isDifferent(SolverSolution neighbor) {
         // check for changes to variables between specified neighbor and this solution
-        Iterator varIter = neighbor.variables().iterator();
+        Iterator<CspVariable> varIter = neighbor.variables().iterator();
         while (varIter.hasNext()) {
             CspVariable var = (CspVariable) varIter.next();
             
@@ -657,7 +659,7 @@ public class SolverSolution extends SolutionScope {
         SolverSolution neighbor = new SolverSolution();
         
         // check for changes to variables in initial solution
-        Iterator varIter = initial.variables.iterator();
+        Iterator<CspVariable> varIter = initial.variables.iterator();
         while (varIter.hasNext()) {
             CspVariable var = (CspVariable) varIter.next();
             
@@ -673,7 +675,7 @@ public class SolverSolution extends SolutionScope {
                 if ((irestore != rrestore)  || !isol.equals(rsol)) {
                     // add change to neighbor
                     neighbor.variables.add(var);
-                    neighbor.varSolutions.put(var, rsol.clone());
+                    neighbor.varSolutions.put(var, (VariableSolution) rsol.clone());
                     neighbor.setRestorable(var, rrestore);
                 }
             }
@@ -692,7 +694,7 @@ public class SolverSolution extends SolutionScope {
 
                 // add change to neighbor
                 neighbor.variables.add(var);
-                neighbor.varSolutions.put(var, rsol.clone());
+                neighbor.varSolutions.put(var, (VariableSolution) rsol.clone());
                 neighbor.setRestorable(var, rrestore);
             }
         }

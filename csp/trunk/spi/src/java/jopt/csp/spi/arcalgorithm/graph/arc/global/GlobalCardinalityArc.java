@@ -167,7 +167,7 @@ public class GlobalCardinalityArc extends GenericArc implements NumArc {
         if (src.getSize()==targets.length)
             return;
         //Now we collect all the values that are left in src in the HashSet src
-        HashSet thisVals = new HashSet(); 
+        HashSet<Number> thisVals = new HashSet<Number>(); 
         Number cVal = src.getMin();
         for (int i =0; i<src.getSize(); i++){
             thisVals.add(cVal);
@@ -177,8 +177,8 @@ public class GlobalCardinalityArc extends GenericArc implements NumArc {
         //We now sort based NumNodeSizeComparator
         Arrays.sort(targets, new NumNodeSizeComparator(thisVals));
         //We thus iterate through all nodes, hopefully building Hall sets on the way, meaning any member of a Hall set can and should be removed
-        HashSet visitedVals = new HashSet();
-        HashSet removableVals = new HashSet();
+        HashSet<Number> visitedVals = new HashSet<Number>();
+        HashSet<Number> removableVals = new HashSet<Number>();
         int counter=0;
         int curSize = 0;
         for (int i=0; i<targets.length; i++) {
@@ -195,13 +195,13 @@ public class GlobalCardinalityArc extends GenericArc implements NumArc {
             //        	}
             //In this case we have a hall interval, all subsequent intervals can safely remove these vals
             if (curSize==(counter)){
-                Iterator iter = visitedVals.iterator();
+                Iterator<Number> iter = visitedVals.iterator();
                 while (iter.hasNext()) {
                     removableVals.add(iter.next());    
                 }   
             }
             //Remove all removable values
-            Iterator iter = removableVals.iterator();
+            Iterator<Number> iter = removableVals.iterator();
             while (iter.hasNext()) {
                 Number num =(Number)iter.next();
                 targets[i].removeValue(num);
@@ -235,7 +235,7 @@ public class GlobalCardinalityArc extends GenericArc implements NumArc {
     private void propagateLowerBound(NumNode src, NumNode[] targets) throws PropagationFailureException{
         //First we parse out an array of numbers that we need to check for lower bound consistency
         NumberIterator numIter = src.deltaValues();
-        ArrayList numsToCheck = new ArrayList();
+        ArrayList<Number> numsToCheck = new ArrayList<Number>();
         while (numIter.hasNext()){
             numsToCheck.add(new Integer(numIter.next().intValue()));
         }
@@ -302,8 +302,8 @@ public class GlobalCardinalityArc extends GenericArc implements NumArc {
      */
     public void propagateNumNodeDomainUB(NumNode targets[]) throws PropagationFailureException{
         //First we sort out only the non bound nodes
-        HashSet tempUnboundTargets = new HashSet();
-        HashSet boundVals = new HashSet();
+        HashSet<NumNode> tempUnboundTargets = new HashSet<NumNode>();
+        HashSet<Number> boundVals = new HashSet<Number>();
         int tempSize=0;
         int[] sizeCounter = new int[targets.length+1];
         for (int i=0; i<targets.length; i++) {
@@ -353,13 +353,15 @@ public class GlobalCardinalityArc extends GenericArc implements NumArc {
         NumNode[] unboundTargets = (NumNode[]) tempUnboundTargets.toArray(new NumNode[0]);
         
         //Here we set up an array of sets that we will use to notify that we have found a valid matching which this is a part of 
-        ArrayList[] valsToMatch = new ArrayList[unboundTargets.length];
-        HashSet[] matchedVals = new HashSet[unboundTargets.length];
+        @SuppressWarnings("unchecked")
+		ArrayList<Number>[] valsToMatch = new ArrayList[unboundTargets.length];
+        @SuppressWarnings("unchecked")
+		HashSet<Number>[] matchedVals = new HashSet[unboundTargets.length];
         
         //populate vals to Match
         for (int i=0; i<unboundTargets.length; i++) {
-            valsToMatch[i] = new ArrayList();
-            matchedVals[i] = new HashSet();
+            valsToMatch[i] = new ArrayList<Number>();
+            matchedVals[i] = new HashSet<Number>();
             Number val = unboundTargets[i].getMin();
             for (int j=0; j<unboundTargets[i].getSize(); j++) {
                 if (val instanceof MutableNumber) {
@@ -379,7 +381,7 @@ public class GlobalCardinalityArc extends GenericArc implements NumArc {
         }
         
         //populate available values
-        ArrayList availVals = new ArrayList();
+        ArrayList<Number> availVals = new ArrayList<Number>();
         //TODO acount for values that have no max, but are in domains
         for (int i=0;i<vals.length;i++){
             for(int j=0; j<ub[i];j++) {
@@ -387,7 +389,7 @@ public class GlobalCardinalityArc extends GenericArc implements NumArc {
             }
         }
         
-        Iterator numIter = boundVals.iterator();
+        Iterator<Number> numIter = boundVals.iterator();
         while (numIter.hasNext()) {
             availVals.remove(numIter.next());
         }
@@ -451,7 +453,7 @@ public class GlobalCardinalityArc extends GenericArc implements NumArc {
      * @param usedNums - A list of numbers that have already been assigned to variables so as not to assign a number twice
      * @return true if such a matching exists, false elsewise
      */
-    private boolean match(ArrayList[] valsToMatch, HashSet[] matchedVals, Number numToAssign, int indexToAssignTo, Number[] assignment, ArrayList availNums){
+    private boolean match(ArrayList<Number>[] valsToMatch, HashSet<Number>[] matchedVals, Number numToAssign, int indexToAssignTo, Number[] assignment, ArrayList<Number> availNums){
         
         //TODO:  improvments may be made with early exit condtions etc. investigate these
         //IE:  If there are three to assign yet and three that are able to be assign, assign more restricted variables first.
@@ -505,7 +507,7 @@ public class GlobalCardinalityArc extends GenericArc implements NumArc {
         //        }
         int nextIndexToAssignTo = (indexToAssignTo+1)%valsToMatch.length;
         //We try the next elements valsToMatch yet first, hoping to use it in a matching
-        Iterator numIter = valsToMatch[nextIndexToAssignTo].iterator();
+        Iterator<Number> numIter = valsToMatch[nextIndexToAssignTo].iterator();
         while(numIter.hasNext()){
             Number num = (Number)numIter.next();
             if (num instanceof MutableNumber) {
@@ -606,13 +608,13 @@ public class GlobalCardinalityArc extends GenericArc implements NumArc {
         }
     }
     
-    public class NumNodeComparator implements Comparator {
+    public class NumNodeComparator implements Comparator<NumNode> {
         Number val;
         public NumNodeComparator(Number valToCompare){
             val=valToCompare;
         }
         //This method compares two NumNode objects based on the sum of the absoulte value difference between val and the NumNodes extrema 
-        public int compare(Object o1, Object o2) {
+        public int compare(NumNode o1, NumNode o2) {
             //Calc diff 1
             double diff1 = Math.abs(val.doubleValue()-((NumNode)o1).getMin().doubleValue());
             diff1+= Math.abs(val.doubleValue()-((NumNode)o1).getMax().doubleValue());
@@ -630,13 +632,13 @@ public class GlobalCardinalityArc extends GenericArc implements NumArc {
             }
         }
     }
-    public class NumNodeSizeComparator implements Comparator {
-        HashSet vals;
-        public NumNodeSizeComparator(HashSet valsToCompare){
+    public class NumNodeSizeComparator implements Comparator<NumNode> {
+        HashSet<Number> vals;
+        public NumNodeSizeComparator(HashSet<Number> valsToCompare){
             vals = valsToCompare;
         }
         //Compare by rank, where rank is the number of elements not in vals
-        public int compare(Object o1, Object o2) {
+        public int compare(NumNode o1, NumNode o2) {
             int rank1= ((NumNode)o1).getSize();
             int rank2= ((NumNode)o2).getSize();
             

@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public class ChoicePointStack implements ChoicePointEntryCloseListener {
     private int nextEntryID;
-    private Map dataEntryOrder;
+    private Map<Integer, Map<Integer, ChoicePointEntry>> dataEntryOrder;
     private int maxKey;
     private int depth;
     
@@ -42,7 +42,7 @@ public class ChoicePointStack implements ChoicePointEntryCloseListener {
      * Creates a new <code>ChoicePointStack</code> object.
      */
     public ChoicePointStack() {
-        this.dataEntryOrder = Collections.synchronizedMap(new HashMap());
+        this.dataEntryOrder = Collections.synchronizedMap(new HashMap<Integer, Map<Integer, ChoicePointEntry>>());
     }
     
 //    /**
@@ -113,9 +113,9 @@ public class ChoicePointStack implements ChoicePointEntryCloseListener {
         
         // retrieve map to store listener
         Integer key = new Integer(order);
-        Map dataEntryHash = (Map) dataEntryOrder.get(key);
+        Map<Integer, ChoicePointEntry> dataEntryHash = dataEntryOrder.get(key);
         if (dataEntryHash==null) {
-            dataEntryHash = Collections.synchronizedMap(new HashMap());
+            dataEntryHash = Collections.synchronizedMap(new HashMap<Integer, ChoicePointEntry>());
             dataEntryOrder.put(key, dataEntryHash);
         }
         
@@ -158,9 +158,9 @@ public class ChoicePointStack implements ChoicePointEntryCloseListener {
     	
     	// retrieve map to store listener
     	Integer key = new Integer(order);
-    	Map dataMapHash = (Map) dataEntryOrder.get(key);
+    	Map<Integer, ChoicePointEntry> dataMapHash = dataEntryOrder.get(key);
     	if (dataMapHash==null) {
-    		dataMapHash = Collections.synchronizedMap(new HashMap());
+    		dataMapHash = Collections.synchronizedMap(new HashMap<Integer, ChoicePointEntry>());
     		dataEntryOrder.put(key, dataMapHash);
     	}
     	
@@ -178,9 +178,9 @@ public class ChoicePointStack implements ChoicePointEntryCloseListener {
      */
     public void entryClosedEvent(Integer entryID) {
         // remove from all hashmaps
-        Iterator keyIter = dataEntryOrder.keySet().iterator();
+        Iterator<Integer> keyIter = dataEntryOrder.keySet().iterator();
         while (keyIter.hasNext()) {
-        	Map dataEntryHash = (Map) dataEntryOrder.get(keyIter.next());
+        	Map<Integer, ChoicePointEntry> dataEntryHash = dataEntryOrder.get(keyIter.next());
             
             // map should only be in one hash
             if (dataEntryHash!=null && dataEntryHash.remove(entryID)!=null)
@@ -196,13 +196,13 @@ public class ChoicePointStack implements ChoicePointEntryCloseListener {
      */
     public void push() {
         // remove from all hashmaps
-        Iterator keyIter = dataEntryOrder.keySet().iterator();
+        Iterator<Integer> keyIter = dataEntryOrder.keySet().iterator();
         while (keyIter.hasNext()) {
             Object key = keyIter.next();
-            Map dataEntryHash = (Map) dataEntryOrder.get(key);
+            Map<Integer, ChoicePointEntry> dataEntryHash = dataEntryOrder.get(key);
             
             // reset data in entry after push
-            Iterator entryIter = dataEntryHash.keySet().iterator();
+            Iterator<Integer> entryIter = dataEntryHash.keySet().iterator();
             while (entryIter.hasNext()) {
                 // restore changes to choicepoint entry
                 Integer entryID = (Integer) entryIter.next();
@@ -223,18 +223,19 @@ public class ChoicePointStack implements ChoicePointEntryCloseListener {
      * @param delta Delta of changes to push back onto stack
      */
     public void pushDelta(Object delta) {
-        Map deltaOrder = (Map) delta;
+        @SuppressWarnings("unchecked")
+		Map<Integer, Map<Integer, Object>> deltaOrder = (Map<Integer, Map<Integer, Object>>) delta;
         
         // remove from all hashmaps
-        Iterator keyIter = dataEntryOrder.keySet().iterator();
+        Iterator<Integer> keyIter = dataEntryOrder.keySet().iterator();
         while (keyIter.hasNext()) {
             Object key = keyIter.next();
-            Map dataEntryHash = (Map) dataEntryOrder.get(key);
-            Map deltaMap = (deltaOrder) != null ? (Map) deltaOrder.get(key) : null;
+            Map<Integer, ChoicePointEntry> dataEntryHash = dataEntryOrder.get(key);
+            Map<Integer, Object> deltaMap = (deltaOrder) != null ? deltaOrder.get(key) : null;
             
             // push empty map of data onto map's stack
             if (deltaMap==null) {
-                Iterator entryIter = dataEntryHash.keySet().iterator();
+                Iterator<Integer> entryIter = dataEntryHash.keySet().iterator();
                 while (entryIter.hasNext()) {
                     Integer entryID = (Integer) entryIter.next();
                     ChoicePointEntry entry = (ChoicePointEntry) dataEntryHash.get(entryID);
@@ -244,7 +245,7 @@ public class ChoicePointStack implements ChoicePointEntryCloseListener {
             
             // restore delta of changes that was pushed onto stack
             else {
-                Iterator entryIter = dataEntryHash.keySet().iterator();
+                Iterator<Integer> entryIter = dataEntryHash.keySet().iterator();
                 while (entryIter.hasNext()) {
                     // restore changes to choicepoint entry
                 	Integer entryID = (Integer) entryIter.next();
@@ -273,14 +274,14 @@ public class ChoicePointStack implements ChoicePointEntryCloseListener {
         // remove from all entries
         for (int i=0; i<=maxKey; i++) {
             Object key = new Integer(i);
-            Map dataEntryHash = (Map) dataEntryOrder.get(key);
+            Map<Integer, ChoicePointEntry> dataEntryHash = dataEntryOrder.get(key);
             
             // ensure data exists for key
             if (dataEntryHash!=null) {
                 
                 // pop data in all entries
-                LinkedList keys = new LinkedList(dataEntryHash.keySet());
-                Iterator entryIter = keys.iterator();
+                LinkedList<Integer> keys = new LinkedList<Integer>(dataEntryHash.keySet());
+                Iterator<Integer> entryIter = keys.iterator();
                 while (entryIter.hasNext()) {
                     Integer entryID = (Integer) entryIter.next();
                     ChoicePointEntry entry = (ChoicePointEntry) dataEntryHash.get(entryID);
@@ -301,21 +302,21 @@ public class ChoicePointStack implements ChoicePointEntryCloseListener {
      * @return Delta of changes that has occurred on stack and can be restored by calling push
      */
     public Object popDelta() {
-        Map deltaMap = Collections.synchronizedMap(new HashMap());
+        Map<Integer, Object> deltaMap = Collections.synchronizedMap(new HashMap<Integer, Object>());
         
         // remove from all entries
         for (int i=0; i<=maxKey; i++) {
-            Object key = new Integer(i);
-            Map dataEntryHash = (Map) dataEntryOrder.get(key);
+            Integer key = new Integer(i);
+            Map<Integer, ChoicePointEntry> dataEntryHash = dataEntryOrder.get(key);
             
             // ensure data exists for key
             if (dataEntryHash!=null) {
-            	Map delta = Collections.synchronizedMap(new HashMap());
+            	Map<Integer, Object> delta = Collections.synchronizedMap(new HashMap<Integer, Object>());
                 deltaMap.put(key, delta);
             
                 // store changes of each entry in delta
-                LinkedList keys = new LinkedList(dataEntryHash.keySet());
-                Iterator entryIter = keys.iterator();
+                LinkedList<Integer> keys = new LinkedList<Integer>(dataEntryHash.keySet());
+                Iterator<Integer> entryIter = keys.iterator();
                 while (entryIter.hasNext()) {
                     Integer entryID = (Integer) entryIter.next();
                     ChoicePointEntry entry = (ChoicePointEntry) dataEntryHash.get(entryID);
@@ -353,7 +354,7 @@ public class ChoicePointStack implements ChoicePointEntryCloseListener {
         // loop through all priority levels
         for (int i=0; i<=maxKey; i++) {
             Object key = new Integer(i);
-            Map dataEntryHash = (Map) dataEntryOrder.get(key);
+            Map<Integer, ChoicePointEntry> dataEntryHash = dataEntryOrder.get(key);
             
             // ensure data exists for key
             if (dataEntryHash!=null) {
@@ -363,7 +364,7 @@ public class ChoicePointStack implements ChoicePointEntryCloseListener {
                 buf.append('\n');
                 
                 // loop over all entries
-                Iterator entryIter = dataEntryHash.keySet().iterator();
+                Iterator<Integer> entryIter = dataEntryHash.keySet().iterator();
                 while (entryIter.hasNext()) {
                     Integer entryID = (Integer) entryIter.next();
                     ChoicePointEntry entry = (ChoicePointEntry) dataEntryHash.get(entryID);

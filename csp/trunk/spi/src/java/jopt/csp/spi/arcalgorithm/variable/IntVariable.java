@@ -5,6 +5,7 @@ import java.util.HashMap;
 import jopt.csp.spi.arcalgorithm.domain.BaseIntDomain;
 import jopt.csp.spi.arcalgorithm.domain.IntIntervalDomain;
 import jopt.csp.spi.arcalgorithm.domain.IntSparseDomain;
+import jopt.csp.spi.solver.VariableChangeListener;
 import jopt.csp.util.IntSet;
 import jopt.csp.util.IntSparseSet;
 import jopt.csp.util.NumSet;
@@ -279,9 +280,10 @@ public class IntVariable extends IntExpr implements CspIntVariable, Variable {
     /**
      * Clones this variable
      */
-    public Object clone() {
+    @SuppressWarnings("unchecked")
+	public Object clone() {
         IntVariable var = new IntVariable(name, this);
-        var.variableListeners = (HashMap)this.variableListeners.clone();
+        var.variableListeners = (HashMap<VariableChangeListener, Integer>)this.variableListeners.clone();
         return var;
    }
     

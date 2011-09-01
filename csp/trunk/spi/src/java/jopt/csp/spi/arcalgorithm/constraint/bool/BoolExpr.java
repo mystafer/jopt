@@ -41,7 +41,7 @@ public interface BoolExpr {
     /**
      * Returns collection of all nodes used to build this expression 
      */
-    public Collection getNodeCollection();
+    public Collection<Node> getNodeCollection();
     
     /**
      * Returns array of arcs that will affect the boolean true / false

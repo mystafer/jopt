@@ -25,7 +25,7 @@ public class TabuList implements ChoicePointEntryListener {
     private boolean conflict;
     private int maxAge;
     private int agingMoves;
-    private LinkedList moves;
+    private LinkedList<TabuMove> moves;
     
     /**
      * Creates a new tabu list
@@ -37,7 +37,7 @@ public class TabuList implements ChoicePointEntryListener {
     public TabuList(boolean conflict, int maxAge) {
         this.conflict = conflict;
         this.maxAge = maxAge;
-    	this.moves = new LinkedList();
+    	this.moves = new LinkedList<TabuMove>();
         this.agingMoves = 0;
     }
     
@@ -48,7 +48,7 @@ public class TabuList implements ChoicePointEntryListener {
      * @return True if any change in move is contained within this list
      */
     public boolean contains(TabuMove move) {
-        Iterator moveIter = moves.iterator();
+        Iterator<TabuMove> moveIter = moves.iterator();
 
         // loop over moves contained in list
     	while (moveIter.hasNext()) {
@@ -124,10 +124,11 @@ public class TabuList implements ChoicePointEntryListener {
     }
     
     // javadoc is inherited
-    public void beforeChoicePointPopEvent() {
+    @SuppressWarnings("unchecked")
+	public void beforeChoicePointPopEvent() {
         if (cpdata!=null) {
             if (cpdata.containsKey("m"))
-            	moves = (LinkedList) cpdata.get("m");
+            	moves = (LinkedList<TabuMove>) cpdata.get("m");
             
             if (cpdata.containsKey("a"))
             	maxAge = ((Integer) cpdata.get("a")).intValue();

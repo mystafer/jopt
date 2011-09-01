@@ -29,7 +29,7 @@ public interface CspVariableFactory {
      * Returns an object used to create constraints on sets
      * @return CspSetConstraints object used to create constraint on sets
      */
-    public CspSetConstraints getSetConstraints();
+    public <T> CspSetConstraints<T> getSetConstraints();
 
 	/**
 	 * Creates an instance of a CspIntVariable object;

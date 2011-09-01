@@ -279,7 +279,7 @@ public class SummationConstraintTest extends TestCase {
 		}
 		catch(PropagationFailureException pfe) {
 		    //propagation, in this case, should cause an exception
-		    assertTrue("verify propagation fails", 1==1);
+		    assertTrue("verify propagation fails", true);
 		}
 		assertTrue("constraint is now violated", constraint.isViolated(false));
 	}
@@ -1338,7 +1338,7 @@ public class SummationConstraintTest extends TestCase {
 	    }
 	    catch(PropagationFailureException pfe) {
 		    //propagation, in this case, should cause an exception
-		    assertTrue("verify propagation fails", 1==1);
+		    assertTrue("verify propagation fails", true);
 	    }
 	}
 	

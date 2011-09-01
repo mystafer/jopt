@@ -1,6 +1,7 @@
 package jopt.csp.spi.search.actions;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import jopt.csp.search.SearchAction;
 import jopt.csp.spi.search.tree.AbstractSearchNodeAction;
@@ -33,7 +34,7 @@ public class NonBinaryInstantiateIntegerAction extends AbstractSearchNodeAction 
         if (var.isBound()) return null;
         
         // create list of actions for choicepoint
-        ArrayList actions = new ArrayList();
+        Collection<SearchAction> actions = new ArrayList<SearchAction>();
         
         int prev;
         int val = var.getMin();

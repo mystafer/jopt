@@ -21,16 +21,16 @@ import jopt.csp.variable.PropagationFailureException;
  * to find one that satisfies the constraints; it has nothing to do with the
  * Java instantiation of a class.
  */
-public class InstantiateSetAction extends AbstractSearchNodeAction {
-    private CspSetVariable var;
-    private SetSelector selector;
+public class InstantiateSetAction<T> extends AbstractSearchNodeAction {
+    private CspSetVariable<T> var;
+    private SetSelector<T> selector;
     
     /**
      * Creates new instantiation action
      * 
      * @param var   Variable to instantiate
      */
-    public InstantiateSetAction(CspSetVariable var) {
+    public InstantiateSetAction(CspSetVariable<T> var) {
         this.var = var;
     }
     
@@ -39,7 +39,7 @@ public class InstantiateSetAction extends AbstractSearchNodeAction {
      * 
      * @param var   Variable to instantiate
      */
-    public InstantiateSetAction(CspSetVariable var, SetSelector selector) {
+    public InstantiateSetAction(CspSetVariable<T> var, SetSelector<T> selector) {
         this.var = var;
         this.selector = selector;
     }
@@ -52,15 +52,15 @@ public class InstantiateSetAction extends AbstractSearchNodeAction {
     public SearchAction performAction() throws PropagationFailureException {
         if (var.isBound()) return null;
         
-        Set possible = var.getPossibleSet();
-        Set required = var.getRequiredSet();
+        Set<T> possible = var.getPossibleSet();
+        Set<T> required = var.getRequiredSet();
         
         // retrieve first value that is not required
-        Iterator possibleIter = possible.iterator();
+        Iterator<T> possibleIter = possible.iterator();
         while (possibleIter.hasNext()) {
             
             // determine next value to use
-            Object val = null;
+            T val = null;
             if (selector == null)
                 val = possibleIter.next();
             else
@@ -80,9 +80,9 @@ public class InstantiateSetAction extends AbstractSearchNodeAction {
      * Action that assigns a single value to a set variable
      */
     private class AssignSet implements SearchAction {
-        private Object val;
+        private T val;
         
-        protected AssignSet(Object val) {
+        protected AssignSet(T val) {
             this.val = val;
         }
         
@@ -100,9 +100,9 @@ public class InstantiateSetAction extends AbstractSearchNodeAction {
      * Action that removes a single value from a set variable
      */
     private class RemoveSet implements SearchAction {
-        private Object val;
+        private T val;
         
-        protected RemoveSet(Object val) {
+        protected RemoveSet(T val) {
             this.val = val;
         }
         

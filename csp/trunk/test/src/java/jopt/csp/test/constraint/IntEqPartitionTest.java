@@ -59,7 +59,7 @@ public class IntEqPartitionTest extends TestCase {
         try {
             initVarsScenario1();
             
-            gac.addConstraint(new EqPartition(x, y, z));
+            gac.addConstraint(new EqPartition<Integer>(x, y, z));
             gac.propagate();
             
             // Check union domain is correct
@@ -75,9 +75,9 @@ public class IntEqPartitionTest extends TestCase {
             assertFalse("z not possible 10", z.isPossible(10));
 
             // Retrieve required set of all variables
-            Set xRequired = x.getRequiredSet();
-            Set yRequired = y.getRequiredSet();
-            Set zRequired = z.getRequiredSet();
+            Set<Integer> xRequired = x.getRequiredSet();
+            Set<Integer> yRequired = y.getRequiredSet();
+            Set<Integer> zRequired = z.getRequiredSet();
 
             // assert x required is subset of z required
             assertTrue("x subset of z", zRequired.containsAll(xRequired));
@@ -86,11 +86,11 @@ public class IntEqPartitionTest extends TestCase {
             assertTrue("y subset of z", zRequired.containsAll(yRequired));
 
             // Retrieve possible sets for x and y
-            Set xPossible = x.getPossibleSet();
-            Set yPossible = y.getPossibleSet();
+            Set<Integer> xPossible = x.getPossibleSet();
+            Set<Integer> yPossible = y.getPossibleSet();
 
             // Ensure no required value in x possible in y
-            Iterator iterator = xRequired.iterator();
+            Iterator<Integer> iterator = xRequired.iterator();
             while (iterator.hasNext()) {
                 Object val = iterator.next();
                 assertFalse("required x possible in y", yPossible.contains(val));
@@ -115,7 +115,7 @@ public class IntEqPartitionTest extends TestCase {
     public void testPartitionWithIntersectScenario1() {
         try {
             initVarsScenario1();
-            gac.addConstraint(new EqPartition(x, y, z, true));
+            gac.addConstraint(new EqPartition<Integer>(x, y, z, true));
             gac.propagate();
 
             // Check union domain is correct
@@ -165,7 +165,7 @@ public class IntEqPartitionTest extends TestCase {
     public void testPartitionScenario2() {
         try {
             initVarsScenario2();
-            gac.addConstraint(new EqPartition(x, y, z));
+            gac.addConstraint(new EqPartition<Integer>(x, y, z));
 
             // propagation should fail
             gac.propagate();
@@ -181,7 +181,7 @@ public class IntEqPartitionTest extends TestCase {
     public void testPartitionWithIntersectScenario2() {
         try {
             initVarsScenario2();
-            gac.addConstraint(new EqPartition(x, y, z, true));
+            gac.addConstraint(new EqPartition<Integer>(x, y, z, true));
 
             // propagation should fail
             gac.propagate();
@@ -199,7 +199,7 @@ public class IntEqPartitionTest extends TestCase {
     public void testPartitionScenario3() {
         try {
             initVarsScenario3();
-            gac.addConstraint(new EqPartition(x, y, z));
+            gac.addConstraint(new EqPartition<Integer>(x, y, z));
 
             // propagation might succeed
             gac.propagate();
@@ -217,7 +217,7 @@ public class IntEqPartitionTest extends TestCase {
     public void testPartitionWithIntersectScenario3() {
         try {
             initVarsScenario3();
-            gac.addConstraint(new EqPartition(x, y, z, true));
+            gac.addConstraint(new EqPartition<Integer>(x, y, z, true));
 
             // propagation should fail
             gac.propagate();
@@ -232,7 +232,7 @@ public class IntEqPartitionTest extends TestCase {
     public void testPartitionScenario4() {
         try {
             initVarsScenario4();
-            gac.addConstraint(new EqPartition(x, y, z));
+            gac.addConstraint(new EqPartition<Integer>(x, y, z));
 
             // propagation should fail
             gac.propagate();
@@ -248,7 +248,7 @@ public class IntEqPartitionTest extends TestCase {
     public void testPartitionWithIntersectScenario4() {
         try {
             initVarsScenario4();
-            gac.addConstraint(new EqPartition(x, y, z, true));
+            gac.addConstraint(new EqPartition<Integer>(x, y, z, true));
 
             // propagation should fail
             gac.propagate();

@@ -10,7 +10,7 @@ import jopt.csp.spi.solver.ChoicePointStack;
 import jopt.csp.spi.util.NumberMath;
 import jopt.csp.variable.PropagationFailureException;
 
-public class IntSetNode extends AbstractNode implements SetNode {
+public class IntSetNode extends AbstractNode implements SetNode<Integer> {
     private IntSetDomain domain;
 
     /**
@@ -104,28 +104,28 @@ public class IntSetNode extends AbstractNode implements SetNode {
     /**
      * Returns possible set of values
      */
-    public Set getPossibleSet() {
+    public Set<Integer> getPossibleSet() {
         return domain.getPossibleSet();
     }
 
     /**
      * Returns required set of values
      */
-    public Set getRequiredSet() {
+    public Set<Integer> getRequiredSet() {
         return domain.getRequiredSet();
     }
 
     /**
      * Returns the possible-delta set
      */
-    public Set getPossibleDeltaSet() {
+    public Set<Integer> getPossibleDeltaSet() {
         return domain.getPossibleDeltaSet();
     }
 
     /**
      * Returns the required-delta set
      */
-    public Set getRequiredDeltaSet() {
+    public Set<Integer> getRequiredDeltaSet() {
         return domain.getRequiredDeltaSet();
     }
     
@@ -150,7 +150,7 @@ public class IntSetNode extends AbstractNode implements SetNode {
         domain.clearDelta();
     }
     
-    public Iterator values() {
+    public Iterator<Integer> values() {
         return domain.values();
     }
     

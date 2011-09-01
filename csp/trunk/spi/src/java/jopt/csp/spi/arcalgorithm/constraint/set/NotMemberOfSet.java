@@ -13,8 +13,9 @@ import jopt.csp.spi.arcalgorithm.graph.node.SetNode;
 /**
  * Constraint representing an expression is not a member of a set
  */
-public class NotMemberOfSet extends SetConstraint {
-    public NotMemberOfSet(SetVariable set, NumExpr expr) {
+public class NotMemberOfSet extends SetConstraint<Number> {
+    @SuppressWarnings("unchecked")
+	public NotMemberOfSet(SetVariable<Number> set, NumExpr expr) {
         super(new SetVariable[]{set}, expr);
 
         if (expr instanceof GenericNumExpr)
@@ -26,7 +27,7 @@ public class NotMemberOfSet extends SetConstraint {
      */
     protected Arc[] createArcs() {
         Node expr = exprSource.getNode();
-        SetNode set = targets[0].getNode();
+        SetNode<Number> set = targets[0].getNode();
         
         return new Arc[]{
             new BinarySetNotMemberOfSetArc(set, (NumNode) expr),

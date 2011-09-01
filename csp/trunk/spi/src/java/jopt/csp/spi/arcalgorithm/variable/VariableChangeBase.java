@@ -12,13 +12,13 @@ import jopt.csp.variable.PropagationFailureException;
  * able to inform others of a change event.
  */
 public abstract class VariableChangeBase implements VariableChangeSource {
-    protected HashMap variableListeners;
+    protected HashMap<VariableChangeListener, Integer> variableListeners;
 
     /**
      * Constructor
      */
     protected VariableChangeBase() {
-        this.variableListeners = new HashMap();
+        this.variableListeners = new HashMap<VariableChangeListener, Integer>();
     }
 
     /**
@@ -66,7 +66,7 @@ public abstract class VariableChangeBase implements VariableChangeSource {
 
 	// Notify listeners
 	if (variableListeners != null) {
-	    Iterator iterator = variableListeners.keySet().iterator();
+	    Iterator<VariableChangeListener> iterator = variableListeners.keySet().iterator();
 	    while (iterator.hasNext()) {
 		VariableChangeListener listener = (VariableChangeListener) iterator.next();
 		listener.variableChange(event);

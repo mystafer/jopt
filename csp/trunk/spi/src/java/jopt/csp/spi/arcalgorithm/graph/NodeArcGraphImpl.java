@@ -31,8 +31,8 @@ import jopt.csp.spi.util.Storable;
  */
 public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, ChoicePointEntryListener {
     private NodeArcGraphListener listener;
-    private HashSet arcs;
-    private HashMap nodes;
+    private HashSet<Arc> arcs;
+    private HashMap<Node, HashMap<String, HashSet<Arc>>> nodes;
     private ChoicePointStack cps;
     private ChoicePointDataMap cpdata;
     private Storable nodesToStore[];
@@ -50,21 +50,21 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
     public NodeArcGraphImpl(NodeArcGraphListener listener) 
     {
         this.listener = listener;
-        this.arcs = new HashSet();
-        this.nodes = new HashMap();
+        this.arcs = new HashSet<Arc>();
+        this.nodes = new HashMap<Node, HashMap<String, HashSet<Arc>>>();
     }
     
     /**
      * Returns all the nodes contained in the graph
      */
-    public Set getAllNodes() {
+    public Set<Node> getAllNodes() {
         return nodes.keySet();
     }
     
     /**
      * Returns all the arcs contained in the graph
      */
-    public Set getAllArcs() {
+    public Set<Arc> getAllArcs() {
     	return arcs;
     }
     
@@ -93,10 +93,10 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
                 getAddedNodeSet().add(node);
         	
             // Create sets for tracking arc connections to node
-            HashMap arcs = new HashMap();
-            arcs.put("value", new HashSet());
-            arcs.put("range", new HashSet());
-            arcs.put("domain", new HashSet());
+            HashMap<String, HashSet<Arc>> arcs = new HashMap<String, HashSet<Arc>>();
+            arcs.put("value", new HashSet<Arc>());
+            arcs.put("range", new HashSet<Arc>());
+            arcs.put("domain", new HashSet<Arc>());
             nodes.put(node, arcs);
             
             // Add listener for node
@@ -113,7 +113,7 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
      * Connects a node to an arc's source
      */
     private void connectNodeSource(Node node, int sourceDependency, Arc arc) {
-        HashMap arcs = (HashMap) nodes.get(node);
+        HashMap<String, HashSet<Arc>> arcs = (HashMap<String, HashSet<Arc>>) nodes.get(node);
         
         // store added connections into choicepoint stack
         if (cpdata!=null)
@@ -121,15 +121,15 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
         
         switch (sourceDependency) {
             case DomainChangeType.VALUE:
-                ((HashSet) arcs.get("value")).add(arc);
+                arcs.get("value").add(arc);
                 break;
 
             case DomainChangeType.RANGE:
-                ((HashSet) arcs.get("range")).add(arc);
+                arcs.get("range").add(arc);
                 break;
 
             case DomainChangeType.DOMAIN:
-                ((HashSet) arcs.get("domain")).add(arc);
+                arcs.get("domain").add(arc);
         }
     }
     
@@ -137,48 +137,48 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
      * Removes a node connection to an arc's source
      */
     private void disconnectNodeSource(Node node, int sourceDependency, Arc arc) {
-        HashMap arcs = (HashMap) nodes.get(node);
+        HashMap<String, HashSet<Arc>> arcs = nodes.get(node);
         if (arcs==null) return;
         
         switch (sourceDependency) {
             case DomainChangeType.VALUE:
-                ((HashSet) arcs.get("value")).remove(arc);
+                arcs.get("value").remove(arc);
                 break;
 
             case DomainChangeType.RANGE:
-                ((HashSet) arcs.get("range")).remove(arc);
+                arcs.get("range").remove(arc);
                 break;
 
             case DomainChangeType.DOMAIN:
-                ((HashSet) arcs.get("domain")).remove(arc);
+                arcs.get("domain").remove(arc);
         }
     }
     
     /**
      * Retrieves a set of value dependent source arcs for node
      */
-    public Set getValueSourceArcs(Node node) {
-        HashMap arcs = (HashMap) nodes.get(node);
+    public Set<Arc> getValueSourceArcs(Node node) {
+        HashMap<String, HashSet<Arc>> arcs = nodes.get(node);
         if (arcs == null) return null;
-        return (Set) arcs.get("value");
+        return arcs.get("value");
     }
     
     /**
      * Retrieves a set of range dependent source arcs for node
      */
-    public Set getRangeSourceArcs(Node node) {
-        HashMap arcs = (HashMap) nodes.get(node);
+    public Set<Arc> getRangeSourceArcs(Node node) {
+        HashMap<String, HashSet<Arc>> arcs = nodes.get(node);
         if (arcs == null) return null;
-        return (Set) arcs.get("range");
+        return arcs.get("range");
     }
     
     /**
      * Retrieves a set of domain dependent source arcs for node
      */
-    public Set getDomainSourceArcs(Node node) {
-        HashMap arcs = (HashMap) nodes.get(node);
+    public Set<Arc> getDomainSourceArcs(Node node) {
+        HashMap<String, HashSet<Arc>> arcs = nodes.get(node);
         if (arcs == null) return null;
-        return (Set) arcs.get("domain");
+        return arcs.get("domain");
     }
     
     /**
@@ -275,7 +275,7 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
      */
     public String nodesDescription() {
         StringBuffer buf = new StringBuffer();
-        Iterator iterator = nodes.keySet().iterator();
+        Iterator<Node> iterator = nodes.keySet().iterator();
         while (iterator.hasNext()) {
             if (buf.length()>0) buf.append("\n");
             buf.append(iterator.next());
@@ -286,11 +286,12 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
     /**
      * Returns the set of added arcs for the current choicepoint
      */
-    private HashSet getAddedArcSet() {
+    private HashSet<Arc> getAddedArcSet() {
         if (cpdata==null) return null;
-        HashSet added = (HashSet) cpdata.get("aa");
+        @SuppressWarnings("unchecked")
+		HashSet<Arc> added = (HashSet<Arc>) cpdata.get("aa");
         if (added == null) {
-        	added = new HashSet();
+        	added = new HashSet<Arc>();
             cpdata.put("aa", added);
         }
         return added;
@@ -304,7 +305,7 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
         buf.append('\n');
         
         buf.append("===== Arcs =====\n");
-        Iterator iterator = arcs.iterator();
+        Iterator<Arc> iterator = arcs.iterator();
         while (iterator.hasNext()) {
             buf.append(iterator.next());
             buf.append('\n');
@@ -316,11 +317,12 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
     /**
      * Returns the set of added nodes for the current choicepoint
      */
-    private HashSet getAddedNodeSet() {
+    private HashSet<Node> getAddedNodeSet() {
         if (cpdata==null) return null;
-        HashSet added = (HashSet) cpdata.get("an");
+        @SuppressWarnings("unchecked")
+		HashSet<Node> added = (HashSet<Node>) cpdata.get("an");
         if (added == null) {
-        	added = new HashSet();
+        	added = new HashSet<Node>();
             cpdata.put("an", added);
         }
         return added;
@@ -329,11 +331,12 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
     /**
      * Returns the set of added source node-arc connections for the current choicepoint
      */
-    private HashSet getAddedConnectionSet() {
+    private HashSet<Object[]> getAddedConnectionSet() {
         if (cpdata==null) return null;
-        HashSet added = (HashSet) cpdata.get("cn");
+        @SuppressWarnings("unchecked")
+		HashSet<Object[]> added = (HashSet<Object[]>) cpdata.get("cn");
         if (added == null) {
-        	added = new HashSet();
+        	added = new HashSet<Object[]>();
             cpdata.put("cn", added);
         }
         return added;
@@ -352,7 +355,7 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
         this.cpdata = cps.newDataMap(this, 10);
         
         // set the choicepoint stack for all nodes currently in the graph
-    	Iterator iter = nodes.keySet().iterator();
+    	Iterator<Node> iter = nodes.keySet().iterator();
     	while (iter.hasNext()) {
     		Node n = (Node) iter.next();
             if (cps!=null && !n.choicePointStackSet())
@@ -363,7 +366,7 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
     // javadoc is inherited
     public void beforeChoicePointPopEvent() {
     	// remove added arcs
-        Iterator iterator = getAddedArcSet().iterator();
+        Iterator<Arc> iterator = getAddedArcSet().iterator();
         while (iterator.hasNext()) {
             Arc arc = (Arc) iterator.next();
             arcs.remove(arc);
@@ -372,11 +375,11 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
         }
     	
     	// remove added node-arc connections
-    	HashSet addedConn = getAddedConnectionSet();
-    	iterator = addedConn.iterator();
-    	while (iterator.hasNext()) {
+    	HashSet<Object[]> addedConn = getAddedConnectionSet();
+    	Iterator<Object[]> addedConnIterator = addedConn.iterator();
+    	while (addedConnIterator.hasNext()) {
     		// retrieve connection information
-    		Object data[] = (Object[]) iterator.next();
+    		Object data[] = (Object[]) addedConnIterator.next();
     		Node node = (Node) data[0];
     		int sourceDependency = ((Integer) data[1]).intValue();
     		Arc arc = (Arc) data[2];
@@ -386,15 +389,15 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
     	}
         
         // remove added nodes
-        HashSet addedSet = getAddedNodeSet();
+        HashSet<Node> addedSet = getAddedNodeSet();
         if (addedSet.size()>0) {
             // reset nodes for storage array
             nodesToStore = null;
             
             // iterator over nodes and remove them
-            iterator = addedSet.iterator();
-            while (iterator.hasNext()) {
-                Node n = (Node) iterator.next();
+            Iterator<Node> addedSetIterator = addedSet.iterator();
+            while (addedSetIterator.hasNext()) {
+                Node n = (Node) addedSetIterator.next();
                 nodes.remove(n);
                 
                 // disconnect node from graph
@@ -425,7 +428,7 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
     // javadoc is inherited
     public void afterChoicePointPushEvent() {
         // add added arcs
-        Iterator iterator = getAddedArcSet().iterator();
+        Iterator<Arc> iterator = getAddedArcSet().iterator();
         while (iterator.hasNext()) {
             Arc a = (Arc) iterator.next();
             addArc(a);
@@ -436,7 +439,7 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
     // javadoc is inherited
     public Object getGraphState() {
         // build map of contents for graph
-        HashMap graphContents = new HashMap(3);
+        HashMap<String, Object> graphContents = new HashMap<String, Object>(3);
         graphContents.put("a", arcs);
         graphContents.put("n", nodes);
         
@@ -451,13 +454,14 @@ public class NodeArcGraphImpl implements NodeArcGraph, NodeChangeListener, Choic
     }
 
     // javadoc is inherited
-    public void restoreGraphState(Object state) {
+    @SuppressWarnings("unchecked")
+	public void restoreGraphState(Object state) {
         // retrieve map of contents for graph
-        HashMap graphContents = (HashMap) state;
+		HashMap<String, Object> graphContents = (HashMap<String, Object>) state;
         
         // restore arcs and nodes
-        arcs = (HashSet) graphContents.get("a");
-        nodes = (HashMap) graphContents.get("n");
+        arcs = (HashSet<Arc>) graphContents.get("a");
+        nodes = (HashMap<Node, HashMap<String, HashSet<Arc>>>) graphContents.get("n");
 
         // restore domain data
         StateStore dataStore = (StateStore) graphContents.get("d");

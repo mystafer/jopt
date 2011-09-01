@@ -53,7 +53,7 @@ public class GenerateDoubleAction extends AbstractSearchNodeAction {
 	 */
 	public SearchAction performAction() throws PropagationFailureException {
 		// build list of instantiate actions for variables
-		LinkedList instantiateActions = new LinkedList();
+		LinkedList<InstantiateDoubleAction> instantiateActions = new LinkedList<InstantiateDoubleAction>();
 		if(varSelector != null) {
 			varSelector.reset();
 			varSelector.setVariables(vars);

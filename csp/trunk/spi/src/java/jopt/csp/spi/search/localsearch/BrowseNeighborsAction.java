@@ -34,7 +34,7 @@ import jopt.csp.variable.PropagationFailureException;
 public class BrowseNeighborsAction extends AbstractSearchNodeAction {
     private ConstraintStore store;
     private SolverSolution initial;
-    private List neighbors;
+    private List<SolverSolution> neighbors;
     
     /**
      * Creates new scan neighbors action
@@ -44,19 +44,19 @@ public class BrowseNeighborsAction extends AbstractSearchNodeAction {
      * @param neighbors     List of neighboring solutions to initial, each to be
      *                      applied as an alternative choices
      */
-    public BrowseNeighborsAction(ConstraintStore store, SolverSolution initial, List neighbors) {
+    public BrowseNeighborsAction(ConstraintStore store, SolverSolution initial, List<SolverSolution> neighbors) {
         this(store, initial, neighbors, true);
     }
     
     /**
      * Internal constructor to save memory by reusing previous list
      */
-    private BrowseNeighborsAction(ConstraintStore store, SolverSolution initial, List neighbors, boolean clone) {
+    private BrowseNeighborsAction(ConstraintStore store, SolverSolution initial, List<SolverSolution> neighbors, boolean clone) {
         this.store = store;
         this.initial = initial;
 
         if (clone)
-            this.neighbors = new LinkedList(neighbors);
+            this.neighbors = new LinkedList<SolverSolution>(neighbors);
         else
         	this.neighbors = neighbors;
     }
@@ -74,7 +74,7 @@ public class BrowseNeighborsAction extends AbstractSearchNodeAction {
         
         // check if other neighbors exist in the list
         if (neighbors.size()>1) {
-            List otherNeighbors = neighbors.subList(1, neighbors.size());
+            List<SolverSolution> otherNeighbors = neighbors.subList(1, neighbors.size());
         	SearchAction scanOthers = new BrowseNeighborsAction(store, initial, otherNeighbors, false);
             return choice(restore, scanOthers);
         }

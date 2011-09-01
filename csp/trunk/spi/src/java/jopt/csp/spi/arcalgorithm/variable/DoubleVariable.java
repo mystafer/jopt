@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import jopt.csp.spi.arcalgorithm.domain.BaseDoubleDomain;
 import jopt.csp.spi.arcalgorithm.domain.DoubleIntervalDomain;
+import jopt.csp.spi.solver.VariableChangeListener;
 import jopt.csp.util.DoubleSet;
 import jopt.csp.util.NumSet;
 import jopt.csp.variable.CspDoubleVariable;
@@ -269,9 +270,10 @@ public class DoubleVariable extends DoubleExpr implements CspDoubleVariable, Var
     /**
      * Clones this variable
      */
-    public Object clone() {
+    @SuppressWarnings("unchecked")
+	public Object clone() {
         DoubleVariable var = new DoubleVariable(name, this);
-        var.variableListeners = (HashMap)this.variableListeners.clone();
+        var.variableListeners = (HashMap<VariableChangeListener, Integer>)this.variableListeners.clone();
         return var;
     }
     

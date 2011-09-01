@@ -21,10 +21,10 @@ import jopt.csp.variable.CspVariable;
  * @see TabuList
  */
 class TabuMove {
-	private Map changes;
+	private Map<CspVariable, VariableSolution> changes;
     
     public TabuMove() {
-    	this.changes = new HashMap();
+    	this.changes = new HashMap<CspVariable, VariableSolution>();
     }
     
     /**
@@ -35,7 +35,7 @@ class TabuMove {
      */
     public void addVariableSolution(VariableSolution sol) {
         if (sol==null) return;
-    	changes.put(sol.getVariable(), sol.clone());
+    	changes.put(sol.getVariable(), (VariableSolution) sol.clone());
     }
     
     /**
@@ -46,7 +46,7 @@ class TabuMove {
         boolean retval = false;
         
         // loop over all variables changed with move
-        Iterator moveIter = move.changes.keySet().iterator();
+        Iterator<CspVariable> moveIter = move.changes.keySet().iterator();
         while (moveIter.hasNext()) {
             CspVariable var = (CspVariable) moveIter.next();
             
@@ -76,7 +76,7 @@ class TabuMove {
         boolean retval = false;
         
         // loop over all variables changed with move
-        Iterator moveIter = move.changes.keySet().iterator();
+        Iterator<CspVariable>moveIter = move.changes.keySet().iterator();
         while (moveIter.hasNext()) {
             CspVariable var = (CspVariable) moveIter.next();
             

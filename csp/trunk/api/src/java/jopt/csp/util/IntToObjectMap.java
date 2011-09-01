@@ -154,7 +154,8 @@ public class IntToObjectMap<T> implements Cloneable{
         return keys.toArray();
     }
     
-    public T[] valueSet() {
+    @SuppressWarnings("unchecked")
+	public T[] valueSet() {
         return (T[]) values.toArray();
     }
     

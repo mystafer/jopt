@@ -4,7 +4,7 @@ package jopt.csp.variable;
 /**
  * Interface implemented by variables representing a set of integer values
  */
-public interface CspIntSetVariable extends CspSetVariable {
+public interface CspIntSetVariable extends CspSetVariable<Integer> {
 	/**
 	 * Returns true if the specified value is in this variable's domain
 	 * @param	val		value to check if it is in the domain

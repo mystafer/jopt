@@ -8,26 +8,26 @@ import jopt.csp.variable.PropagationFailureException;
 /**
  * Base class for all set based interfaces
  */
-public interface SetDomain extends Domain {
+public interface SetDomain<T> extends Domain {
     /**
      * Returns possible set of values
      */
-    public Set getPossibleSet();
+    public Set<T> getPossibleSet();
 
     /**
      * Returns required set of values
      */
-    public Set getRequiredSet();
+    public Set<T> getRequiredSet();
 
     /**
      * Returns the possible-delta set
      */
-    public Set getPossibleDeltaSet();
+    public Set<T> getPossibleDeltaSet();
 
     /**
      * Returns the required-delta set
      */
-    public Set getRequiredDeltaSet();
+    public Set<T> getRequiredDeltaSet();
     
     /**
      * Returns possible cardinality
@@ -47,40 +47,40 @@ public interface SetDomain extends Domain {
     /**
      * Returns iterator of possible values in domain
      */
-    public Iterator values();
+    public Iterator<T> values();
 
     /**
      * Returns true if value is in domain
      */
-    public boolean isInDomain(Object val);
+    public boolean isInDomain(T val);
 
     /**
      * Returns true if value is required
      */
-    public boolean isRequired(Object value);
+    public boolean isRequired(T value);
     
     /**
      * Returns true if value is possible
      */
-    public boolean isPossible(Object value);
+    public boolean isPossible(T value);
     
     /**
      * Adds a required value to the set
      */
-    public void addRequired(Object value) throws PropagationFailureException;
+    public void addRequired(T value) throws PropagationFailureException;
     
     /**
      * Adds a set of values to the required set
      */
-    public void addRequired(Set values) throws PropagationFailureException;
+    public void addRequired(Set<T> values) throws PropagationFailureException;
     
     /**
      * Removes a value from the possible set
      */
-    public void removePossible(Object value) throws PropagationFailureException;
+    public void removePossible(T value) throws PropagationFailureException;
     
     /**
      * Removes a set of values from the possible set
      */
-    public void removePossible(Set values) throws PropagationFailureException;
+    public void removePossible(Set<T> values) throws PropagationFailureException;
 }

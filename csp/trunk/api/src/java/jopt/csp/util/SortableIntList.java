@@ -22,7 +22,9 @@ import org.apache.commons.collections.primitives.IntCollection;
  */
 public class SortableIntList extends ArrayIntList {
 
-    private transient int[] data = null;
+    private static final long serialVersionUID = 1L;
+	
+	private transient int[] data = null;
     private int size = 0;
     
     /** 

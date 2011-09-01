@@ -24,7 +24,7 @@ public class NumberMathTest extends TestCase {
     }
     
     public void testMutableNumberHashCode() {
-        HashSet set = new HashSet();
+        HashSet<Number> set = new HashSet<Number>();
         set.add(new Integer(6));
         set.add(new MutableNumber((int) 6));
         assertTrue(set.size()==1);

@@ -24,12 +24,12 @@ public class SetExample {
 		
 		// define x variables
         CspVariableFactory varFactory = solver.getVarFactory();
-        CspSetVariable xvars[] = new IntSetVariable[n]; 
+        CspSetVariable<Integer> xvars[] = new IntSetVariable[n]; 
 		for (int i=0; i<n; i++)
             xvars[i] = varFactory.intSetVar("x" + (i+1), 0, 2);
 		
         // The third is a union of the previous two
-        CspSetConstraints setCnsts = varFactory.getSetConstraints();
+        CspSetConstraints<Integer> setCnsts = varFactory.getSetConstraints();
     	solver.addConstraint(setCnsts.eqUnion(xvars[0], xvars[1], xvars[2]));
         
         // The first and second sets should have nothing in common
@@ -44,13 +44,11 @@ public class SetExample {
             scope.add(xvars[i]);
         
         Date now = new Date();
-        ArrayList solutions = new ArrayList();
+        ArrayList<SolverSolution> solutions = new ArrayList<SolverSolution>();
         boolean solutionFound = solver.solve(xvars);
-        int solutionNum = 1;
         while(solutionFound) {
             solutions.add(solver.storeSolution(scope));
             solutionFound = solver.nextSolution();
-            solutionNum++;
         }
         
 	    //time the generation of solutions

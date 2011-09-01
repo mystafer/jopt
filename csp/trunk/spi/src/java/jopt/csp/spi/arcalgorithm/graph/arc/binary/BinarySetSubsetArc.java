@@ -8,7 +8,7 @@ import jopt.csp.variable.PropagationFailureException;
 /**
  * Arc representing Z is subset of X
  */
-public class BinarySetSubsetArc extends BinarySetArc {
+public class BinarySetSubsetArc<T> extends BinarySetArc {
     private boolean strict;
     
     /**
@@ -18,19 +18,21 @@ public class BinarySetSubsetArc extends BinarySetArc {
      * @param   target     Target node in equation
      * @param   strict     True if target is a strict subset of source
      */
-    public BinarySetSubsetArc(SetNode source, SetNode target, boolean strict) {
+    public BinarySetSubsetArc(SetNode<T> source, SetNode<T> target, boolean strict) {
         super(source, target);
         this.strict = strict;
     }
 
     public void propagate() throws PropagationFailureException {
-        SetNode x = (SetNode) source;
-        SetNode z = (SetNode) target;
+        @SuppressWarnings("unchecked")
+		SetNode<T> x = (SetNode<T>) source;
+        @SuppressWarnings("unchecked")
+		SetNode<T> z = (SetNode<T>) target;
 
         // check if deltas are supported
         if (useDeltas) {
             // Iterate over newly removed possible values in x removing values in z
-            Iterator iterator = x.getPossibleDeltaSet().iterator();
+            Iterator<T> iterator = x.getPossibleDeltaSet().iterator();
             while (iterator.hasNext())
                 z.removePossible(iterator.next());
         }
@@ -38,7 +40,7 @@ public class BinarySetSubsetArc extends BinarySetArc {
         // deltas are not supported
         else {
             // remove values from z no longer supported by x
-            Iterator zIter = z.getPossibleSet().iterator();
+            Iterator<T> zIter = z.getPossibleSet().iterator();
             while (zIter.hasNext()) {
                 
                 // if value in z is not possible in x, it must
@@ -59,7 +61,7 @@ public class BinarySetSubsetArc extends BinarySetArc {
             if (z.getRequiredCardinality() == x.getRequiredCardinality() - 1) {
                 
                 // iterate over smaller set
-            	Iterator valIter = null;
+            	Iterator<T> valIter = null;
                 if (x.getRequiredCardinality() < z.getPossibleCardinality())
                     valIter = x.getRequiredSet().iterator();
                 else

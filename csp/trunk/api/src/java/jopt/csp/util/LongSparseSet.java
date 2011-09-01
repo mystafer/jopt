@@ -272,7 +272,9 @@ public class LongSparseSet extends LongSet {
      * Iterator for integer values
      */
     private class LongSparseIterator extends NumberIterator {
-        private LongIterator iterator;
+        private static final long serialVersionUID = 1L;
+		
+		private LongIterator iterator;
         private long n;
         
         public LongSparseIterator() {

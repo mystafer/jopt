@@ -18,9 +18,9 @@ import jopt.csp.variable.PropagationFailureException;
  */
 public class BinarySetMemberOfSetReflexArc extends BinaryArc implements NumArc {
 
-    private SetNode set;
+    private SetNode<Number> set;
     
-    public BinarySetMemberOfSetReflexArc(NumNode expr, SetNode set) {
+    public BinarySetMemberOfSetReflexArc(NumNode expr, SetNode<Number> set) {
         super(expr, set);
         this.set = set;
     }
@@ -40,7 +40,7 @@ public class BinarySetMemberOfSetReflexArc extends BinaryArc implements NumArc {
         // deltas are not possible, need to iterate over values in
         // target and make sure they are still possible
         else {
-            Iterator targetIter = set.getPossibleSet().iterator();
+            Iterator<Number> targetIter = set.getPossibleSet().iterator();
             while (targetIter.hasNext()) {
             	Number val = (Number) targetIter.next();
                 

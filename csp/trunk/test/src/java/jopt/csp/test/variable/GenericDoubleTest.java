@@ -47,7 +47,7 @@ public class GenericDoubleTest extends TestCase {
         	assertEquals("index next", curI++, idxI.currentVal());
         }
         
-        ArrayList l = new ArrayList();
+        ArrayList<CspGenericIndex> l = new ArrayList<CspGenericIndex>();
         l.add(idxI);
         IndexIterator idxIterator = new IndexIterator(l);
         curI = 0;

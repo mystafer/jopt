@@ -10,9 +10,9 @@ import jopt.csp.spi.util.DomainChangeType;
 public abstract class AbstractNode implements Node, NodeChangeSource {
     private String name;
     
-    private HashMap domainListeners;
-    private HashMap rangeListeners;
-    private HashMap valueListeners;
+    private HashMap<NodeChangeListener, Object> domainListeners;
+    private HashMap<NodeChangeListener, Object> rangeListeners;
+    private HashMap<NodeChangeListener, Object> valueListeners;
     private boolean inGraph;
     
     protected NodeChangeEvent event;
@@ -25,9 +25,9 @@ public abstract class AbstractNode implements Node, NodeChangeSource {
             throw new RuntimeException("node cannot be created without a name");
         
         this.name = name;
-        this.domainListeners = new HashMap();
-        this.rangeListeners = new HashMap();
-        this.valueListeners = new HashMap();
+        this.domainListeners = new HashMap<NodeChangeListener, Object>();
+        this.rangeListeners = new HashMap<NodeChangeListener, Object>();
+        this.valueListeners = new HashMap<NodeChangeListener, Object>();
         this.event = new NodeChangeEvent(this);
     }
     
@@ -105,7 +105,7 @@ public abstract class AbstractNode implements Node, NodeChangeSource {
     protected void fireChangeEvent(int type) {
         // Notify value listeners
         if (type == DomainChangeType.VALUE) {
-            Iterator iterator = valueListeners.keySet().iterator();
+            Iterator<NodeChangeListener> iterator = valueListeners.keySet().iterator();
             while (iterator.hasNext()) {
                 NodeChangeListener listener = (NodeChangeListener) iterator.next();
                 event.setCallbackValue(valueListeners.get(listener));
@@ -115,7 +115,7 @@ public abstract class AbstractNode implements Node, NodeChangeSource {
 
         // Notify range listeners
         if (type >= DomainChangeType.RANGE) {
-            Iterator iterator = rangeListeners.keySet().iterator();
+            Iterator<NodeChangeListener> iterator = rangeListeners.keySet().iterator();
             while (iterator.hasNext()) {
                 NodeChangeListener listener = (NodeChangeListener) iterator.next();
                 event.setCallbackValue(rangeListeners.get(listener));
@@ -124,7 +124,7 @@ public abstract class AbstractNode implements Node, NodeChangeSource {
         }
         
         // Notify domain listeners
-        Iterator iterator = domainListeners.keySet().iterator();
+        Iterator<NodeChangeListener> iterator = domainListeners.keySet().iterator();
         while (iterator.hasNext()) {
             NodeChangeListener listener = (NodeChangeListener) iterator.next();
             event.setCallbackValue(domainListeners.get(listener));

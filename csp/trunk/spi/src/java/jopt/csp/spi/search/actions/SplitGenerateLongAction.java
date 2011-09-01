@@ -46,7 +46,7 @@ public class SplitGenerateLongAction extends AbstractSearchNodeAction {
 	 */
 	public SearchAction performAction() throws PropagationFailureException {
 		// build list of instantiate actions for variables
-		LinkedList instantiateActions = new LinkedList();
+		LinkedList<SplitInstantiateLongAction> instantiateActions = new LinkedList<SplitInstantiateLongAction>();
 		if(varSelector != null) {
 			varSelector.reset();
 			varSelector.setVariables(vars);

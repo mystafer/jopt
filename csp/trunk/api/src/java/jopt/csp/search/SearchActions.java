@@ -366,7 +366,7 @@ public interface SearchActions {
 	 * 
 	 * @param vars      Array of variables to instantiate
 	 */
-	public SearchAction generate(CspSetVariable vars[]);
+	public <T> SearchAction generate(CspSetVariable<T> vars[]);
 
 	/**
 	 * Creates an action that will instantiate an array of variables in order.  The
@@ -382,7 +382,7 @@ public interface SearchActions {
 	 * @param vars      	Array of variables to instantiate
 	 * @param selector  	Used to select next value to reduce domain of variable
 	 */
-	public SearchAction generate(CspSetVariable vars[], SetSelector selector);
+	public <T> SearchAction generate(CspSetVariable<T> vars[], SetSelector<T> selector);
 
 	/**
 	 * Creates an action that will instantiate an array of variables.  The
@@ -402,7 +402,7 @@ public interface SearchActions {
 	 * @param selector  	Used to select next value to reduce domain of variable
 	 * @param varSelector	Method to select next variable to instantiate
 	 */
-	public SearchAction generate(CspSetVariable vars[], SetSelector selector, VariableSelector varSelector);
+	public <T> SearchAction generate(CspSetVariable<T> vars[], SetSelector<T> selector, VariableSelector varSelector);
 
 	/**
 	 * Creates an action that will store all information for the current problem

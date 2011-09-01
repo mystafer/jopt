@@ -10,11 +10,11 @@ import jopt.csp.variable.PropagationFailureException;
  * Arc that further filters target nodes of a union based on the source union and
  * and an intersection of the targets
  */
-public class GenericSetUnionIntersectFilterArc extends GenericSetArc {
-    private SetNode union;
-    private SetNode targeta;
-    private SetNode targetb;
-    private SetNode intersect;
+public class GenericSetUnionIntersectFilterArc<T> extends GenericSetArc {
+    private SetNode<T> union;
+    private SetNode<T> targeta;
+    private SetNode<T> targetb;
+    private SetNode<T> intersect;
 
     /**
      * Constructor
@@ -24,8 +24,8 @@ public class GenericSetUnionIntersectFilterArc extends GenericSetArc {
      * @param   targetb     Second Target node in equation
      * @param   intersect   Intersection of target nodes used as a reference
      */
-    public GenericSetUnionIntersectFilterArc(SetNode union, SetNode targeta,
-        SetNode targetb, SetNode intersect)
+    public GenericSetUnionIntersectFilterArc(SetNode<T> union, SetNode<T> targeta,
+        SetNode<T> targetb, SetNode<T> intersect)
     {
         super(new SetNode[]{union, intersect}, new SetNode[]{targeta, targetb});
         this.union = union;
@@ -70,7 +70,7 @@ public class GenericSetUnionIntersectFilterArc extends GenericSetArc {
                 
                 // loop over newly required values in union
                 // and check if it is still in the intersection
-                Iterator iterator = requiredDelta ? union.getRequiredDeltaSet().iterator() : union.getRequiredSet().iterator();
+                Iterator<T> iterator = requiredDelta ? union.getRequiredDeltaSet().iterator() : union.getRequiredSet().iterator();
                 while (iterator.hasNext()) {
                     Object zval = iterator.next();
     

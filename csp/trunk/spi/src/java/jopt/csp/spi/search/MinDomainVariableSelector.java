@@ -14,7 +14,7 @@ import jopt.csp.variable.CspVariable;
  *
  */
 public class MinDomainVariableSelector implements VariableSelector {
-    private LinkedList variables;
+    private LinkedList<CspVariable> variables;
     
     //Javadoc inherited
     public boolean hasNext() {
@@ -33,7 +33,7 @@ public class MinDomainVariableSelector implements VariableSelector {
 
     //javadoc inherited
     public void setVariables(CspVariable[] vars) {
-        variables = new LinkedList();
+        variables = new LinkedList<CspVariable>();
         //Sort the variables by lowest domain first
         Arrays.sort(vars,new VariableCompare());
         for(int i=0;i<vars.length;i++) {
@@ -46,9 +46,9 @@ public class MinDomainVariableSelector implements VariableSelector {
      * @author kformsma
      *
      */
-    private class VariableCompare implements Comparator{
+    private class VariableCompare implements Comparator<CspVariable>{
 
-        public int compare(Object arg0, Object arg1) {
+        public int compare(CspVariable arg0, CspVariable arg1) {
             CspVariable a = (CspVariable) arg0;
             CspVariable b = (CspVariable) arg1;
             return (a.getSize() - b.getSize());

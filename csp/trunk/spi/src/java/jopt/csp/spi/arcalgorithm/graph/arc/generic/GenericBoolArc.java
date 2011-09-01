@@ -8,6 +8,7 @@ import jopt.csp.spi.arcalgorithm.graph.node.GenericNodeIndexManager;
 import jopt.csp.spi.arcalgorithm.graph.node.Node;
 import jopt.csp.spi.arcalgorithm.graph.node.NumNode;
 import jopt.csp.spi.arcalgorithm.variable.GenericBooleanConstant;
+import jopt.csp.variable.CspGenericIndex;
 import jopt.csp.variable.PropagationFailureException;
 
 /**
@@ -349,7 +350,7 @@ public abstract class GenericBoolArc extends GenericArc {
      * @param setY          true if current Y node should be set as iterator is processed
      * @throws PropagationFailureException  If domain of target node becomes empty
      */
-    protected void propagateUsingIterator(Iterator idxIterator,
+    protected void propagateUsingIterator(Iterator<CspGenericIndex> idxIterator,
             boolean setX, boolean setY) throws PropagationFailureException 
     {
         // no need to iterate over nodes

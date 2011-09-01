@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import jopt.csp.variable.CspGenericIndex;
+
 
 
 /**
@@ -11,8 +13,8 @@ import java.util.NoSuchElementException;
  * to loop over a combination of target and source indices
  * during processing of propagation events
  */
-public class IndexIterator implements Iterator {
-    private List idxList;
+public class IndexIterator implements Iterator<CspGenericIndex> {
+    private List<? extends CspGenericIndex> idxList;
     private boolean idxReady;
     private boolean firstMove;
     
@@ -22,7 +24,7 @@ public class IndexIterator implements Iterator {
      * 
      * @param indices   List of indices to iterator over
      */
-    public IndexIterator(List indices) 
+    public IndexIterator(List<? extends CspGenericIndex> indices) 
     {
         if (indices.size()==0) {
             throw new IllegalStateException("No indices to iterate over");
@@ -44,7 +46,7 @@ public class IndexIterator implements Iterator {
     /**
      * Moves iterator to next index value
      */
-    public Object next() {
+    public CspGenericIndex next() {
         // ensure next value exists
         if (!idxReady) {
             throw new NoSuchElementException("no further index combinations exist");
@@ -76,7 +78,7 @@ public class IndexIterator implements Iterator {
     /**
      * Updates a list of index objects to the first value in each index
      */
-    private int resetIndexList(List idxList) {
+    private int resetIndexList(List<? extends CspGenericIndex> idxList) {
         int totalSize = 0;
         for (int i=0; i<idxList.size(); i++) {
             GenericIndex idx = (GenericIndex) idxList.get(i);
@@ -89,7 +91,7 @@ public class IndexIterator implements Iterator {
     /**
      * Locates the first unique index combination for a list of indices
      */
-    private boolean findFirstForIndexList(List idxList) {
+    private boolean findFirstForIndexList(List<? extends CspGenericIndex> idxList) {
         if (idxList.size() == 0) return false;
         
         // attempt to all indices first possible value
@@ -109,7 +111,7 @@ public class IndexIterator implements Iterator {
     /**
      * Locates the next unique index combination for a list of indices
      */
-    private boolean findNextForIndexList(List idxList) {
+    private boolean findNextForIndexList(List<? extends CspGenericIndex> idxList) {
         if (idxList.size() == 0) return false;
         
         // attempt to move first possible index in list to next value

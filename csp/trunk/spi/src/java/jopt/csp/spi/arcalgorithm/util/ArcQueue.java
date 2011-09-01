@@ -10,14 +10,14 @@ import jopt.csp.spi.arcalgorithm.graph.arc.Arc;
  * Represents a queue of arcs to be propagated
  */
 public class ArcQueue {
-    private ArrayList list;
+    private ArrayList<Arc> list;
     private int requiredMinComplexity;
     
     /**
      * Constructor
      */
     public ArcQueue() {
-        this.list = new ArrayList();
+        this.list = new ArrayList<Arc>();
     }
     
     /**
@@ -103,8 +103,8 @@ public class ArcQueue {
     /**
      * Adds an arc to the queue
      */
-    public void addAll(Collection col) {
-        Iterator i = col.iterator();
+    public void addAll(Collection<Arc> col) {
+        Iterator<Arc> i = col.iterator();
         while (i.hasNext())
             add((Arc) i.next());
     }

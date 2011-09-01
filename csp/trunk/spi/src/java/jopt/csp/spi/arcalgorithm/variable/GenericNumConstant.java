@@ -113,8 +113,8 @@ public abstract class GenericNumConstant implements CspGenericNumConstant, Gener
     // javadoc inherited from CspGenericNumConstant interface
     public CspGenericNumConstant createFragment(CspGenericIndex fragIndices[]) {
         // build list of indices that are not contained in expression
-        List remainingIdxList = new LinkedList(Arrays.asList(indices));
-        List fragIdxList = Arrays.asList(fragIndices);
+        List<CspGenericIndex> remainingIdxList = new LinkedList<CspGenericIndex>(Arrays.asList(indices));
+        List<CspGenericIndex> fragIdxList = Arrays.asList(fragIndices);
         remainingIdxList.removeAll(fragIdxList);
         
         // if all indices are used for variable, return the specific
@@ -226,7 +226,7 @@ public abstract class GenericNumConstant implements CspGenericNumConstant, Gener
     private CspGenericNumConstant operate(CspGenericNumConstant num, int operation){
         CspGenericIndex[] bIndices = getIndices();
         CspGenericIndex[] aIndices = num.getIndices();
-        HashSet indices = new HashSet(Arrays.asList(aIndices));
+        HashSet<CspGenericIndex> indices = new HashSet<CspGenericIndex>(Arrays.asList(aIndices));
         indices.addAll(Arrays.asList(bIndices));
         CspGenericIndex newIndex[] = (CspGenericIndex[])indices.toArray(new CspGenericIndex[0]);
         int newSize = 1;

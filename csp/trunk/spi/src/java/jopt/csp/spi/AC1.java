@@ -51,7 +51,7 @@ public class AC1 extends ArcBasedAcAlg {
      */
     public void propagate() throws PropagationFailureException {
         // retrieve set of all arcs contained in graph
-        Set arcs = graph.getAllArcs();
+        Set<Arc> arcs = graph.getAllArcs();
         
         // loop until no more changes occur
         while (changed) {
@@ -61,7 +61,7 @@ public class AC1 extends ArcBasedAcAlg {
             // has changed having occurred and continue
             try {
                 // propagate every arc in graph
-            	Iterator arcIter = arcs.iterator();
+            	Iterator<Arc> arcIter = arcs.iterator();
                 while (arcIter.hasNext()) {
                     Arc arc = (Arc) arcIter.next();
                     arc.propagate();

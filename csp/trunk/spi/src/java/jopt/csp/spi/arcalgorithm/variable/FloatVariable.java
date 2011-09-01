@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import jopt.csp.spi.arcalgorithm.domain.BaseFloatDomain;
 import jopt.csp.spi.arcalgorithm.domain.FloatIntervalDomain;
+import jopt.csp.spi.solver.VariableChangeListener;
 import jopt.csp.util.FloatSet;
 import jopt.csp.util.NumSet;
 import jopt.csp.variable.CspFloatVariable;
@@ -269,9 +270,10 @@ public class FloatVariable extends FloatExpr implements CspFloatVariable, Variab
     /**
      * Clones this variable
      */
-    public Object clone() {
+    @SuppressWarnings("unchecked")
+	public Object clone() {
         FloatVariable var = new FloatVariable(name, this);
-        var.variableListeners = (HashMap)this.variableListeners.clone();
+        var.variableListeners = (HashMap<VariableChangeListener, Integer>)this.variableListeners.clone();
         return var;
     }
     

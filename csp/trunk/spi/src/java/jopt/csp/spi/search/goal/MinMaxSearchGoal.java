@@ -29,7 +29,7 @@ public abstract class MinMaxSearchGoal implements SearchGoal {
     // If expr is a variable, then this is equal to expr
     // If expr is not a concrete variable, then this a new variable created by createVar()
     protected CspNumVariable var;
-	protected List solutionRefs = null;
+	protected List<SearchNodeReference> solutionRefs = null;
     protected boolean hasSolution = false;
     protected double bestObjectiveVal;
     protected boolean constraintPosted = false;
@@ -43,7 +43,7 @@ public abstract class MinMaxSearchGoal implements SearchGoal {
      * @param expr		The expression to be maximized or minimized
      */
     public MinMaxSearchGoal(CspVariableFactory varFact, ConstraintStore store, CspNumExpr expr, boolean isCurrentASolution) {
-    	this.solutionRefs = new LinkedList();
+    	this.solutionRefs = new LinkedList<SearchNodeReference>();
         this.varFact = varFact;
         this.store = store;
         this.expr = expr;
@@ -62,7 +62,7 @@ public abstract class MinMaxSearchGoal implements SearchGoal {
 	 *
      */
     public MinMaxSearchGoal() {
-    	this.solutionRefs = new LinkedList();
+    	this.solutionRefs = new LinkedList<SearchNodeReference>();
     }
     
     // javadoc inherited from SearchGoal

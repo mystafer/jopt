@@ -35,7 +35,7 @@ public class TreeSearch implements Search {
      * Queue of techniques used higher in the tree that are currently suspended.
      * When navigation of the tree  
      */
-    private LinkedList techniqueQueue;
+    private LinkedList<PreviousTechniqueInfo> techniqueQueue;
     
     /**
      * Depth in the tree at which current search technique was engaged
@@ -53,7 +53,7 @@ public class TreeSearch implements Search {
         this.continuallyImprove = true;
         this.allSolutionsFound = false;
         this.nextGoalSolution = 0;
-        this.techniqueQueue = new LinkedList();
+        this.techniqueQueue = new LinkedList<PreviousTechniqueInfo>();
         
         if (technique == null)
             this.technique = new DepthFirstSearch();

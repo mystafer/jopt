@@ -1,7 +1,9 @@
 package jopt.csp.variable;
 
 public class PropagationFailureException extends Exception {
-    public PropagationFailureException() {
+    private static final long serialVersionUID = 1L;
+	
+	public PropagationFailureException() {
         super();
     }
     public PropagationFailureException(String msg) {

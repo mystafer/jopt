@@ -125,7 +125,7 @@ public interface TreeNode extends SearchNode {
      * Returns a list of Integers containing the list of movements followed to reach
      * this node.  Each Integer represents a childNumber.
      */
-    public List getPath();
+    public List<Integer> getPath();
     
     /**
      * Returns a bitset representing the path from the root to this node as a series

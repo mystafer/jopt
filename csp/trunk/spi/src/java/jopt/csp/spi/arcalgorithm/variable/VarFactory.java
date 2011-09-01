@@ -44,7 +44,7 @@ import jopt.csp.variable.CspVariableFactory;
  * Implementation of CspVariables for creating implementations of variables
  */
 public class VarFactory implements CspVariableFactory {
-    private Set nameSet = new HashSet();
+    private Set<String> nameSet = new HashSet<String>();
     private double defaultPrecision;
     
     /**
@@ -71,8 +71,8 @@ public class VarFactory implements CspVariableFactory {
     /**
      * Returns an object used to create constraints on sets
      */
-    public CspSetConstraints getSetConstraints() {
-    	return new SetConstraints();
+    public <T> CspSetConstraints<T> getSetConstraints() {
+    	return new SetConstraints<T>();
     }
     
     /**

@@ -53,7 +53,7 @@ public class GenerateFloatAction extends AbstractSearchNodeAction {
 	 */
 	public SearchAction performAction() throws PropagationFailureException {
 		// build list of instantiate actions for variables
-		LinkedList instantiateActions = new LinkedList();
+		LinkedList<InstantiateFloatAction> instantiateActions = new LinkedList<InstantiateFloatAction>();
 		if(varSelector != null) {
 			varSelector.reset();
 			varSelector.setVariables(vars);

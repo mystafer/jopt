@@ -49,7 +49,7 @@ public class GenerateLongAction extends AbstractSearchNodeAction {
 	 */
 	public SearchAction performAction() throws PropagationFailureException {
 		// build list of instantiate actions for variables
-		LinkedList instantiateActions = new LinkedList();
+		LinkedList<InstantiateLongAction> instantiateActions = new LinkedList<InstantiateLongAction>();
 		if(varSelector !=null){
 			varSelector.reset();
 			varSelector.setVariables(vars);

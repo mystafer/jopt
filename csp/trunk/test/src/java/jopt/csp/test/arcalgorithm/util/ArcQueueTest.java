@@ -153,7 +153,7 @@ public class ArcQueueTest extends TestCase {
     }
     
     public void testAddAll() {
-        List l = new ArrayList();
+        List<Arc> l = new ArrayList<Arc>();
         l.add(arc2a);
         l.add(arc1b);
         l.add(arc4a);

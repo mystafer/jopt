@@ -51,7 +51,7 @@ public class IntEqIntersectionTest extends TestCase {
     public void testIntersectScenario1() {
         try {
             initVarsScenario1();
-            gac.addConstraint(new EqIntersection(x, y, z));
+            gac.addConstraint(new EqIntersection<Integer>(x, y, z));
             gac.propagate();
 
             // Check intersect domain is correct
@@ -96,7 +96,7 @@ public class IntEqIntersectionTest extends TestCase {
     public void testIntersectScenario2() {
         try {
             initVarsScenario2();
-            gac.addConstraint(new EqIntersection(x, y, z));
+            gac.addConstraint(new EqIntersection<Integer>(x, y, z));
 
             // propagation should fail
             gac.propagate();

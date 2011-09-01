@@ -8,8 +8,8 @@ import jopt.csp.spi.arcalgorithm.graph.node.SetNode;
 import jopt.csp.variable.CspIntSetVariable;
 import jopt.csp.variable.PropagationFailureException;
 
-public class IntSetVariable extends SetVariableBase implements CspIntSetVariable, Variable {
-    private SetNode node;
+public class IntSetVariable extends SetVariableBase<Integer> implements CspIntSetVariable, Variable {
+    private SetNode<Integer> node;
     
     /**
      * Constructor
@@ -28,7 +28,7 @@ public class IntSetVariable extends SetVariableBase implements CspIntSetVariable
     /**
      * Constructor
      */
-    public IntSetVariable(String name, Collection values) {
+    public IntSetVariable(String name, Collection<Integer> values) {
         this(name, new IntSetDomain(values));
     }
     
@@ -49,7 +49,7 @@ public class IntSetVariable extends SetVariableBase implements CspIntSetVariable
     /**
      * Retrieves node for an expression
      */
-    public SetNode getNode() {
+    public SetNode<Integer> getNode() {
         if (node == null) node = new IntSetNode(name, getIntSetDomain());
         return node;
     }

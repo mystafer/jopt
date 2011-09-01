@@ -103,7 +103,7 @@ public class NumAllDiffConstraint extends AbstractConstraint {
     //We only want to add Source Arcs of Number or Set constraints
     //Java doc inherited
     public Arc[] getBooleanSourceArcs() {
-        ArrayList arcs = new ArrayList();
+        ArrayList<Arc> arcs = new ArrayList<Arc>();
         arcs.addAll(Arrays.asList(gsource.getBooleanSourceArcs()));
         arcs.add(createArc());
         return (Arc[])arcs.toArray(new Arc[0]);
@@ -197,7 +197,7 @@ public class NumAllDiffConstraint extends AbstractConstraint {
             // process generic class
             if (gsource!=null) {
                 // build set of values that are bound in variables
-                HashSet boundValues = new HashSet();
+                HashSet<Number> boundValues = new HashSet<Number>();
                 for (int i=0; i<gsource.getExpressionCount(); i++) {
                     NumExpr expr = gsource.getNumExpression(i);
                     
@@ -217,7 +217,7 @@ public class NumAllDiffConstraint extends AbstractConstraint {
         // process array of individual values
         else {
             // build set of values that are bound in variables
-            HashSet boundValues = new HashSet();
+            HashSet<Number> boundValues = new HashSet<Number>();
             for (int i=0; i<nsources.length; i++) {
                 NumExpr expr = nsources[i];
                 

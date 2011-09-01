@@ -848,8 +848,8 @@ public class GenericIntExpr extends GenericNumExprBase implements CspGenericIntE
         return new GenericIntExpr(name, indices, exprs);
     }
     
-    public Collection getNodeCollection() {
-        Collection nodes = null; 
+    public Collection<Node> getNodeCollection() {
+        Collection<Node> nodes = null; 
             if (super.getNodeCollection()!=null)
                     nodes = super.getNodeCollection();
             
@@ -866,7 +866,7 @@ public class GenericIntExpr extends GenericNumExprBase implements CspGenericIntE
         
         // add this node to collection
         if (nodes==null)
-        	nodes = new ArrayList();
+        	nodes = new ArrayList<Node>();
         nodes.add(getNode());
         
     	return nodes;

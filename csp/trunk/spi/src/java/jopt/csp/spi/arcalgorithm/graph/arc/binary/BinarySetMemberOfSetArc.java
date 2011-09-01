@@ -17,10 +17,10 @@ import jopt.csp.variable.PropagationFailureException;
  */
 public class BinarySetMemberOfSetArc extends BinarySetArc {
 
-    private SetNode set;
-    private ArrayList workingList;
+    private SetNode<Number> set;
+    private ArrayList<Number> workingList;
     
-    public BinarySetMemberOfSetArc(SetNode set, NumNode expr) {
+    public BinarySetMemberOfSetArc(SetNode<Number> set, NumNode expr) {
         super(set, expr);
         this.set = set;
     }
@@ -33,7 +33,7 @@ public class BinarySetMemberOfSetArc extends BinarySetArc {
         if (useDeltas) {
             
             // remove values no longer possible in delta from target
-            Iterator removedIter = set.getPossibleDeltaSet().iterator();
+            Iterator<Number> removedIter = set.getPossibleDeltaSet().iterator();
             while (removedIter.hasNext())
                 z.removeValue((Number) removedIter.next());
         }
@@ -43,7 +43,7 @@ public class BinarySetMemberOfSetArc extends BinarySetArc {
         else {
             // initialize working list
             if (workingList == null)
-                workingList = new ArrayList();
+                workingList = new ArrayList<Number>();
             else
             	workingList.clear();
             

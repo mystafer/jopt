@@ -41,7 +41,7 @@ public class NonBinaryGenerateIntegerAction extends AbstractSearchNodeAction {
 	 */
 	public SearchAction performAction() throws PropagationFailureException {
 		// build list of instantiate actions for variables
-		LinkedList instantiateActions = new LinkedList();
+		LinkedList<NonBinaryInstantiateIntegerAction> instantiateActions = new LinkedList<NonBinaryInstantiateIntegerAction>();
 		if(varSelector != null) {
 			varSelector.reset();
 			varSelector.setVariables(vars);

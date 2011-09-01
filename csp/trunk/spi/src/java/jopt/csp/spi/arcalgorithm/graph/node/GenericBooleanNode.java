@@ -110,7 +110,7 @@ public class GenericBooleanNode extends AbstractNode implements NodeChangeListen
     	return 0;
     }
     
-    public Iterator values() {
+    public Iterator<Boolean> values() {
     	return null;
     }
     
@@ -127,7 +127,7 @@ public class GenericBooleanNode extends AbstractNode implements NodeChangeListen
      */
     public void nodeChange(NodeChangeEvent ev) {
         int idx = ((Integer) (ev.getCallbackValue())).intValue();
-        HashMap modifyMap = getModifiedMinMaxChangeMap();
+        HashMap<String, Integer> modifyMap = getModifiedMinMaxChangeMap();
         
         // add to domain modified set
         if (domainModifiedMin==-1 || idx < domainModifiedMin) {
@@ -154,7 +154,7 @@ public class GenericBooleanNode extends AbstractNode implements NodeChangeListen
         }
 
         // clear modified node lists
-        HashMap modifyMap = getModifiedMinMaxChangeMap();
+        HashMap<String, Integer> modifyMap = getModifiedMinMaxChangeMap();
         if (modifyMap!=null) modifyMap.clear();
         
         // reset min / max modified offsets
@@ -165,11 +165,12 @@ public class GenericBooleanNode extends AbstractNode implements NodeChangeListen
     /**
      * Returns the set of changes to modified node min / max value
      */
-    private HashMap getModifiedMinMaxChangeMap() {
+    private HashMap<String, Integer> getModifiedMinMaxChangeMap() {
         if (cpdata==null) return null;
-        HashMap modifyMap = (HashMap) cpdata.get("mm");
+        @SuppressWarnings("unchecked")
+		HashMap<String, Integer> modifyMap = (HashMap<String, Integer>) cpdata.get("mm");
         if (modifyMap == null) {
-            modifyMap = new HashMap();
+            modifyMap = new HashMap<String, Integer>();
             cpdata.put("mm", modifyMap);
         }
         return modifyMap;
@@ -208,7 +209,7 @@ public class GenericBooleanNode extends AbstractNode implements NodeChangeListen
     // javadoc is inherited
     public void beforeChoicePointPopEvent() {
         // Add any values that were removed
-        HashMap modifyMap = getModifiedMinMaxChangeMap();
+        HashMap<String, Integer> modifyMap = getModifiedMinMaxChangeMap();
         
         //If no modify data is stored, there can be no popping back
         if (modifyMap==null) {
@@ -244,7 +245,7 @@ public class GenericBooleanNode extends AbstractNode implements NodeChangeListen
      */
     public Object getState() {
         // store state for each node in a statemap
-        HashMap stateMap = new HashMap();
+        HashMap<String, Object> stateMap = new HashMap<String, Object>();
         for (int i=0; i<nodes.length; i++) {
             Node n = nodes[i];
             stateMap.put(n.getName(), n.getState());
@@ -258,7 +259,8 @@ public class GenericBooleanNode extends AbstractNode implements NodeChangeListen
      */
     public void restoreState(Object state) {
         // restore state for each node in a statemap
-        HashMap stateMap = (HashMap) state;
+        @SuppressWarnings("unchecked")
+		HashMap<String, Object> stateMap = (HashMap<String, Object>) state;
         for (int i=0; i<nodes.length; i++) {
             Node n = nodes[i];
             n.restoreState(stateMap.get(n.getName()));

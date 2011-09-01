@@ -277,7 +277,9 @@ public class IntSparseSet extends IntSet {
      * Iterator for integer values
      */
     private class IntSparseIterator extends NumberIterator {
-        private int idx;
+        private static final long serialVersionUID = 1L;
+		
+		private int idx;
         
         public IntSparseIterator() {
         	this.idx = -1;

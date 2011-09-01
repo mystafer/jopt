@@ -14,19 +14,20 @@ import jopt.csp.spi.util.NumConstants;
 /**
  * Constraint representing target is subset of source
  */
-public class EqSubset extends SetConstraint {
+public class EqSubset<T> extends SetConstraint<T> {
     private boolean constSource;
-    private Set constSet;
+    private Set<T> constSet;
     
-    public EqSubset(SetVariable source, SetVariable target) {
+    @SuppressWarnings("unchecked")
+	public EqSubset(SetVariable<T> source, SetVariable<T> target) {
         super(new SetVariable[] {source}, new SetVariable[]{target});
     }
-    public EqSubset(Set source, SetVariable target) {
+    public EqSubset(Set<T> source, SetVariable<T> target) {
         this(target, target);
         this.constSource = true;
         this.constSet = source;
     }
-    public EqSubset(SetVariable source, Set target) {
+    public EqSubset(SetVariable<T> source, Set<T> target) {
         this(source, source);
         this.constSource = true;
         this.constSet = target;
@@ -36,8 +37,8 @@ public class EqSubset extends SetConstraint {
      * Creates an array of arcs representing constraint
      */
     protected Arc[] createArcs() {
-        SetNode sourceNodes[] = getSetSourceNodes();
-        SetNode targetNodes[] = getSetTargetNodes();
+        SetNode<T> sourceNodes[] = getSetSourceNodes();
+        SetNode<T> targetNodes[] = getSetTargetNodes();
         
         // create node arc with constant source
         Arc arcs[] = null;
@@ -45,14 +46,14 @@ public class EqSubset extends SetConstraint {
             // a cardinality arc is required to ensure that strict subset terms are met
             if (constSource) {
                 arcs = new Arc[]{
-                    new NodeSetSubsetEqArc(constSet, targetNodes[0], false),
-                    new BinaryNumCardinalityReflexArc(new Integer(constSet.size()), targetNodes[0], NumConstants.LT)
+                    new NodeSetSubsetEqArc<T>(constSet, targetNodes[0], false),
+                    new BinaryNumCardinalityReflexArc<T>(new Integer(constSet.size()), targetNodes[0], NumConstants.LT)
                 };
             }
             else {
                 arcs = new Arc[]{
-                    new NodeSetSubsetEqArc(sourceNodes[0], constSet, false),
-                    new BinaryNumCardinalityReflexArc(new Integer(constSet.size()), sourceNodes[0], NumConstants.GT)
+                    new NodeSetSubsetEqArc<T>(sourceNodes[0], constSet, false),
+                    new BinaryNumCardinalityReflexArc<T>(new Integer(constSet.size()), sourceNodes[0], NumConstants.GT)
                 };
             }
         }
@@ -60,8 +61,8 @@ public class EqSubset extends SetConstraint {
         // create binary arcs between nodes
         else {
             arcs = new Arc[]{
-        		new BinarySetSubsetArc(sourceNodes[0], targetNodes[0], false),
-                new BinarySetSupersetArc(targetNodes[0], sourceNodes[0], false)
+        		new BinarySetSubsetArc<T>(sourceNodes[0], targetNodes[0], false),
+                new BinarySetSupersetArc<T>(targetNodes[0], sourceNodes[0], false)
             };
         }
         

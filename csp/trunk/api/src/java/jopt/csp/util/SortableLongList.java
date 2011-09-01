@@ -21,7 +21,9 @@ import org.apache.commons.collections.primitives.LongCollection;
  */
 public class SortableLongList extends ArrayLongList {
 
-    private transient long[] data = null;
+    private static final long serialVersionUID = 1L;
+	
+	private transient long[] data = null;
     private int size = 0;
     
     /** 

@@ -67,7 +67,7 @@ public class TabuSearchBrowseAction extends AbstractSearchNodeAction {
         SolverSolution firstConsistentNeighbor = null;
         int firstConsistentNeighborIdx = -1;
 
-        ArrayList sols = new ArrayList();
+        ArrayList<SolverSolution> sols = new ArrayList<SolverSolution>();
         ArrayIntList solIndices = new ArrayIntList();
         ArrayDoubleList solObjectives = new ArrayDoubleList();
         while (sols.size()<numToCheck && currentNeighbor < hood.size()) {

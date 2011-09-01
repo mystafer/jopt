@@ -13,6 +13,7 @@ import jopt.csp.spi.util.GenericIndex;
 import jopt.csp.spi.util.GenericIndexManager;
 import jopt.csp.spi.util.NumberMath;
 import jopt.csp.util.DoubleUtil;
+import jopt.csp.variable.CspGenericIndex;
 import jopt.csp.variable.CspGenericNumConstant;
 
 /**
@@ -112,7 +113,7 @@ public abstract class NumRangeConstraint extends NumConstraint {
     //  javadoc is inherited
     public GenericIndexManager getIndexManager() {
         if(gim == null) {
-            ArrayList sourceAL = new ArrayList();
+            ArrayList<CspGenericIndex> sourceAL = new ArrayList<CspGenericIndex>();
             if (genSourceExprMin != null)
                 sourceAL.addAll(Arrays.asList(genSourceExprMin.getGenericIndices()));
             if (genSourceExprMax != null)
@@ -133,7 +134,7 @@ public abstract class NumRangeConstraint extends NumConstraint {
     // inherited javadoc from NumConstraint abstract class
     public boolean isViolated(boolean allViolated) {
         GenericIndexManager gim = this.getIndexManager();
-        Iterator gimIt;
+        Iterator<CspGenericIndex> gimIt;
         // all combinations must be checked in the case of NEQ constraints
         if(allViolated) {
             gimIt = gim.allIterator();
@@ -339,7 +340,7 @@ public abstract class NumRangeConstraint extends NumConstraint {
     
     public Node[] getBooleanSourceNodes() {
         if (sourceNodes==null) {
-            Collection nodes = null;
+            Collection<Node> nodes = null;
             
             // retrieve nodes from a min
             if (sourceExprMin!=null) {
@@ -374,7 +375,7 @@ public abstract class NumRangeConstraint extends NumConstraint {
         }
         else{
 	        booleanArcsObtained = true;
-	        ArrayList arcs = new ArrayList();
+	        ArrayList<Arc> arcs = new ArrayList<Arc>();
 	        if (sourceExprMin!=null)
 	            arcs.addAll(Arrays.asList(sourceExprMin.getBooleanSourceArcs()));
 	        if (sourceExprMax!=null)
