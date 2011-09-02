@@ -1,4 +1,5 @@
 /*
+
  * SearchGoalsImpl.java
  * 
  * Created on May 27, 2005
