@@ -1,0 +1,304 @@
+<html>
+<head>
+<title>jOpt - Java OPL Implementation</title>
+<link rel=StyleSheet href="jopt.css" type="text/css"/>
+</head>
+<body>
+<div class="banner">
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+  <tr>
+    <td rowspan="2"><img border="0" src="images/homer_brain_small.jpg" width="32" height="39"></td>
+    <td width="100%" class="jopttitle">jOpt</td>
+	<td rowspan="2"></a></td>
+  </tr>
+  <tr>
+    <td width="100%" class="jopttagline">Java OPL Implementation</td>
+  </tr>
+</table>
+</div>
+<div id="toptabs">
+<table cellpadding="4" cellspacing="0" border="0">
+  <tr>
+  			<td><a href="index.php.html">Main</a></td>
+		
+  			<td><a href="news.php.html">News</a></td>
+		
+  		    <td><a href="opl.php.html">OPL</a></td>
+		
+  		    <td><a href="mp_general.php.html">MP</a></td>
+		
+  		    <td><a href="cp_general.php.html">CP</a></td>
+		
+		    <td><a href="js_general.php.html">JS</a></td>
+		
+  		    <td><a href="project.php.html">Project</a></td>
+		
+  		    <td><a href="documentation.php.html">Documentation</a></td>
+		
+  		    <td><a href="links.php.html">Links</a></td>
+		
+  		    <th><a href="faqs_updated.php.html">FAQs</a></th>
+	  </tr>
+</table>
+</div>
+ 
+ <div id="breadcrumbs">
+   <a href="faqs_updated.php.html" class="selfref">FAQs</a>  
+ </div>
+
+<table cellpadding="4" cellspacing="0" border="0" width="100%" id="main">
+  <tr>
+    <td width="10%" valign="top" nowrap>
+      <div id="navcolumn">
+	  	        <div class="label"><strong>Navigation</strong></div>
+        <div class="body">
+          <div> <a href="index.php.html">Home</a> </div>
+          <div> <a href="news.php.html">News</a> </div>
+          <div> <a href="opl.php.html">OPL</a> </div>
+          <div> <a href="mp_general.php.html">MP</a> </div>
+          <div> <a href="cp_general.php.html">CP</a> </div>
+          <div> <a href="js_general.php.html">JS</a> </div>
+          <div> <a href="project.php.html">Project</a> </div>
+          <div> <a href="documentation.php.html">Documentation</a> </div>
+          <div> <a href="links.php.html">Links</a> </div>
+          <div> <a href="faqs_updated.php.html">FAQs</a> </div>
+		</div>	  	        <div class="body">
+		  <div> <a href="http://sourceforge.net/projects/jopt">Sourceforge Project</a></div>
+		  <div> <a href="http://sourceforge.net/forum/forum.php?forum_id=383655">Developer Forum</a></div>
+		  <div> <a href="http://sourceforge.net/project/showfiles.php?group_id=112044">Downloads</a></div>
+		  <div> <a href="javadocs/api.html">CSP API Javadoc</a></div>
+		  <div> <a href="javadocs/spi.html">CSP SPI Javadoc</a></div>
+  		  <div> <a href="javadocs/js/api.html">JS API Javadoc</a></div>
+		  <div> <a href="javadocs/js/spi.html">JS SPI Javadoc</a></div>
+        </div>      </div>
+	</td>
+    <td valign="top" align="left">
+	<div class="app">
+	<h3>Frequently Asked Questions</h3>
+	<p>
+		<strong><a href="faqs_updated.php.html#overview">Overview</a></strong><br>
+				1. <a href="faqs_updated.php.html#q1">What is jOpt?</a><br>
+		2. <a href="faqs_updated.php.html#q2">What is OPL?</a><br>
+		3. <a href="faqs_updated.php.html#q3">What can I do with jOpt?</a><br>
+		4. <a href="faqs_updated.php.html#q4">How is jOpt designed?</a><br>
+		5. <a href="faqs_updated.php.html#q5">How do the components of jOpt interact with each other?</a><br>
+		6. <a href="faqs_updated.php.html#q6">I downloaded the source code; where do I start?</a>
+	<p>
+		<strong><a href="faqs_updated.php.html#clp">Constraint Logic Programming</a></strong><br>
+		7. <a href="faqs_updated.php.html#q7">What does the abbreviation CLP stand for?</a><br>
+		8. <a href="faqs_updated.php.html#q8">What is Constraint Logic Programming?</a><br>
+		9. <a href="faqs_updated.php.html#q9">What is the difference between constraint satisfaction and optimization?</a><br>
+		10. <a href="faqs_updated.php.html#q10">What is a CSP solver?</a><br>
+		11. <a href="faqs_updated.php.html#q11">How does jOpt's CSP solver work?</a><br>
+		12. <a href="faqs_updated.php.html#q12">How does arc consistency work?</a><br>
+		13. <a href="faqs_updated.php.html#q13">What types of constraints does the CSP solver support?</a><br>
+		14. <a href="faqs_updated.php.html#q14">What makes this solver different than existing solutions?</a>
+	<p>
+		<strong><a href="faqs_updated.php.html#mp">Mathematical Programming</a></strong><br>
+		15. <a href="faqs_updated.php.html#q15">What does the abbreviation MP stand for?</a><br>
+		16. <a href="faqs_updated.php.html#q16">What is Mathematical Programming?</a><br>
+		17. <a href="faqs_updated.php.html#q17">What is Linear Programming?</a><br>
+		18. <a href="faqs_updated.php.html#q18">What is Integer Programming?</a> 
+	<p>
+		<strong><a href="faqs_updated.php.html#info">Additional Information</a></strong><br>
+		19. <a href="faqs_updated.php.html#q19">What industries might benefit from jOpt?</a><br>
+		20. <a href="faqs_updated.php.html#q20">Can you give an example problem that jOpt could solve?</a><br>
+		21. <a href="faqs_updated.php.html#q21">Where can I find additional information about the technologies on which jOpt is based?</a><br>
+		22. <a href="faqs_updated.php.html#q22">How can I get involved / get more information?</a> 
+	<p>
+	
+	<br><br><br>
+	<a name="overview"/><h4>Overview</h4>
+			<p>
+		<a name="q1"><strong>Q1. What is jOpt?</strong></a><br>
+		jOpt strives to be a fully functional implementation of the Optimization Programming Language (OPL) built using the Java programming language.  The components within jOpt that are necessary to process OPL language statements are based largely on Operations Research (OR) and Artificial Intelligence (AI) technologies.
+		</p>
+		
+		<p>
+		<a name="q2"><strong>Q2. What is OPL?</strong></a><br>
+		OPL is a programming language created by Pascal Van Hentenryck .  It provides a syntax allowing the definition of a problem model with the goal of assigning values to variables in the context of constraints that determine permissible values.  The models consist primarily of variables, constraints to restrict values in the variables, and the ability to combine multiple AI / OR techniques to solve the problem.<br>
+		<br>
+		OPL variables can be assigned either numeric or string values.  The variables are initialized by declaring what values might be assigned to the variable such as &quot;X can be assigned a value between 0 and 1 million&quot;.<br>
+		<br>
+		Constraints can be defined on the variables such as &quot;X + Y &lt; 100&quot; in order to restrict the values that may be assigned to the variable.<br>
+		<br>
+		OPL also allows the developer to indicate whether all possible solutions to the problem should be determined or if a specific solution should be located.  Specific solutions are requested by declaring a goal such as &quot;maximize the value of Y&quot;.<br>
+		<br>
+		While it is possible to create a piece of software from scratch in order to solve one (or even a small subset) of these problems, OPL provides a developer the ability to define a model without the need to write software to implement the solution.  An OPL interpreter engine utilizes advanced techniques to solve the problem as defined by the developer.  The developer can change and refine the model without worrying about constructing the underlying implementation.<br>
+		<br>
+		OPL requires that the interpreting engine be capable of combining two advanced technologies known as Mathematical Programming and Constraint Logic Programming to solve the problems.  The combination of these types of technologies provides developers an advanced tool for solving combinatorial optimization problems.
+		</p>
+		
+		<p>
+		<a name="q3"><strong>Q3. What can I do with jOpt?</strong></a><br>
+		jOpt will eventually provide an interpreter for the OPL language, but before this can be accomplished, the components that make up the foundation of the project must first be built.<br>
+		<br>
+		The first component is the CSP solver that provides a simple, yet powerful framework (and accompanying implementation) for solving constraint satisfaction problems.  The current CSP solver can be incorporated into Java applications independently (ie. without the other components of jOpt) and includes the necessary tools for modeling and solving.<br>
+		<br>
+		The second component is the Scheduling solver, an extension of the CSP solver that specializes in Job Scheduling problems involving the assignment of resources to activities.  When combined with the CSP solver, it, too, can be incorporated into Java applications independently.<br>
+		<br>
+		Currently, the remaining components are still under development.
+		</p>
+		
+		<p>
+		<a name="q4"><strong>Q4. How is jOpt designed?</strong></a><br>
+		Four major components will provide the foundation for the OPL Engine:<br>
+		<br>
+		1. OPL language parser - provides the lexical logic for parsing OPL language model requirements that will be sent to the solver components to find solutions<br>
+		<br>			  
+		2. CSP solver - provides constraint logic programming functionality to solve constraint satisfaction problems.  More information about this component can be found in the <a href="faqs_updated.php.html#clp">constraint logic programming</a> section.<br>
+		<br>
+		3. MP solver - provides mathematical programming functionality in order to solve linear and integer programming problems<br>
+		<br>
+		4. Scheduling solver - a specialized extension of the CSP solver component that helps solve problems that are based on assigning resources to activities in the context of a schedule
+		</p>
+		
+		<p>
+		<a name="q5"><strong>Q5. How do the components of jOpt interact with each other?</strong></a><br>
+		This hasn't really been figured out yet :).  The plan is for the interpreter engine to use the parser to understand the problem and then use the solver components to find solutions.  The components are designed and built with their eventual need to interact in mind.
+		</p>
+		
+		<p>
+		<a name="q6"><strong>Q6. I downloaded the source code; where do I start?</strong></a><br>
+		Each component in the jOpt project includes an 'example' module containing, among other things, a StartHere class.  Look there for a gentle introduction to the power of jOpt's components.
+		</p>
+	
+	<br><br><br>
+	<a name="clp"/><h4>Constraint Logic Programming</h4>
+		<p>
+		<a name="q7"><strong>Q7. What does the abbreviation CLP stand for?</strong></a><br>
+		CLP stands for Constraint Logic Programming (also commonly referred to as Constraint Programming).  CLP typically deals with solving Constraint Satisfaction Problems (CSP). 
+		</p>
+		
+		<p>
+		<a name="q8"><strong>Q8. What is Constraint Logic Programming?</strong></a><br>
+		&quot;Constraint programming is a computer programming technique, with a name that is in the spirit of other programming techniques, such as object-oriented programming, functional programming, and structured programming&quot; - Irvin Lusting, ILOG<br>
+		<br>
+		The basics of constraint logic programming involve defining variables and constraints over the variables.  CLP provides a way for users to create a program that will assign values to the variables in the context of constraints.
+		</p>
+		
+		<p>
+		<a name="q9"><strong>Q9. What is the difference between constraint satisfaction and optimization?</strong></a><br>
+		The difference between constraint satisfaction and optimization depends entirely on how the question is worded.<br>
+		<br>
+		For example a question like &quot;name one way you can make change for a dollar using quarters, dimes, and nickels&quot; is an example of a constraint satisfaction problem.  Similarly, &quot;name all the ways you can make change for a dollar using quarters, dimes, and nickels&quot; is a CSP.<br>
+		<br>
+		On the other hand, if the problem was to &quot;name the way you can make change for a dollar using quarters, dimes, and nickels that maximizes the number of quarters&quot;, you would have an optimization problem - the goal (maximizing or minimizing some criteria) makes a CSP a CSOP (Constraints Satisfaction Optimization Problem).
+		</p>
+		<a name="q10"><strong>Q10. What is a CSP solver?</strong></a><br>
+		A CSP solver is a program that produces solutions to CLP problems.  Different types of CSP solvers exist, but they all have some common features.  A CSP solver provides a library that allows a user to define variables and constraints.  While the specific types of variables and constraints that can be created vary from solver to solver, the intention of the solver is to produce a solution that assigns values to each variable in order to satisfy the constraints.</p>
+		
+		<p>
+		<a name="q11"><strong>Q11. How does jOpt's CSP solver work?</strong></a><br>
+		jOpt's CSP solver is based on an artificial intelligence technique known as Arc Consistency that involves creating a graph of nodes and arcs from the user-defined variables and constraints, respectively.  The node-arc graph is used to reduce the variable domains while maintaining consistency.<br>
+		<br>
+		jOpt's solver supports different domain reduction algorithms with varying levels on consistency across a wide range of domain types (integer, float, etc.).<br>
+		<br>
+		jOpt's solver also provides searching and local search utilities for exploring the search space in order to find valid solutions (assignments of values to variables) for CSPs.
+		</p>
+		
+		<p>
+		<a name="q12"><strong>Q12. How does arc consistency work?</strong></a><br>
+		Arc Consistency is based on the concept of a graph where every variable creates a node in the graph and the constraints create arcs that connect the nodes.<br>
+		<br>
+		For example, variables X and Y would create two corresponding nodes in the graph. A constraint X + Y = 10 would create two arcs in the graph. The first arc based on the constraint is X = 10 - Y.  This arc would be drawn from Y, the source, to X, the target.  Similarly, a second arc, Y = X - 10, would be drawn from X to Y.  The arcs indicate the dependencies between the nodes and can be traversed by an algorithm to ensure that all nodes are 'consistent' with each other.<br>
+		<br>
+		When a variable is defined, the possible values that may be assigned to the variable are declared as well.  For instance, X may be assigned a value between 1 and 10.  When values are removed from a variable / node, the arcs originating from the node can be used to remove values from nodes targeted by the arcs.  As other nodes are changed, they will propagate changes to other nodes.  When no more changes are necessary, the variables are said to be 'consistent'.<br>
+		<br>
+		Although consistency techniques can reduce possible values in a variable, it may not determine a specific value to assign to each variable.  Therefore, the consistency technique is combined with searching algorithms in order to 'search' for the specific value to assign to each variable.
+		</p>
+		
+		<p>
+		<a name="q13"><strong>Q13. What types of constraints does the CSP solver support?</strong></a><br>
+		jOpt provides for the ability to define expressions and to create a wide array of constraints on those expressions.<br>
+		<br>
+		For numeric expressions, jOpt's CSP solver supports all standard (+, -, /, *, ^, &Sigma;, log, abs, etc.) and trigonometric (sin, cos, tan, arcsin, etc.) operations along with the standard relations including &lt;, &gt;, &lt;=, &gt;=, !=, and =.  Also supported are 'global' constraints including allDifferent and cardinality constraints.<br>
+		<br>
+		For boolean expressions, the CSP solver supports the And, Or, Xor, Not, Equals, and Implies relationships.<br>
+		<br>
+		Set constraints such as Intersection (&cap;), Union (&cup;), Subset (&sube;), Strict Subset (&sub;), etc. are also provided.<br>
+		<br>
+		While not created yet, jOpt has plans to allow constraints on user defined functions that can be used to convert numeric values to non-numeric values and vice versa.
+		</p>
+		
+		<p>
+		<a name="q14"><strong>Q14. What makes this solver different than existing solutions?</strong></a><br>
+		jOpt's CSP solver is similar to some commercial solutions such as ILOG and Koalog.  However, it is built from the ground up using a design whose goal is to foster extension and stability of the product by making its technology open to everyone.
+		</p>
+		
+	<br><br><br>	
+	<a name="mp"/><h4>Mathematical Programming</h4>
+		<p>
+		<a name="q15"><strong>Q15. What does the abbreviation MP stand for?</strong></a><br>
+		It stands for Mathematical Programming, which almost always elicits the next question ;) ...
+		</p>
+		
+		<p>
+		<a name="q16"><strong>Q16. What is Mathematical Programming?</strong></a><br>
+		The term programming in mathematical programming is often confusing for people who work with computers.  The term traces its origins to the 1940s when the phrase "linear programming" was coined by a mathematician named George Dantzig.  Danztig was describing some problems related to the US Defense Department's research into devising &quot;programs&quot; of activities for future conflicts.  He called the problems &quot;linear programs&quot; and hence linear programming became associated with a particular type of mathematics problem.  (see the link &quot;Program Does Not Equal Program&quot; on the links page for more info.)<br>
+		<br>
+		As time went on, linear programming led to other types of "programming" including integer programming, quadratic problems, etc.  Mathematical Programming covers all these problems.
+		</p>
+		
+		<p>
+		<a name="q17"><strong>Q17. What is Linear Programming?</strong></a><br>
+		Linear programming describes a type of mathematical problem in which all variables are part of linear polynomials.<br>
+		<br>
+		A linear polynomial is a function that has a form similar to 1x + 15y + 3z = w. None of the variables can be raised to a power and no variables can be multiplied by other variables.<br>
+		<br>
+		The simplex algorithm is a mathematical algorithm for solving a set of linear polynomial equations.  The polynomials are defined using a set of variables and each equation represents a constraint.  Another polynomial function can be used to define a goal (ie. maximize or minimize the expression).<br>
+		<br>
+		The simplex algorithm is extremely efficient, but it has limitations. It can only solve problems where the constraints and the expression to maximize / minimize are linear.  Also, it only produces real values so some additional work must be done to restrict variables to integer values (a common requirement for MP problems).
+		</p>
+		
+		<p>
+		<a name="q18"><strong>Q18. What is Integer Programming?</strong></a><br>
+		Integer programming is an extension of linear programming that handles finding solutions where variables must be in integer form.  Techniques such as Branch-and-Bound or Cutting Plane are used to invoke a simplex algorithm over and over again until all variables in the problem are assigned to integer values.
+		</p>
+	
+	<br><br><br>
+	<a name="info"/><h4>Additional Information</h4>
+		<p>
+		<a name="q19"><strong>Q19. What industries might benefit from jOpt technology?</strong></a><br>
+		Many industries including manufacturing, insurance, logistics, warehousing, retail, etc. can benefit from jOpt's technology.  Many of these industries have constraint problems that could be solved by jOpt.
+		</p>
+		
+		<p>
+		<a name="q20"><strong>Q20. Can you give an example problem that jOpt could solve?</strong></a><br>
+		Packing problems:<br>
+		Given the size of some items and restrictions on which items can be stored in the same box, jOpt could determine the best way to put the items in the boxes to minimize the number of boxes required.<br>
+		<br>
+		Manufacturing:<br>
+		Based on available raw materials and the amount of material required to produce each kind of product, jOpt could determine what products to create and how many of each product to produce to maximize income.<br>
+		<br>
+		Airline Scheduling:<br>
+		jOpt could be given input on crew abilities: medical knowledge, languages, training, etc.  The input would also require knowledge of what planes were traveling to where, at what times, and restrictions on the number of hours each crew member may work.  jOpt could ensure that crews would arrive near where their next flight would depart as well as ensure all required skill sets needed on a flight were provided by the crew assigned to the flight.  It could also attempt minimize the staff needed while satisfying additional side constraints.<br>
+		<br>
+		Puzzles and Games:<br>
+		jOpt is also really good at solving several puzzles and games including Sudoku puzzles.  An example of such is included in the CSP solver component.
+		</p>
+		
+		<p>
+		<a name="q21"><strong>Q21. Where can I find additional information about the technologies on which jOpt is based?</strong></a><br>
+		Our <a href="links.php.html">links</a> page has many good references.
+		</p>
+		
+		<p>
+		<a name="q22"><strong>Q22. How can I get involved / get more information?</strong></a><br>
+		Please feel free to send an e-mail to <a href="mailto:cmj917@users.sourceforge.net">cmj917@users.sourceforge.net</a> or <a href="mailto:mystafer@users.sourceforge.net">mystafer@users.sourceforge.net</a> or post questions in our <a href="http://sourceforge.net/forum/forum.php?forum_id=383655">developers forum</a>.
+		</p>
+		
+	</div>
+	</td>
+	<td width="20%" valign="top">
+		
+<div class="announce">
+<h3>Announcements</h3><div><a href='news.php.html#newdownload'>JS Alpha 1.0</a></div>
+<div><a href='news.php.html#newjavadocs'>JS Javadocs Available</a></div>
+<div><a href='news.php.html#newdownload'>CSP Release 1.0</a></div>
+<div><a href='news.php.html#newjavadocs'>CSP Javadocs Updated</a></div>
+</div>	</td>
+  </tr>
+</table>
+</body>
+</html>

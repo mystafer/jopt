@@ -1,0 +1,252 @@
+<html>
+
+<head>
+<title>JOpt - Java OPL Implementation</title>
+<link rel=StyleSheet href="../jopt.css" type="text/css"/>
+</head>
+
+<body>
+<div class="banner">
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+  <tr>
+    <td rowspan="2"><img border="0" src="../images/homer_brain_small.jpg" width="32" height="39"></td>
+    <td width="100%" class="jopttitle">jOpt</td>
+	<td rowspan="2"></a></td>
+  </tr>
+  <tr>
+    <td width="100%" class="jopttagline">Java OPL Implementation</td>
+  </tr>
+</table>
+</div>
+<div id="toptabs">
+<table cellpadding="4" cellspacing="0" border="0">
+  <tr>
+  			<td><a href="../index.php.html">Main</a></td>
+		
+  			<td><a href="../news.php.html">News</a></td>
+		
+  		    <td><a href="../opl.php.html">OPL</a></td>
+		
+  		    <td><a href="../mp_general.php.html">MP</a></td>
+		
+  		    <td><a href="../cp_general.php.html">CP</a></td>
+		
+		    <td><a href="../js_general.php.html">JS</a></td>
+		
+  		    <td><a href="../project.php.html">Project</a></td>
+		
+  		    <th><a href="../documentation.php.html">Documentation</a></th>
+		
+  		    <td><a href="../links.php.html">Links</a></td>
+		
+  		    <td><a href="../faqs_updated.php.html">FAQs</a></td>
+	  </tr>
+</table>
+</div>
+
+ <div id="breadcrumbs">&nbsp;</div>
+ 
+<table cellpadding="4" cellspacing="0" border="0" width="100%">
+<tr>
+    <td width="10%" valign="top" nowrap>
+      <div id="navcolumn">
+	  	        <div class="label"><strong>Navigation</strong></div>
+        <div class="body">
+          <div> <a href="../index.php.html">Home</a> </div>
+          <div> <a href="../news.php.html">News</a> </div>
+          <div> <a href="../opl.php.html">OPL</a> </div>
+          <div> <a href="../mp_general.php.html">MP</a> </div>
+          <div> <a href="../cp_general.php.html">CP</a> </div>
+          <div> <a href="../js_general.php.html">JS</a> </div>
+          <div> <a href="../project.php.html">Project</a> </div>
+          <div> <a href="../documentation.php.html">Documentation</a> </div>
+          <div> <a href="../links.php.html">Links</a> </div>
+          <div> <a href="../faqs_updated.php.html">FAQs</a> </div>
+		</div>	  	        <div class="body">
+		  <div> <a href="http://sourceforge.net/projects/jopt">Sourceforge Project</a></div>
+		  <div> <a href="http://sourceforge.net/forum/forum.php?forum_id=383655">Developer Forum</a></div>
+		  <div> <a href="http://sourceforge.net/project/showfiles.php?group_id=112044">Downloads</a></div>
+		  <div> <a href="../javadocs/api.html">CSP API Javadoc</a></div>
+		  <div> <a href="../javadocs/spi.html">CSP SPI Javadoc</a></div>
+  		  <div> <a href="../javadocs/js/api.html">JS API Javadoc</a></div>
+		  <div> <a href="../javadocs/js/spi.html">JS SPI Javadoc</a></div>
+        </div>      </div>
+	</td>
+<td>
+
+<div class="app">
+<h3>Generic Constraints and Variables </h3>
+  A generic variable is a wrapper class that represents a set of other variables. In this way a single constraint can be created that applies to all the other variables. <br>
+    <br>
+  Why do this you might ask? Well, the number of constraints that are necessary to define a problem are reduced to a single constraint. The reduces memory overhead, makes modelling of problems simpler and has performance implications.<br>
+  <br>
+  For example, lets say we had variables A, B, C and Y with the following constraints:<br> 
+<pre>A < Y
+B < Y
+C < Y
+</pre>
+
+<p><br>
+  These constraints could be <em>generalized </em>into a single constraint:</p>
+<pre>X &lt; Y </pre>
+<p>     where X represented the variables A, B, and C. The implications of one constraint versus three are even more dramatic when the affects are considered on nodes and arcs for the CSP solver. Each constraint generates 2 arcs:</p>
+<pre>1) A &lt; Y
+2) Y &gt; A
+3) B &lt; Y
+4) Y &gt; B
+5) C &lt; Y
+6) Y &gt; C
+
+vs
+
+1) X &lt; Y
+2) Y &gt; X</pre>
+<p>this means the generalized constraint creates only 2 arcs vs the 6 arcs created by the independant constraints. This will greatly improve solver performance since the number of arcs that need to be visited in a problem can be significantly reduced.<br>
+  <br>
+  This page begins the discussion of how  this idea should be constructed in the project. Before we go further in the design, we should review how the independant arcs are created and act within the system.<br>
+  <br>
+<h3>Node and Arc Objects </h3>
+  <p>Nodes and arcs are created as a result of building expressions from variables and defining constraints. <br>
+      <br>
+      Nodes have a direct relationship with variables and can many times be thought of as the same thing. When a variable is defined, it is associated with a domain. The primary purpose of the variable is to build expressions with other variables and not to modify the values in the domain. A node is produced by a variable that wraps the same domain. A node's purpose is to allow arcs to record changes that will update the associated domain. However, even though they are different in purpose, in many discussions a variable such as X will be used interchangably with a node X.<br>
+      <br>
+    Arcs also have a direct relationship with constraints, but they are very different in purpose. A constraint is defined on variables to represent some limitation. A single constraint may produce multiple arcs, each with its own operation. In the previous example, the constraint X &lt; Y produced two arcs to create the necessary effects each node has on the other. After arcs are produced, they are evaluated independantly of each other by the CSP algorithm.<br>
+    <br>
+    Just as there are different types of variables (Object, Integer, Double, Sets, etc), different constraints exist to operate on these variables. The nodes and arcs produced can also be grouped into specific categories. The numeric category of nodes and arcs is a common one which can be broken into smaller sub-categories. One such category is Integer. The following diagram displays the relationship from two specific types of binary integer arcs to  an integer node.</p>
+  <p><a href="../images/node_arc_relation.jpg"><img src="../images/node_arc_relation.jpg" width="285" height="360" border="0">  click to enlarge </a><br>
+        <br>
+        </p>
+  <p>As nodes change, arcs depending on the node are evaluated causing other nodes to change. In this way, changes from one node are <em>propagated</em> to all other dependant nodes. The following diagram displays the sequence of events that occurs when the value of a node is changed.</p>
+  <p><a href="../images/node_arc_interaction.jpg"><img src="../images/node_arc_interaction.jpg" width="321" height="214" border="0"> click to enlarge</a></p>
+  <p>&nbsp;</p>
+  <p>The following listing is from the BinaryNumDiffArc class. The BinaryNumDiffArc is used to ensure that a node Z is always consistent with some equation such as Z = X - y, Z &lt; x - Y, Z &gt; X - y, etc. (where uppercase is a variable and lowercase is a constant). This arc can only handle one target node (Z), one source node  (X or Y) and one constant value (x or y). The propogateBounds method is called when the source node (X or Y) changes. The code attempts to determine the new minimum and maximum  values for Z and then, based on the type of arc (&lt;, &gt;, =, etc), update Z accordingly.</p>
+  <pre>    /**
+     * Attempts to reduce values in target node domain based on Min / Max values
+     * in source node(s)
+     *
+     * @throws PropagationFailureException  If domain of target node becomes empty
+     */
+    public void propagateBounds() throws PropagationFailureException {
+        Number xmin = xconst;
+        Number xmax = xconst;
+        Number ymin = yconst;
+        Number ymax = yconst;
+
+
+        if (x != null) {
+            xmin = x.getMin();
+            xmax = x.getMax();
+        }
+        else {
+            ymin = y.getMin();
+            ymax = y.getMax();
+        }
+
+
+        switch(arcType) {
+            case GEQ:
+                z.setMin(NodeMath.subtractNoNull(xmin, ymax, nodeType));
+                break;
+
+
+            case GT:
+                z.setMin(NumSequence.next(NodeMath.subtractNoNull(xmin, ymax, nodeType)));
+                break;
+
+
+            case LEQ:
+                z.setMax(NodeMath.subtractNoNull(xmax, ymin, nodeType));
+                break;
+
+
+            case LT:
+                z.setMax(NumSequence.previous(NodeMath.subtractNoNull(xmax, ymin, nodeType)));
+                break;
+
+
+            case EQ:
+                z.setRange(NodeMath.subtractNoNull(xmin, ymax, nodeType),
+                           NodeMath.subtractNoNull(xmax, ymin, nodeType));
+                break;
+
+            case NEQ:
+                if (x.isBound() && y.isBound())
+                    z.removeValue(NodeMath.subtractNoNull(xmin, ymin, nodeType));
+        }
+    }
+</pre> 
+  </p>
+  The BinaryNumDiffArc is designed to work with any node that implements the NumNode interface so it performs its calculations using generic Number objects and math utilities rather than straight integer may. 
+  <p>In our example, the Z node is an IntNode which converts the Number values to int values internally and performs the necessary updates to the domain. If the domain of Z is reduced at all, an event is raised notifying the solving algorithm that all arcs dependant on the node Z must be propagated again. </p>
+  <p>&nbsp;</p>
+	<h3>Generics</h3>
+  	Now that we have seen how standard variables, constraints, nodes and arcs operate. How can we extend this to incorporate the generalize concept?<br>
+  	<br>
+  	Well to begin with, lets limit our discussion to integer types to reduce confusion for the moment.<br>
+  	<br>
+  	If we created a variable called GenericIntVariable that was initialized with an array of AcIntVariables, the generic variable should implement the AcIntExpr interface to allow it to be used in any integer expression just as any other AcIntVariable. This would also mean that existing constraints should support the GenericIntVariable just like any other variable. This design will be consistent with the original concept that the generic variable can be used in place of standard variables at any point in the modelling of a problem. <br>
+  	<br>
+  	Now comes the issue of implementing generic arcs and nodes. A generic node does not have a domain of values that can be enumerated like an int node, it is really just a placeholder for other nodes. The node itself only collects information about the internal nodes that changed, but does not really have a value of its own. Consider the following diagram:<br>
+  	<br>
+  	<a href="../images/generics.jpg"><img src="../images/generics.jpg" width="248" height="265" border="0">  	 click to enlarge</a><br>
+  	<br>
+  	Notice that a change such as setMax(15) on a generic will apply to all nodes within the generic. This is simple to code since one could simply loop over all the internal code and update the values with a convience function on the generic node. This makes a generic node very simple to use when it is the target of an arc, but it becomes more complex when it is the source of an arc.<br>
+  	<br>
+  	Consider the following:<br>
+<pre>
+A: {7, 8, 9}
+B: {10, 11, 12}
+Y: {5}
+
+
+X is a generic of A and B
+
+
+X > Y is true
+</pre>
+  	<p>Notice that A and B have no values in common, but they are both consistent with the constraint. This is important since it shows that X cannot simply be represented by the intersection of all the values in A and B.</p>
+  	<p>Now consider this <br>
+<pre>
+A: {1, 2, 3, 4}
+B: {3, 4, 5, 6}
+Y: {5}
+
+
+X is a generic of A and B
+
+
+X > Y is false
+</pre>
+      <p>The statement is false because no value in A is greater than 5. This example is also important since it shows that X cannot simply be represented by the union of all the values in A and B.</p>
+      <p>So now what? We can't easily represent the values in X so we need to evaluate the individual nodes in X when a generic arc is propagated. For efficiency, the generic arc should track the indices of the nodes that actually change so these are the only ones checked, but that is about all it can do. We still need to go to the specific node to do the work.<br>
+        <br>
+        Here's the real question when you look at the propogateBounds code above. Is there an easy way to introduce generic nodes into existing arc classes without having to edit the code of each arc? I'm not sure there is...<br>
+        <br>
+        My solution would be to do something like this:<br>
+  <pre>    public void propagateBounds() throws PropagationFailureException {
+        Node src = (x != null) ? x : y;<br>
+        // if node is not a generic, propagate like usual
+        if (src != generic) {
+            propogateBoundsForNode(src);
+        }
+
+        // node is a generic, propagate node for each modified index
+        else {
+            GenericNode gn = (GenericNode) src;
+
+            int modIndices[] = gn.getModifiedIndices();
+            for (int i=0; i&lt;modIndices.length; i++) {
+                propogateBoundsForNode(gn.getNode(i));
+            }
+        }
+    }
+</pre> 
+        <br>
+      However, this pattern would be so repetitious. It would be nice if it could be moved up into a more abstract base class like BinaryArc.</div>
+</td>
+<td width="20%">&nbsp;</td>
+</tr>
+</table>
+</body>
+
+</html>

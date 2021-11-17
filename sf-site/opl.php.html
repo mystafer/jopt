@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>jOpt - Java OPL Implementation</title>
+<link rel=StyleSheet href="jopt.css" type="text/css"/>
+</head>
+<body>
+<div class="banner">
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+  <tr>
+    <td rowspan="2"><img border="0" src="images/homer_brain_small.jpg" width="32" height="39"></td>
+    <td width="100%" class="jopttitle">jOpt</td>
+	<td rowspan="2"></a></td>
+  </tr>
+  <tr>
+    <td width="100%" class="jopttagline">Java OPL Implementation</td>
+  </tr>
+</table>
+</div>
+<div id="toptabs">
+<table cellpadding="4" cellspacing="0" border="0">
+  <tr>
+  			<td><a href="index.php.html">Main</a></td>
+		
+  			<td><a href="news.php.html">News</a></td>
+		
+  		    <th><a href="opl.php.html">OPL</a></th>
+		
+  		    <td><a href="mp_general.php.html">MP</a></td>
+		
+  		    <td><a href="cp_general.php.html">CP</a></td>
+		
+		    <td><a href="js_general.php.html">JS</a></td>
+		
+  		    <td><a href="project.php.html">Project</a></td>
+		
+  		    <td><a href="documentation.php.html">Documentation</a></td>
+		
+  		    <td><a href="links.php.html">Links</a></td>
+		
+  		    <td><a href="faqs_updated.php.html">FAQs</a></td>
+	  </tr>
+</table>
+</div>
+ 
+ <div id="breadcrumbs">
+   <a href="opl.php.html" class="selfref">OPL</a>  
+ </div>
+
+<table cellpadding="4" cellspacing="0" border="0" width="100%" id="main">
+  <tr>
+    <td width="10%" valign="top" nowrap>
+      <div id="navcolumn">
+	  	        <div class="label"><strong>Navigation</strong></div>
+        <div class="body">
+          <div> <a href="index.php.html">Home</a> </div>
+          <div> <a href="news.php.html">News</a> </div>
+          <div> <a href="opl.php.html">OPL</a> </div>
+          <div> <a href="mp_general.php.html">MP</a> </div>
+          <div> <a href="cp_general.php.html">CP</a> </div>
+          <div> <a href="js_general.php.html">JS</a> </div>
+          <div> <a href="project.php.html">Project</a> </div>
+          <div> <a href="documentation.php.html">Documentation</a> </div>
+          <div> <a href="links.php.html">Links</a> </div>
+          <div> <a href="faqs_updated.php.html">FAQs</a> </div>
+		</div>	  	        <div class="body">
+		  <div> <a href="http://sourceforge.net/projects/jopt">Sourceforge Project</a></div>
+		  <div> <a href="http://sourceforge.net/forum/forum.php?forum_id=383655">Developer Forum</a></div>
+		  <div> <a href="http://sourceforge.net/project/showfiles.php?group_id=112044">Downloads</a></div>
+		  <div> <a href="javadocs/api.html">CSP API Javadoc</a></div>
+		  <div> <a href="javadocs/spi.html">CSP SPI Javadoc</a></div>
+  		  <div> <a href="javadocs/js/api.html">JS API Javadoc</a></div>
+		  <div> <a href="javadocs/js/spi.html">JS SPI Javadoc</a></div>
+        </div>      </div>
+	</td>
+    <td><div class="app">
+        <h3>Optimization Programming Language</h3>
+        OPL is a modeling language for combinatorial optimization problems created by Pascal Van Hentenryck. It combines mathematical programming and constraint programming into a single language.<br>
+        <br>
+        Linear programming, integer programming, and combinatorial optimization problems are useful for many practical applications including planning, scheduling, sequencing, resource allocation, vehicle routing, design, and configuration. However, many of the problems are considered NP-complete (essentially, incredibly difficult) and no general solution can be applied to solve all of them. Each problem requires considerable work to both model the problem accurately and create an algorithm to solve it.<br>
+        <br>
+        OPL allows a developer to create model representations of linear programming, integer programming, and constraint programming problems. Models can also include high-level support for scheduling and resource applications. Variations of models for the same problem can be created with data that can be defined seperately and plugged into the problem.<br>
+        <br>
+        OPL can then be used to search for possible solutions to problems or for the best (optimal) solution based on some criteria.<br>
+		
+        <h3>OPL Components</h3>
+		OPL consists of a number of modules:
+		<ul>
+		  <li>OPL Engine - Standalone engine that processes OPL problems by delegating to a few main components</li>
+		  <li>Modeling Language Parser - Parser implementation of the OPL language used to load source files for processing</li>
+		  <li>MP Solver - A mathematical programming engine that is based on the simplex algorithm for solving LP (Linear Programming) and IP (Integer Programming) optimization problems</li>
+		  <li>CSP Solver - A constraint solver with roots in the AI (Artificial Intelligence) and OR (Operations Research) communities used to solve non-linear optimization problems</li>
+		  <li>Scheduling Solver - A specialized extension of the CSP solver that is optimized to handle scheduling and resource allocation problems</li>
+		</ul>
+		The following diagram shows the relationships between these components. <br>
+		<br>
+		<img src="images/opl_components.jpg" width="601" height="239"> <br>
+		<br>
+		A stable, fully-functional version of the CSP Solver component has been released. There is also a version of the Scheduling Solver available for download. The MP Solver component is under development, and the remaining items are still on the drawing board.</div>
+	  </td>
+	<td width="20%" valign="top">
+		
+<div class="announce">
+<h3>Announcements</h3><div><a href='news.php.html#newdownload'>JS Alpha 1.0</a></div>
+<div><a href='news.php.html#newjavadocs'>JS Javadocs Available</a></div>
+<div><a href='news.php.html#newdownload'>CSP Release 1.0</a></div>
+<div><a href='news.php.html#newjavadocs'>CSP Javadocs Updated</a></div>
+</div>	</td>
+  </tr>
+</table>
+</body>
+</html>

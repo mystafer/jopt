@@ -1,0 +1,139 @@
+<html>
+
+<head>
+<title>JOpt - Java OPL Implementation</title>
+<link rel=StyleSheet href="../jopt.css" type="text/css"/>
+</head>
+
+<body>
+<div class="banner">
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+  <tr>
+    <td rowspan="2"><img border="0" src="../images/homer_brain_small.jpg" width="32" height="39"></td>
+    <td width="100%" class="jopttitle">jOpt</td>
+	<td rowspan="2"></a></td>
+  </tr>
+  <tr>
+    <td width="100%" class="jopttagline">Java OPL Implementation</td>
+  </tr>
+</table>
+</div>
+<div id="toptabs">
+<table cellpadding="4" cellspacing="0" border="0">
+  <tr>
+  			<td><a href="../index.php.html">Main</a></td>
+		
+  			<td><a href="../news.php.html">News</a></td>
+		
+  		    <td><a href="../opl.php.html">OPL</a></td>
+		
+  		    <td><a href="../mp_general.php.html">MP</a></td>
+		
+  		    <th><a href="../cp_general.php.html">CP</a></th>
+		
+		    <td><a href="../js_general.php.html">JS</a></td>
+		
+  		    <td><a href="../project.php.html">Project</a></td>
+		
+  		    <td><a href="../documentation.php.html">Documentation</a></td>
+		
+  		    <td><a href="../links.php.html">Links</a></td>
+		
+  		    <td><a href="../faqs_updated.php.html">FAQs</a></td>
+	  </tr>
+</table>
+</div>
+ 
+ <div id="breadcrumbs">
+   <a href="../cp_general.php.html">CP</a> &gt; 
+   <a href="arc_consistency.php.html" class="selfref">Arc Consistency</a>  
+ </div>
+
+ <table cellpadding="4" cellspacing="0" border="0" width="100%" id="main">
+<tr>
+    <td width="10%" valign="top" nowrap>
+      <div id="navcolumn">
+	  	        <div class="label"><strong>Navigation</strong></div>
+        <div class="body">
+          <div> <a href="../index.php.html">Home</a> </div>
+          <div> <a href="../news.php.html">News</a> </div>
+          <div> <a href="../opl.php.html">OPL</a> </div>
+          <div> <a href="../mp_general.php.html">MP</a> </div>
+          <div> <a href="../cp_general.php.html">CP</a> </div>
+          <div> <a href="../js_general.php.html">JS</a> </div>
+          <div> <a href="../project.php.html">Project</a> </div>
+          <div> <a href="../documentation.php.html">Documentation</a> </div>
+          <div> <a href="../links.php.html">Links</a> </div>
+          <div> <a href="../faqs_updated.php.html">FAQs</a> </div>
+		</div>		        <div class="body">
+          <div> <a href="../cp_general.php.html">Constraint Programming</a> </div>
+          <div> <a href="engine_overview.php.html">CSP Solver Overview</a> </div>
+          <div> 
+		    <a href="arc_consistency.php.html">Arc Consistency</a>
+    	    <div> <a href="cnst_representation.php.html">Representation Example</a> </div>
+			<div> <a href="cnst_propagation.php.html">Propagation Example</a> </div>
+		  </div>
+          <div> 
+    	    <a href="jopt_ac_implementation.php.html">jOpt AC Implementation</a>
+    	    <div> <a href="add_cnst_to_store.php.html">Add Constraint to Store</a> </div>
+			<div> <a href="propagate_cnst.php.html">Propagate Constraint</a> </div>
+		  </div>
+		</div>
+	  	        <div class="body">
+		  <div> <a href="http://sourceforge.net/projects/jopt">Sourceforge Project</a></div>
+		  <div> <a href="http://sourceforge.net/forum/forum.php?forum_id=383655">Developer Forum</a></div>
+		  <div> <a href="http://sourceforge.net/project/showfiles.php?group_id=112044">Downloads</a></div>
+		  <div> <a href="../javadocs/api.html">CSP API Javadoc</a></div>
+		  <div> <a href="../javadocs/spi.html">CSP SPI Javadoc</a></div>
+  		  <div> <a href="../javadocs/js/api.html">JS API Javadoc</a></div>
+		  <div> <a href="../javadocs/js/spi.html">JS SPI Javadoc</a></div>
+        </div>      </div>
+	</td>
+<td>
+<td>
+<div class="app">
+<h3>Arc-Consistency Overview</h3>
+The basis of arc-consistency is that all variables can be represented as nodes in a graph.  When constraints are placed on the variables, arcs that represent the constraints can be added to the graph to connect the nodes.  As the domains of the nodes change, the arcs in the graph can be traversed to alter other nodes.  This process of altering nodes connected by arcs is commonly referred to as propagation.<br>
+<br>
+<p>
+The study of arc-consistency has lead to the classification of different types of arcs.  Arcs usually have a direction associated with them to indicate that a source node (or nodes) impacts a target node.  When a source node changes, the target node is updated by 'propagating' the change through the arc.  The following list describes arcs commonly found in literature discussing arc-consistency: 
+<ul>
+	<li>Node Arc - arc that originates at a node and is pointed back at itself (X &gt; 3)</li>
+    <li>Binary Arc - arc with one source node and one target node (X &gt; Y)</li>
+    <li>Generic Arc - all non-binary and non-node arcs. These arcs may have one or more sources and one or more targets. Some common sub-categories of generic arcs are well-defined: </li>
+	<ul>
+		<li>Ternary Arc - a hyper arc with exactly two source nodes and one target (X + Y &gt; Z)</li>
+	    <li>Hyper Arc - a generic arc with multiple source nodes but only one target ([W &cap; X &cap; Y] = Z)</li>
+	    <li>Global Arc - a generic arc with multiple source nodes and multiple targets (alldiff[X,Y,Z])</li>
+	</ul>
+</ul>
+</p>
+<p>
+Variations on the basic concept of arc-consistency have also been studied to support different types of constraints as well as to improve performance. The following list defines some of the consistency techniques:
+<ul>
+	<li>Arc Consistency (AC) - defines the node / arc concept that is the foundation for other consistency techniques - often used interchangeably with domain consistency.</li>
+    <li>Domain Consistency (DC) - only Node and Binary arcs are supported and *all* values for *all* domains must be consistent with respect to the constraints.  Because real number-based variables have infinite domains, DC does not apply to floating point variables.</li>
+    <li>Bounds Consistency (BC) - a relaxation of domain consistency for numeric variables that generally refers to integers but can applied to both integer and floating point numbers. Only requires that the minimum and maximum values for all domains be consistent.</li>
+    <li>Interval Consistency (IC) - an extension of bounds consistency where floating point variables may have complete intervals of values within their domains.  Interval consistency only requires the min and max values of each interval within a variable's domain to be consistent.</li>
+    <li>Box Consistency - a compromise between the speed of interval consistency and the accuracy of domain consistency.  This technique attempts to reduce domains of floating point numbers more so than interval consistency without the requirement that all values must be consistent.</li>
+    <li>Generalized Consistency - any of the existing consistency techniques can 'generalized' in order to support generic arcs (in addition to node and binary arcs). Generalized Arc Consistency (GAC) is often found in consistency literature and Generalized Bounds Consistency (GBC) is the basis for the default implementation of jOpt's CSP solver's consistency algorithm.</li>
+</ul>
+</p>
+<p>
+Different types of domains are also common in arc-consistency solvers.  The goal for a solver is to reduce every domain in a problem until it is 'bound'.  The following list describes some domain types and what it means for them to be 'bound':
+<ul>
+	<li>Sparse Numeric Domain - a domain that contains number values.  It will contain each and every value supported by the domain.  For example, a sparse integer domain from 51 though 100 will contain 50 elements.  A sparse numeric domain is bound when it is reduced to a single value and will fail if it contains no values.  This domain is not practical for integer variables with large domains or for real (ie. floating point) variables.</li>
+    <li>Interval Numeric Domain - a domain that contains number values represented by intervals.  For example, an interval integer domain from 51 to 100 will contain 1 element: { [51-100] }.  If the value 55 was removed, the domain would contain two interval elements: { [51-54], [56-100] }.  This domain is useful for intervals of real numbers and large ranges of integer values.  An interval domain is bound when it is reduced to a single value (ie. an interval beginning and ending at the same number).</li>
+    <li>Numeric Set Domain - a domain that contains a set of possible values and a set of required values.  It is initialized with the set of possible values and reduced by either removing values as possiblities or requiring values.  The domain is bound when the possible set of values is equal to the required set and fails if a value is required that is not possible.  A set domain can be bound to zero, one, or more values unlike numeric domains that must have one value.</li>
+    <li>Object Domain - a domain that contains object values such as strings.  It is useful for representing certain relationships and must be reduced to a single value for it to be bound.  An object domain will fail if it is reduced to no possible values.</li>
+    <li>Object Set Domain - similar to a numeric set domain; this domain can contain any type of object that can be compared (like strings).  It will contain possible and required value sets that determine when the set is bound.</li>
+</ul>
+</p>
+</div>
+</td>
+<td width="20%">&nbsp;</td>
+</tr>
+</table>
+</body>
+
+</html>

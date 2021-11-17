@@ -1,0 +1,150 @@
+<html>
+
+<head>
+<title>jOpt - Java OPL Implementation</title>
+<link rel=StyleSheet href="jopt.css" type="text/css"/>
+</head>
+
+<body>
+<div class="banner">
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+  <tr>
+    <td rowspan="2"><img border="0" src="images/homer_brain_small.jpg" width="32" height="39"></td>
+    <td width="100%" class="jopttitle">jOpt</td>
+	<td rowspan="2"></a></td>
+  </tr>
+  <tr>
+    <td width="100%" class="jopttagline">Java OPL Implementation</td>
+  </tr>
+</table>
+</div>
+<div id="toptabs">
+<table cellpadding="4" cellspacing="0" border="0">
+  <tr>
+  			<td><a href="index.php.html">Main</a></td>
+		
+  			<td><a href="news.php.html">News</a></td>
+		
+  		    <td><a href="opl.php.html">OPL</a></td>
+		
+  		    <td><a href="mp_general.php.html">MP</a></td>
+		
+  		    <th><a href="cp_general.php.html">CP</a></th>
+		
+		    <td><a href="js_general.php.html">JS</a></td>
+		
+  		    <td><a href="project.php.html">Project</a></td>
+		
+  		    <td><a href="documentation.php.html">Documentation</a></td>
+		
+  		    <td><a href="links.php.html">Links</a></td>
+		
+  		    <td><a href="faqs_updated.php.html">FAQs</a></td>
+	  </tr>
+</table>
+</div>
+ 
+ <div id="breadcrumbs">
+   <a href="cp_general.php.html" class="selfref">CP</a>  
+ </div>
+
+ <table cellpadding="4" cellspacing="0" border="0" width="100%" id="main">
+<tr>
+    <td width="10%" valign="top" nowrap>
+      <div id="navcolumn">
+	  	        <div class="label"><strong>Navigation</strong></div>
+        <div class="body">
+          <div> <a href="index.php.html">Home</a> </div>
+          <div> <a href="news.php.html">News</a> </div>
+          <div> <a href="opl.php.html">OPL</a> </div>
+          <div> <a href="mp_general.php.html">MP</a> </div>
+          <div> <a href="cp_general.php.html">CP</a> </div>
+          <div> <a href="js_general.php.html">JS</a> </div>
+          <div> <a href="project.php.html">Project</a> </div>
+          <div> <a href="documentation.php.html">Documentation</a> </div>
+          <div> <a href="links.php.html">Links</a> </div>
+          <div> <a href="faqs_updated.php.html">FAQs</a> </div>
+		</div>		        <div class="body">
+          <div> <a href="cp_general.php.html">Constraint Programming</a> </div>
+          <div> <a href="cp/engine_overview.php.html">CSP Solver Overview</a> </div>
+          <div> 
+		    <a href="cp/arc_consistency.php.html">Arc Consistency</a>
+    	    <div> <a href="cp/cnst_representation.php.html">Representation Example</a> </div>
+			<div> <a href="cp/cnst_propagation.php.html">Propagation Example</a> </div>
+		  </div>
+          <div> 
+    	    <a href="cp/jopt_ac_implementation.php.html">jOpt AC Implementation</a>
+    	    <div> <a href="cp/add_cnst_to_store.php.html">Add Constraint to Store</a> </div>
+			<div> <a href="cp/propagate_cnst.php.html">Propagate Constraint</a> </div>
+		  </div>
+		</div>
+	  	        <div class="body">
+		  <div> <a href="http://sourceforge.net/projects/jopt">Sourceforge Project</a></div>
+		  <div> <a href="http://sourceforge.net/forum/forum.php?forum_id=383655">Developer Forum</a></div>
+		  <div> <a href="http://sourceforge.net/project/showfiles.php?group_id=112044">Downloads</a></div>
+		  <div> <a href="javadocs/api.html">CSP API Javadoc</a></div>
+		  <div> <a href="javadocs/spi.html">CSP SPI Javadoc</a></div>
+  		  <div> <a href="javadocs/js/api.html">JS API Javadoc</a></div>
+		  <div> <a href="javadocs/js/spi.html">JS SPI Javadoc</a></div>
+        </div>      </div>
+	</td>
+<td>
+<td>
+<div class="app">
+<h3>Constraint Programming</h3>
+Constraint Programming (CP) is often called constraint logic programming or logic programming and has origins in artificial intelligence. Here the word &quot;programming&quot; refers to computer programming in a more traditional sense.<br>
+<br>
+CP is similar to LP (Linear Programming) in that functions are used as constraints and the goal is typically to maximize or minimize an objective function. However, CP differs from LP in that Constraint Programming allows the constraint functions to be non-linear, and it provides the option of finding all possible combinations that satisfy a set of constraints rather than simply finding a maximal or minimal solution.<br>
+<br>
+A common type of problem addressed by constraint programming is called a constraint satisfaction problem (CSP). A standard method of solving a CSP problem is through a technique known as domain reduction.
+In CSPs, all unknown variables are assigned a domain. The domain of a variable is all possible values to which the variable could be assigned. For example, the domain of a variable indicating the weight of a box could be [0..100] pounds while the domain of a variable indicating color of the box could be [Red, Blue].<br>
+<br> 
+Domain reduction is performed using &quot;constraint propagation&quot; which applies the constraints to reduce the domains of the variables to feasible values.<br>
+<br>
+An example of using propagation to reduce domains follows:<br> 
+<pre>Unknowns
+     X={1,2,3,4,5,6,7,8,9,10}
+     Y={1,2,3,4,5,6,7,8,9,10}
+Constraints
+     Y = 2X
+     Y &lt;= 10
+     (X mod 2) = 1</pre>
+
+Step 1: Apply Y=2X constraint to reduce domain of Y. Since Y must be a multiple of 2, remove all odd numbers from the domain of Y.
+
+<pre>     X={1,2,3,4,5,6,7,8,9,10}
+     Y={2,4,6,8,10}</pre>
+
+Step 2: Apply Y <= 10 constraint to reduce domain of X. Since Y=2X and Y&lt;=10, remove all numbers greater
+than 5 from X.
+<pre>     X={1,2,3,4,5}
+     Y={2,4,6,8,10}</pre>
+
+Step 3: Apply (X mod 2)=1 constraint to further reduce domain of X
+<pre>     X={1,3,5}
+     Y={2,4,6,8,10}</pre>
+
+Step 4: Since domain of X has changed, apply Y=2X constraint again to reduce Y
+<pre>     X={1,3,5}
+     Y={2,6,10}</pre>
+
+Notice that all constraints are satisifed, but the values of X and Y are not known for certain. A searching technique can be used to obtain the exact values to use for X and Y.<br>
+<br>
+Constraint Satisfaction Optimization Problems (CSOP) are an extension of CSP problems. Essentially, a CSOP is a CSP along with an objective function. Solving a CSOP typically has the goal of finding a solution that either maximizes or minimizes the objective function.  For instance, our CSP could be extended to a CSOP by adding the goal of finding a solution that minimizes X + Y (X=1, Y=2).
+
+<h4>Development Status</h4>
+		A stable version of the CSP solver component of the jOpt project has been released and is available for download.</div></div>
+</td>
+	<td width="20%" valign="top">
+		
+<div class="announce">
+<h3>Announcements</h3><div><a href='news.php.html#newdownload'>JS Alpha 1.0</a></div>
+<div><a href='news.php.html#newjavadocs'>JS Javadocs Available</a></div>
+<div><a href='news.php.html#newdownload'>CSP Release 1.0</a></div>
+<div><a href='news.php.html#newjavadocs'>CSP Javadocs Updated</a></div>
+</div>	</td>
+</tr>
+</table>
+</body>
+
+</html>

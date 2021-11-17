@@ -1,0 +1,128 @@
+<html>
+
+<head>
+<title>JOpt - Java OPL Implementation</title>
+<link rel=StyleSheet href="../jopt.css" type="text/css"/>
+</head>
+
+<body>
+<div class="banner">
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+  <tr>
+    <td rowspan="2"><img border="0" src="../images/homer_brain_small.jpg" width="32" height="39"></td>
+    <td width="100%" class="jopttitle">jOpt</td>
+	<td rowspan="2"></a></td>
+  </tr>
+  <tr>
+    <td width="100%" class="jopttagline">Java OPL Implementation</td>
+  </tr>
+</table>
+</div>
+<div id="toptabs">
+<table cellpadding="4" cellspacing="0" border="0">
+  <tr>
+  			<td><a href="../index.php.html">Main</a></td>
+		
+  			<td><a href="../news.php.html">News</a></td>
+		
+  		    <td><a href="../opl.php.html">OPL</a></td>
+		
+  		    <td><a href="../mp_general.php.html">MP</a></td>
+		
+  		    <th><a href="../cp_general.php.html">CP</a></th>
+		
+		    <td><a href="../js_general.php.html">JS</a></td>
+		
+  		    <td><a href="../project.php.html">Project</a></td>
+		
+  		    <td><a href="../documentation.php.html">Documentation</a></td>
+		
+  		    <td><a href="../links.php.html">Links</a></td>
+		
+  		    <td><a href="../faqs_updated.php.html">FAQs</a></td>
+	  </tr>
+</table>
+</div>
+ 
+ <div id="breadcrumbs">
+   <a href="../cp_general.php.html">CP</a> &gt; 
+   <a href="jopt_ac_implementation.php.html" class="selfref">JOpt AC Implementation</a>
+ </div>
+
+ <table cellpadding="4" cellspacing="0" border="0" width="100%" id="main">
+<tr>
+    <td width="10%" valign="top" nowrap>
+      <div id="navcolumn">
+	  	        <div class="label"><strong>Navigation</strong></div>
+        <div class="body">
+          <div> <a href="../index.php.html">Home</a> </div>
+          <div> <a href="../news.php.html">News</a> </div>
+          <div> <a href="../opl.php.html">OPL</a> </div>
+          <div> <a href="../mp_general.php.html">MP</a> </div>
+          <div> <a href="../cp_general.php.html">CP</a> </div>
+          <div> <a href="../js_general.php.html">JS</a> </div>
+          <div> <a href="../project.php.html">Project</a> </div>
+          <div> <a href="../documentation.php.html">Documentation</a> </div>
+          <div> <a href="../links.php.html">Links</a> </div>
+          <div> <a href="../faqs_updated.php.html">FAQs</a> </div>
+		</div>		        <div class="body">
+          <div> <a href="../cp_general.php.html">Constraint Programming</a> </div>
+          <div> <a href="engine_overview.php.html">CSP Solver Overview</a> </div>
+          <div> 
+		    <a href="arc_consistency.php.html">Arc Consistency</a>
+    	    <div> <a href="cnst_representation.php.html">Representation Example</a> </div>
+			<div> <a href="cnst_propagation.php.html">Propagation Example</a> </div>
+		  </div>
+          <div> 
+    	    <a href="jopt_ac_implementation.php.html">jOpt AC Implementation</a>
+    	    <div> <a href="add_cnst_to_store.php.html">Add Constraint to Store</a> </div>
+			<div> <a href="propagate_cnst.php.html">Propagate Constraint</a> </div>
+		  </div>
+		</div>
+	  	        <div class="body">
+		  <div> <a href="http://sourceforge.net/projects/jopt">Sourceforge Project</a></div>
+		  <div> <a href="http://sourceforge.net/forum/forum.php?forum_id=383655">Developer Forum</a></div>
+		  <div> <a href="http://sourceforge.net/project/showfiles.php?group_id=112044">Downloads</a></div>
+		  <div> <a href="../javadocs/api.html">CSP API Javadoc</a></div>
+		  <div> <a href="../javadocs/spi.html">CSP SPI Javadoc</a></div>
+  		  <div> <a href="../javadocs/js/api.html">JS API Javadoc</a></div>
+		  <div> <a href="../javadocs/js/spi.html">JS SPI Javadoc</a></div>
+        </div>      </div>
+	</td>
+<td>
+<td>
+<div class="app">
+<h3>jOpt Arc Consistency Implementation </h3>
+jOpt's CSP solver supports many consistency concepts.  It allows constraints to be defined on sparse, interval, and set domains for int, long, float, and double Java types as well as set domains for generic objects. 
+The solver also supports node, binary, and generic arcs (including ternary, hyper, and global arcs).<br>
+<br>
+The default algorithm for the solver is based on AC-3 and maintains interval consistency on floating-point domains, bounds consistency on integer domains, and domain consistency on set domains.  An alternate algorithm also exists that maintains domain consistency on integer domains.
+The algorithm used within jOpt can be replaced by implementing a CspAlgorithm interface allowing other consistency algorithms to be defined.<br>
+<br>
+The implementation of jOpt's arc consistency can be broken down into several sub-components.<br>
+<br>
+The components are used to define variables, define constraints on the variables, and provide the ability to generate arcs and nodes that are used to make the variables consistent with their constraints.<br>
+<br>
+The following diagram details some of the components that make up the constraint logic component of jOpt's CSP solver.
+Note that these components roughly correlate to packages within the code structure of jOpt's CSP solver.<br>
+<br>
+<img src="../images/cnst_logic_components.jpg" width="718" height="601">
+
+<h3>Component Descriptions</h3>
+<ul>
+	<li>Constraint Store - this component is used by the arc consistency engine to hold constraints that must be applied to variables.  The constraint store wraps an arc consistency algorithm that performs that actual work of propagating constraint requirements across nodes (variables)</li>
+	<li>Variable - numeric expression, numeric variable, and set variable classes that can be used to build constraints</li>
+	<li>Domain - classes that represent possible values that may be assigned to a specific variable</li>
+	<li>Constraint - classes determining how values are removed from the domains of the variables</li>
+	<li>Solver - utility classes used by the arc consistency engine</li>
+	<li>Graph - contains classes that represent the nodes and the arcs for use by the AC algorithm</li>
+	<li>Algorithm - represents specific implementations of the AC concept.  Many algorithms exist including AC-1, AC-2, AC-3, AC-5, AC-7, etc.  The default implementation is a variation on AC-3 that performs generalized arc consistency.</li>
+</ul>
+</div>
+</td>
+<td width="20%">&nbsp;</td>
+</tr>
+</table>
+</body>
+
+</html>

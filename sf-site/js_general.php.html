@@ -1,0 +1,102 @@
+<html>
+<head>
+<title>jOpt - Java OPL Implementation</title>
+<link rel=StyleSheet href="jopt.css" type="text/css"/>
+</head>
+<body>
+<div class="banner">
+<table border="0" width="100%" cellspacing="0" cellpadding="2">
+  <tr>
+    <td rowspan="2"><img border="0" src="images/homer_brain_small.jpg" width="32" height="39"></td>
+    <td width="100%" class="jopttitle">jOpt</td>
+	<td rowspan="2"></a></td>
+  </tr>
+  <tr>
+    <td width="100%" class="jopttagline">Java OPL Implementation</td>
+  </tr>
+</table>
+</div>
+<div id="toptabs">
+<table cellpadding="4" cellspacing="0" border="0">
+  <tr>
+  			<td><a href="index.php.html">Main</a></td>
+		
+  			<td><a href="news.php.html">News</a></td>
+		
+  		    <td><a href="opl.php.html">OPL</a></td>
+		
+  		    <td><a href="mp_general.php.html">MP</a></td>
+		
+  		    <td><a href="cp_general.php.html">CP</a></td>
+		
+		    <th><a href="js_general.php.html">JS</a></th>
+		
+  		    <td><a href="project.php.html">Project</a></td>
+		
+  		    <td><a href="documentation.php.html">Documentation</a></td>
+		
+  		    <td><a href="links.php.html">Links</a></td>
+		
+  		    <td><a href="faqs_updated.php.html">FAQs</a></td>
+	  </tr>
+</table>
+</div>
+<div id="breadcrumbs"> <a href="js_general.php.html" class="selfref">JS</a> </div>
+<table cellpadding="4" cellspacing="0" border="0" width="100%" id="main">
+  <tr>
+    <td width="10%" valign="top" nowrap><div id="navcolumn">
+                <div class="label"><strong>Navigation</strong></div>
+        <div class="body">
+          <div> <a href="index.php.html">Home</a> </div>
+          <div> <a href="news.php.html">News</a> </div>
+          <div> <a href="opl.php.html">OPL</a> </div>
+          <div> <a href="mp_general.php.html">MP</a> </div>
+          <div> <a href="cp_general.php.html">CP</a> </div>
+          <div> <a href="js_general.php.html">JS</a> </div>
+          <div> <a href="project.php.html">Project</a> </div>
+          <div> <a href="documentation.php.html">Documentation</a> </div>
+          <div> <a href="links.php.html">Links</a> </div>
+          <div> <a href="faqs_updated.php.html">FAQs</a> </div>
+		</div>                <div class="body">
+		  <div> <a href="http://sourceforge.net/projects/jopt">Sourceforge Project</a></div>
+		  <div> <a href="http://sourceforge.net/forum/forum.php?forum_id=383655">Developer Forum</a></div>
+		  <div> <a href="http://sourceforge.net/project/showfiles.php?group_id=112044">Downloads</a></div>
+		  <div> <a href="javadocs/api.html">CSP API Javadoc</a></div>
+		  <div> <a href="javadocs/spi.html">CSP SPI Javadoc</a></div>
+  		  <div> <a href="javadocs/js/api.html">JS API Javadoc</a></div>
+		  <div> <a href="javadocs/js/spi.html">JS SPI Javadoc</a></div>
+        </div>      </div></td>
+    <td>
+    <td><div class="app">
+        <h3>Job Scheduling</h3>
+        Job Scheduling (JS) has a long history in the operations research field (recall that constraint programming, on the other hand, originated in AI).  Typically, JS problems involve assigning a set of activities to a limited number of resources with consideration given to time and ordering limitations.<br>
+        <br>
+		The core entity of a JS problem is the activity.  Activities are used to model precisely what their name suggests, activities - be it anything from painting (in the context of building a house) to adding the chocolate chips (in the context of baking cookies).  Activities are typically represented by 3 ranges of numeric values: the earliest start time, the latest end time, and the duration of the activity.  Activities can depend on one another (in our house example, the framing and drywall would have to be complete before painting), and activities require resources (some paint, a paintbrush, a painter, etc.).<br>
+        <br>
+        The other essential entity of a JS problem (as you may have surmised) is the resource.  Activities interact with resource(s) for processing, and resources are classified differently depending on their potential interaction with activities:
+		<ul>
+		  <li>Unary - resource that can process only one activity at a time</li>
+		  <li>Discrete - the number of activities supported by a discrete resource is determined by its available capacity over time</li>
+		  <li>Reservoir - resource that can be both consumed and/or produced by an activity (ie. its capacity can go down as well as up)</li>
+		</ul>
+		As is commonly the case, variations and extensions of these standard resources exist.<br>
+        <br>
+        Solving a JS problem consists of associating (assigning) activities to resources and determining the start, end, and duration of each activity.  As with standard constraint satisfaction problems, a goal or objective is commonly used.  In the realm of Job Scheduling, common goals include minimizing makespan (the difference between the start of the first activity and the end of the last) or minimizing resource cost.<br>
+        <br>
+        A significant amount of research has been done into creating intelligent methods of solving JS problems.  One such method is to treat a Job Scheduling problem as an extension of a constraint satisfaction problem.  Commonly referred to as 'Constraint-Based Scheduling', this approach is well-suited for solving real-world scheduling problems, and it is the technique used in the jOpt project.
+
+        <h4>Development Status</h4>
+		An alpha-version of the job scheduling component of the jOpt project has been released and is available for download.</div>
+	 </td>
+	<td width="20%" valign="top">
+		
+<div class="announce">
+<h3>Announcements</h3><div><a href='news.php.html#newdownload'>JS Alpha 1.0</a></div>
+<div><a href='news.php.html#newjavadocs'>JS Javadocs Available</a></div>
+<div><a href='news.php.html#newdownload'>CSP Release 1.0</a></div>
+<div><a href='news.php.html#newjavadocs'>CSP Javadocs Updated</a></div>
+</div>	</td>
+  </tr>
+</table>
+</body>
+</html>
